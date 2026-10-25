@@ -1,15 +1,57 @@
 ---
+import { Image } from 'astro:assets';
 import { ui, type Locale } from '../i18n/ui';
-import TimeVisual from './visuals/TimeVisual.astro';
-import CostVisual from './visuals/CostVisual.astro';
-import PricingVisual from './visuals/PricingVisual.astro';
-import TrayVisual from './visuals/TrayVisual.astro';
+import timeZhDark from '../assets/shots/time-zh-dark.png';
+import timeZhLight from '../assets/shots/time-zh-light.png';
+import timeEnDark from '../assets/shots/time-en-dark.png';
+import timeEnLight from '../assets/shots/time-en-light.png';
+import costZhDark from '../assets/shots/cost-zh-dark.png';
+import costZhLight from '../assets/shots/cost-zh-light.png';
+import costEnDark from '../assets/shots/cost-en-dark.png';
+import costEnLight from '../assets/shots/cost-en-light.png';
+import pricingZhDark from '../assets/shots/data-pricing-zh-dark.png';
+import pricingZhLight from '../assets/shots/data-pricing-zh-light.png';
+import pricingEnDark from '../assets/shots/data-pricing-en-dark.png';
+import pricingEnLight from '../assets/shots/data-pricing-en-light.png';
+import trayZhDark from '../assets/shots/tray-zh-dark.png';
+import trayZhLight from '../assets/shots/tray-zh-light.png';
+import trayEnDark from '../assets/shots/tray-en-dark.png';
+import trayEnLight from '../assets/shots/tray-en-light.png';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = ui[locale];
+
+const shots: Record<string, { dark: ImageMetadata; light: ImageMetadata; alt: string; altEn: string; tray?: boolean }> = {
+  time: {
+    dark: locale === 'zh' ? timeZhDark : timeEnDark,
+    light: locale === 'zh' ? timeZhLight : timeEnLight,
+    alt: 'Tokenmetry 时间分析视图：高峰时段 KPI、按小时分布图与活跃日历热力图',
+    altEn: 'Tokenmetry time analysis: peak-hour KPIs, hourly distribution chart and activity calendar heatmap',
+  },
+  cost: {
+    dark: locale === 'zh' ? costZhDark : costEnDark,
+    light: locale === 'zh' ? costZhLight : costEnLight,
+    alt: 'Tokenmetry 成本分析视图：估算总成本 KPI 与成本计算口径表',
+    altEn: 'Tokenmetry cost analysis: estimated-cost KPIs and the cost methodology table',
+  },
+  pricing: {
+    dark: locale === 'zh' ? pricingZhDark : pricingEnDark,
+    light: locale === 'zh' ? pricingZhLight : pricingEnLight,
+    alt: 'Tokenmetry 数据与计价视图：数据源状态表与模型目录',
+    altEn: 'Tokenmetry data & pricing: source status table and the model catalog',
+  },
+  tray: {
+    dark: locale === 'zh' ? trayZhDark : trayEnDark,
+    light: locale === 'zh' ? trayZhLight : trayEnLight,
+    alt: 'Tokenmetry 托盘快捷信息窗：今日 Token、估算成本、构成占比与主要 Agent',
+    altEn: 'Tokenmetry tray popover: tokens today, estimated cost, composition and top agents',
+    tray: true,
+  },
+};
+
 const icons: Record<string, string> = {
   sources: 'M4 6h16M4 12h16M4 18h10',
   views: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
@@ -41,10 +83,29 @@ const iconKeys = ['sources', 'views', 'time', 'cost', 'pricing', 'tray'];
               <p>{item.desc}</p>
             </div>
           </div>
-          {item.visual === 'time' && <div class="visual"><TimeVisual locale={locale} /></div>}
-          {item.visual === 'cost' && <div class="visual"><CostVisual locale={locale} /></div>}
-          {item.visual === 'pricing' && <div class="visual"><PricingVisual locale={locale} /></div>}
-          {item.visual === 'tray' && <div class="visual tray"><TrayVisual locale={locale} /></div>}
+          {item.visual && (
+            <div class:list={['visual', 'theme-dual', { tray: shots[item.visual].tray }]}>
+              <Image
+                src={shots[item.visual].dark}
+                alt={locale === 'zh' ? shots[item.visual].alt : shots[item.visual].altEn}
+                widths={shots[item.visual].tray ? [498] : [640, 1024]}
+                sizes={shots[item.visual].tray ? '(max-width: 640px) 86vw, 330px' : '(max-width: 900px) 100vw, 504px'}
+                format="webp"
+                class="t-dark"
+                loading="lazy"
+              />
+              <Image
+                src={shots[item.visual].light}
+                alt=""
+                aria-hidden="true"
+                widths={shots[item.visual].tray ? [498] : [640, 1024]}
+                sizes={shots[item.visual].tray ? '(max-width: 640px) 86vw, 330px' : '(max-width: 900px) 100vw, 504px'}
+                format="webp"
+                class="t-light"
+                loading="lazy"
+              />
+            </div>
+          )}
         </article>
       ))}
     </div>
@@ -96,11 +157,27 @@ const iconKeys = ['sources', 'views', 'time', 'cost', 'pricing', 'tray'];
 
   .visual {
     margin-top: 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   .visual.tray {
+    border: 0;
+    background: transparent;
+    overflow: visible;
     display: flex;
     justify-content: center;
+    filter: drop-shadow(0 16px 40px rgba(2, 8, 20, 0.3));
+  }
+
+  [data-theme='light'] .visual.tray {
+    filter: drop-shadow(0 14px 34px rgba(30, 50, 90, 0.16));
+  }
+
+  .visual.tray img {
+    max-width: 330px;
+    border-radius: 14px;
   }
 
   @media (max-width: 900px) {
