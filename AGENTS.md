@@ -38,3 +38,4 @@ pnpm og        # 仅重新生成 OG 分享图（public/og-{zh,en}.png，已 giti
 - README「结构」一节仍提到 `src/components/visuals/`（复刻组件），该目录已删除，以本文件和实际目录为准。
 - `public/og-*.png` 是构建产物且被 gitignore，改动 OG 文案后跑 `pnpm og` 重新生成。
 - `pnpm-workspace.yaml` 的 `allowBuilds`（esbuild、sharp）是 pnpm 构建脚本白名单，勿删。
+- `package.json` 的 `packageManager` 钉住 pnpm 版本，勿删：Cloudflare 靠它选 pnpm，否则按 `lockfileVersion: 9.0` 推断成 pnpm 9，会因 `pnpm-workspace.yaml` 无 `packages` 字段报 "packages field missing or empty"。改动该字段后需重跑 `pnpm install` 刷新 lockfile 里的 `packageManagerDependencies`，否则 frozen 安装失败。
