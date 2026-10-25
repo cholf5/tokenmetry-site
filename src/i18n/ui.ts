@@ -57,14 +57,6 @@ const zh = {
     subtitle: '每个功能都以当前版本实际实现为准',
     items: [
       {
-        title: '19 源直读',
-        desc: '只读本地日志与数据库，零配置自动探测，不调用外部进程。',
-      },
-      {
-        title: '9 个固定视图',
-        desc: '总览、会话、Agent、模型、项目、时间、成本、数据与计价、设置；时间范围与 Agent 筛选贯穿所有视图。',
-      },
-      {
         title: '时间分析',
         desc: '按小时分布、活跃日历与星期分布，识别高峰时段、最活跃日与长会话。',
         visual: 'time' as const,
@@ -83,6 +75,14 @@ const zh = {
         title: '托盘常驻',
         desc: '后台自动刷新，异常成本即时通知，5 秒知道今天的状态。',
         visual: 'tray' as const,
+      },
+      {
+        title: '19 源直读',
+        desc: '只读本地日志与数据库，零配置自动探测，不调用外部进程。',
+      },
+      {
+        title: '9 个固定视图',
+        desc: '总览、会话、Agent、模型、项目、时间、成本、数据与计价、设置；时间范围与 Agent 筛选贯穿所有视图。',
       },
     ],
   },
@@ -178,14 +178,6 @@ const en: typeof zh = {
     subtitle: 'Every feature reflects what the current release actually does',
     items: [
       {
-        title: 'Reads 19 agent sources',
-        desc: 'Read-only access to local logs and databases, auto-detected with zero config. No external processes spawned.',
-      },
-      {
-        title: '9 fixed views',
-        desc: 'Overview, sessions, agents, models, projects, time, cost, data & pricing, settings — with time-range and agent filters running through every view.',
-      },
-      {
         title: 'Time analysis',
         desc: 'Hourly distribution, activity calendar and weekday breakdown to spot peak hours, busiest days and long sessions.',
         visual: 'time' as const,
@@ -204,6 +196,14 @@ const en: typeof zh = {
         title: 'Lives in your tray',
         desc: 'Refreshes in the background and notifies you the moment spend looks abnormal.',
         visual: 'tray' as const,
+      },
+      {
+        title: 'Reads 19 agent sources',
+        desc: 'Read-only access to local logs and databases, auto-detected with zero config. No external processes spawned.',
+      },
+      {
+        title: '9 fixed views',
+        desc: 'Overview, sessions, agents, models, projects, time, cost, data & pricing, settings — with time-range and agent filters running through every view.',
       },
     ],
   },
