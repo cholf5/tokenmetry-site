@@ -10,6 +10,7 @@ pnpm dev       # http://localhost:4321
 pnpm build     # 先 node scripts/generate-og.mjs 再 astro build → dist/
 pnpm preview   # 预览 dist/
 pnpm og        # 仅重新生成 OG 分享图（public/og-{zh,en}.png，已 gitignore）
+pnpm icons     # 重新烘焙站点图标（public/favicon-{16,32}.png、apple-touch-icon.png，入库提交）
 ```
 
 包管理器用 pnpm。无测试、无 lint；不要虚构 lint/test 命令。
@@ -21,6 +22,7 @@ pnpm og        # 仅重新生成 OG 分享图（public/og-{zh,en}.png，已 giti
 - `src/layouts/Layout.astro` — SEO / canonical / hreflang / OG meta + 主题系统。
 - `src/components/` — 页面区块（Nav、Hero、Values、Features、HowItWorks、OpenSource、DownloadCta、GithubCta、Footer）。
 - `src/assets/shots/` — 真实产品 UI 截图，命名 `{view}-{locale}-{theme}.png`（如 `overview-zh-dark.png`）。Hero/Features 同时引入 dark+light 两张，用 CSS `theme-dual` 切换。
+- `src/assets/brand/app-icon.svg` — 站点图标唯一母版（主仓库 D-018 定稿 v1 绿柱）；`Logo.astro` 内联同几何，favicon 由 `scripts/generate-icons.mjs` 从它烘焙。
 - `src/styles/global.css` — 设计令牌。
 - `scripts/generate-og.mjs` — 构建时用 resvg 生成 OG 图。
 
@@ -37,5 +39,6 @@ pnpm og        # 仅重新生成 OG 分享图（public/og-{zh,en}.png，已 giti
 
 - README「结构」一节仍提到 `src/components/visuals/`（复刻组件），该目录已删除，以本文件和实际目录为准。
 - `public/og-*.png` 是构建产物且被 gitignore，改动 OG 文案后跑 `pnpm og` 重新生成。
+- 改品牌图标的同步点：`src/assets/brand/app-icon.svg`（母版）→ `Logo.astro`（内联几何）→ `pnpm icons` 重烘焙 favicon 并提交。apple-touch-icon 是方角全出血版（iOS 自裁圆角），由脚本自动处理。
 - `pnpm-workspace.yaml` 的 `allowBuilds`（esbuild、sharp、workerd）是 pnpm 构建脚本白名单，勿删。workerd 是给 Cloudflare CI 用的：构建时它会往项目里临时装 wrangler，其依赖 workerd 的构建脚本须放行，否则 pnpm 12 报 `ERR_PNPM_IGNORED_BUILDS`。
 - `package.json` 的 `packageManager` 钉住 pnpm 版本，勿删：Cloudflare 靠它选 pnpm，否则按 `lockfileVersion: 9.0` 推断成 pnpm 9，会因 `pnpm-workspace.yaml` 无 `packages` 字段报 "packages field missing or empty"。改动该字段后需重跑 `pnpm install` 刷新 lockfile 里的 `packageManagerDependencies`，否则 frozen 安装失败。

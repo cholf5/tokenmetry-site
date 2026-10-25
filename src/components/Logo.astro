@@ -1,29 +1,27 @@
 ---
-/** 品牌标：渐变圆角方块 + T，与产品托盘原型 logo 同源 */
+/** 品牌标：定稿应用图标 v1 绿柱，几何与 src/assets/brand/app-icon.svg 同源（改图标两处同步） */
 interface Props {
   size?: number;
 }
 const { size = 24 } = Astro.props;
-const id = `lg-${size}`;
+const id = `tk-${size}`;
 ---
 
 <svg
   width={size}
   height={size}
-  viewBox="0 0 24 24"
+  viewBox="0 0 1024 1024"
   role="img"
   aria-label="Tokenmetry"
 >
   <defs>
-    <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3986ed"></stop>
-      <stop offset="1" stop-color="#8a68e9"></stop>
+    <linearGradient id={id} x1="150" y1="0" x2="874" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14263f"></stop>
+      <stop offset="1" stop-color="#0a1322"></stop>
     </linearGradient>
   </defs>
-  <rect width="24" height="24" rx="6.5" fill={`url(#${id})`}></rect>
-  <path
-    d="M7 8.4h10M12 8.4V17"
-    stroke="#fff"
-    stroke-width="2.1"
-    stroke-linecap="round"></path>
+  <rect width="1024" height="1024" rx="239" fill={`url(#${id})`}></rect>
+  <rect x="177" y="530" width="170" height="290" rx="85" fill="#1d9e79"></rect>
+  <rect x="427" y="365" width="170" height="455" rx="85" fill="#27c496"></rect>
+  <rect x="677" y="200" width="170" height="620" rx="85" fill="#38d6a4"></rect>
 </svg>
