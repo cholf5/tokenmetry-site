@@ -1,0 +1,87 @@
+---
+import { site } from '../config/site';
+import { ui, type Locale } from '../i18n/ui';
+import Logo from './Logo.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale];
+---
+
+<footer>
+  <div class="container inner">
+    <div class="left">
+      <a class="brand" href={`/${locale === 'zh' ? '' : 'en'}`}>
+        <Logo size={20}></Logo>
+        <span>Tokenmetry</span>
+      </a>
+      <p class="tagline">{t.footer.tagline}</p>
+    </div>
+    <nav class="links" aria-label={locale === 'zh' ? '页脚' : 'Footer'}>
+      <a href={site.repo} target="_blank" rel="noopener">{t.footer.links.github}</a>
+      <a href={site.releases} target="_blank" rel="noopener">{t.footer.links.releases}</a>
+      <a href={site.license} target="_blank" rel="noopener">{t.footer.links.license}</a>
+    </nav>
+  </div>
+  <div class="container copy num">
+    <p>{t.footer.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line-soft);
+    padding: 44px 0 34px;
+  }
+
+  .inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .tagline {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+
+  .links {
+    display: flex;
+    gap: 22px;
+    font-size: 14px;
+  }
+
+  .links a {
+    color: var(--muted);
+  }
+
+  .links a:hover {
+    color: var(--text);
+  }
+
+  .copy {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+</style>

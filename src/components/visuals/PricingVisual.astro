@@ -1,0 +1,138 @@
+---
+import { ui, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+
+// 真实数据源名（19 源中的代表）；状态与记录数为示意
+const sources = [
+  { name: 'Claude Code', ok: true, records: '2,184' },
+  { name: 'Codex', ok: true, records: '946' },
+  { name: 'ZCode', ok: true, records: '622' },
+  { name: 'Gemini CLI', ok: true, records: '1,102' },
+  { name: 'Qwen Code', ok: false, records: '307' },
+];
+const fallback = locale === 'zh'
+  ? ['用户覆盖', 'models.dev', '内置快照']
+  : ['Your overrides', 'models.dev', 'Bundled snapshot'];
+const fallbackTitle = locale === 'zh' ? '三级定价回退' : 'Three-tier pricing fallback';
+---
+
+<div class="appwin" aria-hidden="true">
+  <div class="aw-top">
+    <span class="aw-dots"><i></i><i></i><i></i></span>
+    <span class="aw-title">{t.pagePricing}</span>
+    <span class="aw-pill">{locale === 'zh' ? '自动探测 · 只读' : 'Auto-detected · Read-only'}</span>
+  </div>
+  <div class="aw-body">
+    <div class="app-grid2">
+      <div class="app-panel">
+        <div class="app-panelhead">
+          <strong>{t.sources}</strong>
+          <span class="meta">{locale === 'zh' ? '19 源 · 示意' : '19 sources · sample'}</span>
+        </div>
+        <table class="app-table">
+          <thead>
+            <tr>
+              <th>{t.thSource}</th>
+              <th>{t.thStatus}</th>
+              <th class="num">{t.thRecords}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {sources.map((s) => (
+              <tr>
+                <td style="white-space:nowrap;font-weight:600">{s.name}</td>
+                <td class={s.ok ? 'status-ok' : 'status-partial'}>{s.ok ? t.connected : t.partial}</td>
+                <td class="num">{s.records}</td>
+                <td class="num"><span class="ghost-btn">{t.rescanning}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="app-panel stack">
+        <div class="app-panelhead">
+          <strong>{fallbackTitle}</strong>
+        </div>
+        <ol class="chain">
+          {fallback.map((f, i) => (
+            <li>
+              <span class="step-no num">{i + 1}</span>
+              <span class="step-name">{f}</span>
+              {i < fallback.length - 1 && (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                  <path d="M5 12h13M13 6.5 18.5 12 13 17.5"></path>
+                </svg>
+              )}
+            </li>
+          ))}
+        </ol>
+        <p class="chain-note">
+          {locale === 'zh'
+            ? '联网刷新仅后台增强，永不阻塞界面；断网时使用内置价格快照。'
+            : 'Online refresh is a background enhancement only; the bundled snapshot works offline.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chain {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .chain li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+
+  .chain svg {
+    margin-left: auto;
+    color: var(--muted);
+  }
+
+  .step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background: var(--chip-bg);
+    color: var(--link);
+    font-size: 10px;
+    font-weight: 700;
+    flex: 0 0 auto;
+  }
+
+  .step-name {
+    font-weight: 600;
+  }
+
+  .chain-note {
+    margin-top: auto;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>

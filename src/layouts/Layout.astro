@@ -1,0 +1,86 @@
+---
+import { site } from '../config/site';
+import { ui, defaultLocale, type Locale } from '../i18n/ui';
+import '../styles/global.css';
+import '../styles/app-ui.css';
+
+interface Props {
+  locale: Locale;
+  /** 当前页面路径（无尾斜杠），如 '' 或 '/en' */
+  path: '' | '/en';
+}
+
+const { locale, path } = Astro.props;
+const t = ui[locale];
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+const otherPath = locale === 'zh' ? '/en' : '';
+const canonical = `${site.url}${path === '' ? '/' : path}`;
+const ogImage = `${site.url}/og-${locale}.png`;
+---
+
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'} data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={`${site.url}/`} />
+    <link rel="alternate" hreflang="en" href={`${site.url}/en`} />
+    <link rel="alternate" hreflang="x-default" href={`${site.url}/`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- 主题初始化：必须在首帧渲染前执行，避免闪烁 -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('tk-theme');
+          var theme =
+            saved === 'light' || saved === 'dark'
+              ? saved
+              : matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark';
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <!-- 主题切换（惰性绑定，无框架依赖） -->
+    <script is:inline>
+      (function () {
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-theme-toggle]');
+          if (!btn) return;
+          var root = document.documentElement;
+          var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+          root.dataset.theme = next;
+          try {
+            localStorage.setItem('tk-theme', next);
+          } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>

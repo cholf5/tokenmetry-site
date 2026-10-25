@@ -1,0 +1,159 @@
+---
+import { site } from '../config/site';
+import { ui, type Locale } from '../i18n/ui';
+import Logo from './Logo.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale];
+const otherPath = locale === 'zh' ? '/en' : '/';
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href={`/${locale === 'zh' ? '' : 'en'}`} aria-label="Tokenmetry">
+      <Logo size={26}></Logo>
+      <span>Tokenmetry</span>
+    </a>
+
+    <nav class="links" aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
+      <a href="#features">{t.nav.features}</a>
+      <a href="#how">{t.nav.how}</a>
+      <a href={site.repo} target="_blank" rel="noopener">{t.nav.github}</a>
+    </nav>
+
+    <div class="actions">
+      <a class="icon-link lang" href={otherPath} aria-label={t.nav.langAria}>{t.nav.langLabel}</a>
+      <button
+        class="icon-link"
+        type="button"
+        data-theme-toggle
+        aria-label={t.nav.themeAria}
+      >
+        <svg class="ico-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"></path>
+        </svg>
+        <svg class="ico-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.6 14.2A8.8 8.8 0 0 1 9.8 3.4a8.8 8.8 0 1 0 10.8 10.8Z"></path>
+        </svg>
+      </button>
+      <a class="btn btn-primary btn-dl" href={site.releases} target="_blank" rel="noopener">{t.nav.download}</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 62px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    margin-left: 14px;
+    font-size: 14.5px;
+  }
+
+  .links a {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .links a:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  }
+
+  .icon-link:hover {
+    color: var(--text);
+    background: var(--panel-2);
+    text-decoration: none;
+  }
+
+  .ico-sun {
+    display: none;
+  }
+
+  [data-theme='light'] .ico-sun {
+    display: block;
+  }
+
+  [data-theme='light'] .ico-moon {
+    display: none;
+  }
+
+  .btn-dl {
+    padding: 9px 18px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 780px) {
+    .links {
+      display: none;
+    }
+
+    .lang {
+      font-size: 12.5px;
+      padding: 0 8px;
+    }
+
+    .btn-dl {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  }
+</style>

@@ -1,0 +1,282 @@
+/*
+ * 全局样式与设计令牌。
+ * 令牌色值直接取自产品 src/Tokenmetry.App/Styles/Tokens.axaml（明暗两套均为产品真实值），
+ * 图表系列色不随明暗翻转（与产品 design-tokens.md §2 口径一致）。
+ */
+:root {
+  /* dark（产品 Dark ThemeDictionary 原值） */
+  --bg: #0b1120;
+  --bg-soft: #0e1728;
+  --panel: #111c2e;
+  --panel-2: #142137;
+  --text: #e8eef9;
+  --muted: #8293ad;
+  --line: #22324a;
+  --line-soft: #1c2b40;
+  --link: #80adff;
+  --chip-bg: #1b2c44;
+  --accent: #4c8dff;
+  --green: #38d6a4;
+  --red: #ff7185;
+  --orange: #ffb454;
+  --purple: #a779ff;
+  --cyan: #57c7e8;
+  --btn-primary-a: #397df5;
+  --btn-primary-b: #3670e7;
+  --btn-ghost-bg: #17263c;
+  --btn-ghost-line: #2a3b54;
+  --hero-glow: rgba(76, 141, 255, 0.13);
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #f4f6fa;
+  --bg-soft: #eef2f8;
+  --panel: #ffffff;
+  --panel-2: #f4f7fb;
+  --text: #1c2735;
+  --muted: #66788f;
+  --line: #d8e0eb;
+  --line-soft: #e4eaf2;
+  --link: #2f6bd8;
+  --chip-bg: #e3ecfb;
+  --accent: #2f6bd8;
+  --green: #0e9f77;
+  --red: #d64566;
+  --orange: #b26a00;
+  --purple: #7c4fd8;
+  --cyan: #1596bd;
+  --btn-primary-a: #3670e7;
+  --btn-primary-b: #2c5fd4;
+  --btn-ghost-bg: #ffffff;
+  --btn-ghost-line: #c9d5e3;
+  --hero-glow: rgba(47, 107, 216, 0.08);
+  color-scheme: light;
+}
+
+/* 图表系列色：明暗共用（与产品口径一致） */
+:root,
+[data-theme='light'] {
+  --series-0: #4c8dff;
+  --series-1: #12b886;
+  --series-2: #ffad4d;
+  --series-3: #a779ff;
+  --series-4: #48bde3;
+  --series-5: #8394ae;
+  --series-6: #f06bc4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 可见焦点态（可访问性要求） */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 18px;
+  }
+}
+
+section {
+  padding: 76px 0;
+}
+
+@media (max-width: 640px) {
+  section {
+    padding: 52px 0;
+  }
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.section-head h2 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 640px) {
+  .section-head h2 {
+    font-size: 24px;
+  }
+}
+
+.section-head .sub {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* 按钮 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter 0.15s ease, background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--btn-primary-a), var(--btn-primary-b));
+  color: #fff;
+}
+
+.btn-ghost {
+  background: var(--btn-ghost-bg);
+  border-color: var(--btn-ghost-line);
+  color: var(--text);
+}
+
+.btn-lg {
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+/* 双主题配图：同一位置两份资源，按当前主题显示其一 */
+.theme-dual {
+  position: relative;
+}
+
+.theme-dual img {
+  width: 100%;
+  height: auto;
+}
+
+.theme-dual img.t-light {
+  display: none;
+}
+
+[data-theme='light'] .theme-dual img.t-light {
+  display: block;
+}
+
+[data-theme='light'] .theme-dual img.t-dark {
+  display: none;
+}
+
+/* 数字用等宽变体，与产品的 tabular-nums 一致 */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgba(76, 141, 255, 0.35);
+}
+
+/* 进入动画（克制：仅淡入上移一次） */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.rise-2 {
+  animation-delay: 0.08s;
+}
+
+.rise-3 {
+  animation-delay: 0.16s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}

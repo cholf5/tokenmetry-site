@@ -1,0 +1,71 @@
+---
+import { ui, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+
+const kpis = [
+  { v: '$286.41', foot: t.knownOnly },
+  { v: '31.8%', foot: locale === 'zh' ? '按 Token 构成展示' : 'shown by token composition' },
+  { v: '54.6%', foot: locale === 'zh' ? '输出单价通常更高' : 'output is usually priced higher' },
+  { v: locale === 'zh' ? '3 个' : '3', foot: t.unpricedFoot },
+];
+const kpiTitles = [t.totalCost, t.inputShare, t.outputShare, t.unpriced];
+
+const rows = locale === 'zh'
+  ? [
+      { item: '实际计费', stance: '优先', note: '日志自带 costUSD 时直接采用' },
+      { item: '估算成本', stance: '模型价格表', note: '用户覆盖 → models.dev → 内置快照三级回退' },
+      { item: '未知成本', stance: '不计入总额或单独标注', note: '绝不折 0 混入合计' },
+    ]
+  : [
+      { item: 'Actual billing', stance: 'Preferred', note: 'costUSD from logs is used as-is' },
+      { item: 'Estimates', stance: 'Price tables', note: 'user overrides → models.dev → bundled snapshot' },
+      { item: 'Unknown cost', stance: 'Excluded from totals', note: 'never zeroed into totals' },
+    ];
+---
+
+<div class="appwin" aria-hidden="true">
+  <div class="aw-top">
+    <span class="aw-dots"><i></i><i></i><i></i></span>
+    <span class="aw-title">{t.pageCost}</span>
+    <span class="aw-pill">{locale === 'zh' ? '最近 30 天 · 所有 Agent' : 'Last 30 days · All agents'}</span>
+  </div>
+  <div class="aw-body">
+    <div class="kpi-row">
+      {kpis.map((k, i) => (
+        <div class="kpi">
+          <div class="kpi-top">{kpiTitles[i]}</div>
+          <div class="kpi-value">{k.v}</div>
+          <div class="kpi-foot">{k.foot}</div>
+        </div>
+      ))}
+    </div>
+    <div class="app-panel">
+      <div class="app-panelhead">
+        <strong>{t.costBasis}</strong>
+      </div>
+      <table class="app-table">
+        <thead>
+          <tr>
+            <th>{t.thItem}</th>
+            <th>{t.thStance}</th>
+            <th>{t.thNote}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <td style="white-space:nowrap;font-weight:600">{r.item}</td>
+              <td><span class="app-chip">{r.stance}</span></td>
+              <td style="color:var(--muted)">{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
