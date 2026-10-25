@@ -1,0 +1,232 @@
+---
+import { Image } from 'astro:assets';
+import { ui, type Locale } from '../i18n/ui';
+import trayZhDark from '../assets/shots/tray-zh-dark.png';
+import trayZhLight from '../assets/shots/tray-zh-light.png';
+import trayEnDark from '../assets/shots/tray-en-dark.png';
+import trayEnLight from '../assets/shots/tray-en-light.png';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale];
+const shot = locale === 'zh' ? { dark: trayZhDark, light: trayZhLight } : { dark: trayEnDark, light: trayEnLight };
+---
+
+<section id="tray" class="full-bleed">
+  <div class="container inner">
+    <div class="txt">
+      <span class="kicker">{t.tray.kicker}</span>
+      <h2>{t.tray.title}</h2>
+      <p class="sub">{t.tray.subtitle}</p>
+      <ul class="points">
+        {t.tray.points.map((p) => (
+          <li>
+            <span class="k mono">{p.k}</span>
+            <span>{p.v}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <figure class="scene" aria-label={t.tray.shotAlt}>
+      <div class="menubar" aria-hidden="true">
+        <span class="m-left">
+          <span class="apple"></span>
+          <span class="m-item strong">Tokenmetry</span>
+          <span class="m-item">File</span>
+          <span class="m-item">Edit</span>
+        </span>
+        <span class="m-right">
+          <span class="m-ico battery"></span>
+          <span class="m-ico wifi"></span>
+          <span class="m-item mono num">21:26</span>
+        </span>
+      </div>
+      <div class="desktop">
+        <div class="popover-wrap theme-dual">
+          <Image src={shot.dark} alt={t.tray.shotAlt} widths={[420]} sizes="(max-width: 560px) 84vw, 340px" format="webp" class="t-dark" loading="lazy" />
+          <Image src={shot.light} alt="" aria-hidden="true" widths={[420]} sizes="(max-width: 560px) 84vw, 340px" format="webp" class="t-light" loading="lazy" />
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 72px 0;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .sub {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .points {
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .points li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+
+  .points .k {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 7px;
+    padding: 2px 9px;
+    flex: 0 0 auto;
+  }
+
+  /* 桌面场景：菜单栏 + 弹层 */
+  .scene {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px rgba(2, 8, 20, 0.3);
+  }
+
+  [data-theme='light'] .scene {
+    box-shadow: 0 18px 42px rgba(30, 50, 90, 0.15);
+  }
+
+  .menubar {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: color-mix(in srgb, var(--panel) 92%, var(--text) 8%);
+    color: var(--text);
+    font-size: 12px;
+  }
+
+  .m-left,
+  .m-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .m-item.strong {
+    font-weight: 700;
+  }
+
+  .apple {
+    width: 13px;
+    height: 13px;
+    position: relative;
+  }
+
+  .apple::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    background: var(--text);
+  }
+
+  .m-ico {
+    width: 18px;
+    height: 11px;
+    display: inline-block;
+  }
+
+  .battery {
+    border: 1.4px solid var(--text);
+    border-radius: 2.5px;
+    position: relative;
+  }
+
+  .battery::before {
+    content: '';
+    position: absolute;
+    left: 1.5px;
+    top: 1.5px;
+    bottom: 1.5px;
+    width: 62%;
+    background: var(--green);
+    border-radius: 1px;
+  }
+
+  .battery::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 3px;
+    width: 2px;
+    height: 4px;
+    background: var(--text);
+    border-radius: 0 1px 1px 0;
+  }
+
+  .wifi {
+    border: 2.4px solid var(--text);
+    border-radius: 50%;
+    clip-path: inset(52% 0 0 0);
+    width: 15px;
+    height: 15px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    transform: rotate(45deg) scale(0.8);
+  }
+
+  .desktop {
+    background:
+      radial-gradient(420px 260px at 78% 18%, color-mix(in srgb, var(--series-0) 14%, transparent), transparent 72%),
+      radial-gradient(360px 240px at 16% 84%, color-mix(in srgb, var(--series-3) 10%, transparent), transparent 70%),
+      var(--bg);
+    min-height: 420px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 26px 30px;
+  }
+
+  .popover-wrap {
+    width: min(340px, 84vw);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(2, 8, 20, 0.4);
+  }
+
+  [data-theme='light'] .popover-wrap {
+    box-shadow: 0 20px 44px rgba(30, 50, 90, 0.22);
+  }
+
+  @media (max-width: 900px) {
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>

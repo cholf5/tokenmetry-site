@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import { ui, type Locale } from '../i18n/ui';
+import pricingZhDark from '../assets/shots/data-pricing-zh-dark.png';
+import pricingZhLight from '../assets/shots/data-pricing-zh-light.png';
+import pricingEnDark from '../assets/shots/data-pricing-en-dark.png';
+import pricingEnLight from '../assets/shots/data-pricing-en-light.png';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale];
+const pricingShot = locale === 'zh'
+  ? { dark: pricingZhDark, light: pricingZhLight }
+  : { dark: pricingEnDark, light: pricingEnLight };
+const pricingAlt = locale === 'zh'
+  ? 'Tokenmetry 数据与计价视图：数据源状态表（正常/部分/无数据/尚未扫描）与模型价格目录'
+  : 'Tokenmetry data & pricing view: source status table (ok/partial/no data/not scanned) and the model price catalog';
+---
+
+<section id="sources">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">{t.sources.kicker}</span>
+      <h2>{t.sources.title}</h2>
+      <p class="sub">{t.sources.subtitle}</p>
+    </div>
+
+    <div class="layout">
+      <ul class="wall">
+        {t.sources.items.map((item, i) => (
+          <li class="cell">
+            <span class="dot" style={`--dot:var(--series-${i % 7})`}></span>
+            <span class="name">{item.name}</span>
+            <span class="method mono">{item.method}</span>
+          </li>
+        ))}
+        <li class="cell count">
+          <strong class="num">19</strong>
+          <span>{locale === 'zh' ? '源 · 只读' : 'sources · read-only'}</span>
+        </li>
+      </ul>
+
+      <aside class="teaser" style="--acc:var(--series-5)">
+        <span class="no mono num">{t.sources.pricingTeaser.no}<em>/09</em></span>
+        <span class="view">{t.sources.pricingTeaser.view}</span>
+        <h3>{t.sources.pricingTeaser.title}</h3>
+        <p>{t.sources.pricingTeaser.desc}</p>
+        <div class="visual theme-dual">
+          <Image src={pricingShot.dark} alt={pricingAlt} widths={[640, 880]} sizes="(max-width: 900px) 100vw, 420px" format="webp" class="t-dark" loading="lazy" />
+          <Image src={pricingShot.light} alt="" aria-hidden="true" widths={[640, 880]} sizes="(max-width: 900px) 100vw, 420px" format="webp" class="t-light" loading="lazy" />
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head {
+    max-width: 660px;
+    margin-bottom: 40px;
+  }
+
+  .section-head h2 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .section-head .sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 34px;
+    align-items: start;
+  }
+
+  .wall {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    transition: border-color 0.15s ease;
+  }
+
+  .cell:hover {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+
+  .cell .dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .name {
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .method {
+    font-size: 11.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .cell.count {
+    grid-column: 1 / -1;
+    justify-content: center;
+    gap: 12px;
+    border-style: dashed;
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .cell.count strong {
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 750;
+  }
+
+  .teaser {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--acc);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .no {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--acc);
+    margin-right: 8px;
+  }
+
+  .no em {
+    font-style: normal;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  .view {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+
+  .teaser h3 {
+    font-size: 17.5px;
+    font-weight: 720;
+    margin-top: 12px;
+  }
+
+  .teaser p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+
+  .teaser .visual {
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .wall {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
