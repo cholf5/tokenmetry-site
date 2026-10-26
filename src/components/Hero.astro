@@ -6,7 +6,6 @@ import zhDark from '../assets/shots/overview-zh-dark.png';
 import zhLight from '../assets/shots/overview-zh-light.png';
 import enDark from '../assets/shots/overview-en-dark.png';
 import enLight from '../assets/shots/overview-en-light.png';
-import Logo from './Logo.astro';
 
 interface Props {
   locale: Locale;
@@ -20,7 +19,6 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 <section class="hero">
   <div class="container">
     <div class="lead rise">
-      <span class="pill"><Logo size={15}></Logo>Tokenmetry · {t.hero.kicker}</span>
       <h1>
         {t.hero.title}<br />
         <span class="l2">{t.hero.titleLine2}</span>
@@ -111,20 +109,6 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
     margin: 0 auto;
     text-align: center;
     position: relative;
-  }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    border: 1px solid var(--line);
-    background: var(--panel);
-    border-radius: 999px;
-    padding: 6px 13px;
-    margin-bottom: 22px;
   }
 
   h1 {

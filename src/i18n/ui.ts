@@ -27,7 +27,6 @@ const zh = {
     themeAria: '切换深浅主题',
   },
   hero: {
-    kicker: 'Opinionated Usage Stats',
     title: '打开就知道，',
     titleLine2: 'AI 编程花了多少钱',
     subtitle:
@@ -279,7 +278,6 @@ const en: typeof zh = {
     themeAria: 'Toggle color theme',
   },
   hero: {
-    kicker: 'Opinionated Usage Stats',
     title: 'Open it and know',
     titleLine2: 'what your AI coding costs',
     subtitle:
