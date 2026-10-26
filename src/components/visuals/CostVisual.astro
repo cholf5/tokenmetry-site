@@ -1,0 +1,105 @@
+---
+/**
+ * 成本分析视图复刻（原 cost-*.png）：六张口径 KPI 卡 + 口径说明表。
+ * 12.0/5.0/78.0/5.0 为 Token 四分量占比（成本按方向拆价口径待扩展，产品如实标注）。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+
+const footBasis = t.kpiFootTokenShareBasis;
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(860 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.costTitle}</h3>
+      <p class="ta-page-sub">{t.costSubtitle}</p>
+    </div>
+
+    <div class="ta-cost-grid">
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic amber" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2.2v11.6M10.4 4.4c-.5-.8-4.3-1.2-4.5.8-.2 2.3 4.7 1.4 4.6 3.6-.1 2-4 1.8-4.8.8"></path></svg>
+          </span>
+          {t.kpiTotalCost}
+        </div>
+        <div class="ta-kpi-val">$81.22+</div>
+        <div class="ta-kpi-foot">{t.kpiFootKnownCostOnly}</div>
+      </div>
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v9M4.5 8.6 8 12.2l3.5-3.6"></path></svg>
+          </span>
+          {t.kpiInputCostShare}
+        </div>
+        <div class="ta-kpi-val">12.0%</div>
+        <div class="ta-kpi-foot">{footBasis}</div>
+      </div>
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic purple" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V4M4.5 7.4 8 3.8l3.5 3.6"></path></svg>
+          </span>
+          {t.kpiOutputCostShare}
+        </div>
+        <div class="ta-kpi-val">5.0%</div>
+        <div class="ta-kpi-foot">{footBasis}</div>
+      </div>
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic green" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5v3.2a5 5 0 0 0 10 0V4.5M8 10v3.5M5.7 11.2 8 13.5l2.3-2.3"></path></svg>
+          </span>
+          {t.kpiCacheReadShare}
+        </div>
+        <div class="ta-kpi-val">78.0%</div>
+        <div class="ta-kpi-foot">{footBasis}</div>
+      </div>
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic green" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5V8.3a5 5 0 0 1 10 0v3.2M8 6V2.5M5.7 4.8 8 2.5l2.3 2.3"></path></svg>
+          </span>
+          {t.kpiCacheWriteShare}
+        </div>
+        <div class="ta-kpi-val">5.0%</div>
+        <div class="ta-kpi-foot">{footBasis}</div>
+      </div>
+      <div class="ta-card ta-kpi">
+        <div class="ta-kpi-top">
+          <span class="ta-ic green" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5.6 5.4a2.5 2.5 0 0 1 4.9.6c0 1.7-2.4 2-2.4 3.4M8 12.2h.01"></path></svg>
+          </span>
+          {t.kpiUnpriced}
+        </div>
+        <div class="ta-kpi-val">{t.unpricedCount}</div>
+        <div class="ta-kpi-foot">{t.kpiFootUnpriced}<br />{t.kpiFootUnpricedWhere}</div>
+      </div>
+    </div>
+
+    <p class="ta-cost-note">{t.unknownCostNote}</p>
+
+    <div class="ta-card ta-view-card" style="margin-top:calc(12*var(--u)); flex:none">
+      <span class="ta-card-title">{t.panelCostBasis}</span>
+      <div class="ta-basis-head" style="margin-top:calc(10*var(--u))">
+        <span class="ta-cell-dim">{t.thItem}</span>
+        <span class="ta-cell-dim">{t.thSuggestedDisplay}</span>
+        <span class="ta-cell-dim">{t.thCaveats}</span>
+      </div>
+      {t.costBasis.map((row) => (
+        <div class="ta-basis-row">
+          <span class="item">{row.item}</span>
+          <span><span class="ta-chip">{row.stance}</span></span>
+          <span class="note">{row.note}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

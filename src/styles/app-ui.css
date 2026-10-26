@@ -1,0 +1,1334 @@
+/*
+ * 应用内 UI 复刻层（src/components/visuals/*.astro 的样式）。
+ * 与截图 1:1 的纯 HTML/CSS 复刻：数据来自 src/data/app-demo.ts（主仓库 SiteShotsTests.SiteData
+ * + 真机总览手记），色值直接取产品 Tokens.axaml 两套 ThemeDictionary 原值，明暗随站点
+ * [data-theme] 翻转——替代原 src/assets/shots/ 双主题截图（已删除，commit 2e69663 引入）。
+ *
+ * 缩放系统：每个复刻根 .tapp 外包一层 .tapp-frame（container-type: inline-size）并内联
+ * --dw（该视图的设计稿宽度，见 app-demo.ts designWidth）。--u = 设计稿 1px =
+ * calc(100cqw / var(--dw))，全部尺寸写 calc(N * var(--u))，整体随插槽宽度线性缩放，
+ * 文字/矢量恒定清晰（等价于无限分辨率的截图）。
+ */
+
+.tapp-frame {
+  container-type: inline-size;
+  line-height: 0; /* 消除 inline 空隙，高度完全由复刻根决定 */
+}
+
+.tapp {
+  /* 缩放：--u = 设计稿 1px（--dw 由各复刻组件内联传入） */
+  --u: calc(100cqw / var(--dw, 1280));
+
+  /* ── 产品令牌：dark（Tokens.axaml Dark 原值）── */
+  --tabg: #0b1120;
+  --tasidebar: #0d1626;
+  --tatopbar: #0e1728;
+  --tapanel: #111c2e;
+  --tapanel2: #142137;
+  --taline: #24344d;
+  --taline-soft: #1c2b40;
+  --tatext: #e8eef9;
+  --tamuted: #8293ad;
+  --takpititle: #b7c5d9;
+  --tacard: linear-gradient(145deg, #121e31, #101a2b);
+  --tacardline: #22324a;
+  --tablue: #4c8dff;
+  --tacyan: #57c7e8;
+  --tapurple: #a779ff;
+  --tagreen: #38d6a4;
+  --taorange: #ffb454;
+  --tared: #ff7185;
+  --talink: #80adff;
+  --tachip-bg: #1b2c44;
+  --tachip-tx: #a8c8ff;
+  --tachip-neutral-bg: #263143;
+  --tachip-neutral-tx: #bac8da;
+  --tatrack: #23334b;
+  --tagrid: #23344b;
+  --taaxis: #35465e;
+  --tanav-active-bg: #1b2d49;
+  --tanav-active-tx: #9dc2ff;
+  --tanav-ind: #5794ff;
+  --tanav-hover: #17253b;
+  --taic-blue: #20395b;
+  --taic-blue-fg: #8db8ff;
+  --taic-amber: #3c3321;
+  --taic-amber-fg: #ffcb64;
+  --taic-purple: #33284f;
+  --taic-purple-fg: #c0a0ff;
+  --taic-green: #173d3b;
+  --taic-green-fg: #67e3bd;
+  --taic-neutral: #263143;
+  --taic-neutral-fg: #bac8da;
+  --tatitlebar: #373737;
+  --tatitlebar-tx: #d3d3d3;
+  --taheat-empty: #1b2c44;
+  --taheat-fill: #2c4a6e;
+  --tastatus-ok: #38d6a4;
+  --tastatus-warn: #ffb454;
+  --tastatus-off: #6d7f98;
+
+  position: relative;
+  width: 100%;
+  background: var(--tabg);
+  color: var(--tatext);
+  font-family: inherit;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  overflow: hidden;
+  user-select: none;
+}
+
+[data-theme='light'] .tapp {
+  --tabg: #f4f6fa;
+  --tasidebar: #edf1f7;
+  --tatopbar: #f0f4f9;
+  --tapanel: #ffffff;
+  --tapanel2: #eef1f6;
+  --taline: #d4dbe6;
+  --taline-soft: #e3e9f1;
+  --tatext: #1c2735;
+  --tamuted: #66788f;
+  --takpititle: #5d6f86;
+  --tacard: linear-gradient(145deg, #ffffff, #f7f9fc);
+  --tacardline: #d8e0eb;
+  --tablue: #2e6bdc;
+  --tacyan: #1d9bc4;
+  --tapurple: #7d4fe0;
+  --tagreen: #0e9e77;
+  --taorange: #c77700;
+  --tared: #d9374f;
+  --talink: #2f6bd8;
+  --tachip-bg: #e3ecfb;
+  --tachip-tx: #2b5d9f;
+  --tachip-neutral-bg: #e8ecf2;
+  --tachip-neutral-tx: #5a6b80;
+  --tatrack: #e2e8f0;
+  --tagrid: #d9e1ec;
+  --taaxis: #b9c5d7;
+  --tanav-active-bg: #dbe7fb;
+  --tanav-active-tx: #2b5d9f;
+  --tanav-ind: #2e6bdc;
+  --tanav-hover: #e3eaf4;
+  --taic-blue: #dce9fb;
+  --taic-blue-fg: #2f66c0;
+  --taic-amber: #f7ecd4;
+  --taic-amber-fg: #a06a00;
+  --taic-purple: #ece4fb;
+  --taic-purple-fg: #7a4fd4;
+  --taic-green: #d9f3ec;
+  --taic-green-fg: #0f8f6c;
+  --taic-neutral: #e8ecf2;
+  --taic-neutral-fg: #5a6b80;
+  --tatitlebar: #f4f4f4;
+  --tatitlebar-tx: #555a61;
+  --taheat-empty: #e3ecfb;
+  --taheat-fill: #b9d2f2;
+  --tastatus-ok: #0e9e77;
+  --tastatus-warn: #c77700;
+  --tastatus-off: #8b9ab0;
+}
+
+/* 单色品牌标记随明暗翻转（产品 AgentLogos 的 Light/Dark 字典行为） */
+.tapp .ta-mark-mono {
+  color: var(--tatext);
+}
+
+/* ── 通用原子 ── */
+
+.tapp b,
+.tapp strong {
+  font-weight: 650;
+}
+
+/* 卡片（.kpi/.panel：145deg 渐变 + 1px #22324a） */
+.ta-card {
+  background: var(--tacard);
+  border: calc(1 * var(--u)) solid var(--tacardline);
+  border-radius: calc(10 * var(--u));
+}
+
+.ta-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+}
+
+.ta-card-title {
+  font-size: calc(14 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ta-card-meta {
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+  white-space: nowrap;
+}
+
+/* 页面头（裸窗视图） */
+.ta-page {
+  display: flex;
+  flex-direction: column;
+  background: var(--tabg);
+  overflow: hidden;
+}
+
+.ta-page-head {
+  padding: calc(16 * var(--u)) calc(24 * var(--u)) 0;
+}
+
+.ta-page-title {
+  font-size: calc(20 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ta-page-sub {
+  margin-top: calc(4 * var(--u));
+  font-size: calc(12 * var(--u));
+  color: var(--tamuted);
+}
+
+/* 表格基元（div 网格行；--cols 由组件按视图传入） */
+.ta-grid {
+  display: grid;
+  grid-template-columns: var(--cols);
+  column-gap: calc(12 * var(--u));
+  align-items: center;
+  min-width: 0;
+}
+
+.ta-grid.head {
+  padding: calc(7 * var(--u)) calc(8 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  font-weight: 500;
+  color: var(--tamuted);
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-grid.row {
+  padding: calc(14 * var(--u)) calc(8 * var(--u));
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+/* 紧凑行（数据与计价来源表） */
+.ta-grid.row.dense {
+  padding: calc(6 * var(--u)) calc(8 * var(--u));
+}
+
+.ta-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ta-table th {
+  padding: calc(7 * var(--u)) calc(8 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  font-weight: 500;
+  color: var(--tamuted);
+  text-align: left;
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+  white-space: nowrap;
+}
+
+.ta-table td {
+  padding: calc(9 * var(--u)) calc(8 * var(--u));
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+  vertical-align: middle;
+}
+
+.ta-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ta-num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* 迷你进度条（.mini-track/.mini-fill） */
+.ta-mini {
+  height: calc(4 * var(--u));
+  border-radius: calc(2 * var(--u));
+  background: var(--tatrack);
+  overflow: hidden;
+}
+
+.ta-mini > i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3e7df0, #65b9ff);
+}
+
+/* chip（.chip） */
+.ta-chip {
+  display: inline-block;
+  border-radius: calc(6 * var(--u));
+  background: var(--tachip-bg);
+  color: var(--tachip-tx);
+  font-size: calc(10.5 * var(--u));
+  line-height: 1;
+  padding: calc(4 * var(--u)) calc(8 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-chip-neutral {
+  background: var(--tachip-neutral-bg);
+  color: var(--tachip-neutral-tx);
+}
+
+/* KPI 卡图标芯片（.kpi-icon 四色 + 中性） */
+.ta-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: calc(9 * var(--u));
+  background: var(--taic-blue);
+  color: var(--taic-blue-fg);
+}
+
+.ta-ic.amber {
+  background: var(--taic-amber);
+  color: var(--taic-amber-fg);
+}
+
+.ta-ic.purple {
+  background: var(--taic-purple);
+  color: var(--taic-purple-fg);
+}
+
+.ta-ic.green {
+  background: var(--taic-green);
+  color: var(--taic-green-fg);
+}
+
+.ta-ic.neutral {
+  background: var(--taic-neutral);
+  color: var(--taic-neutral-fg);
+}
+
+/* 图例圆点 */
+.ta-dot {
+  display: inline-block;
+  width: calc(8 * var(--u));
+  height: calc(8 * var(--u));
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* ═══ 总览（全窗外壳）═══ */
+
+.ta-ov-titlebar {
+  display: flex;
+  align-items: center;
+  height: calc(30 * var(--u));
+  padding: 0 calc(14 * var(--u));
+  background: var(--tatitlebar);
+  color: var(--tatitlebar-tx);
+  position: relative;
+}
+
+.ta-ov-lights {
+  display: flex;
+  gap: calc(8 * var(--u));
+}
+
+.ta-ov-lights i {
+  width: calc(12 * var(--u));
+  height: calc(12 * var(--u));
+  border-radius: 50%;
+}
+
+.ta-ov-lights i:nth-child(1) {
+  background: #ff5f57;
+}
+
+.ta-ov-lights i:nth-child(2) {
+  background: #febc2e;
+}
+
+.ta-ov-lights i:nth-child(3) {
+  background: #28c840;
+}
+
+.ta-ov-wintitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+}
+
+.ta-ov-topbar {
+  display: flex;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  height: calc(52 * var(--u));
+  padding: 0 calc(16 * var(--u));
+  background: var(--tatopbar);
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-filter {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  font-size: calc(12.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-combo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(10 * var(--u));
+  height: calc(30 * var(--u));
+  padding: 0 calc(10 * var(--u));
+  min-width: calc(128 * var(--u));
+  border: calc(1 * var(--u)) solid var(--taline);
+  border-radius: calc(8 * var(--u));
+  background: var(--tapanel2);
+  color: var(--tatext);
+  font-size: calc(12.5 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-combo svg {
+  width: calc(10 * var(--u));
+  height: calc(10 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+}
+
+.ta-status {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  height: calc(30 * var(--u));
+  padding: 0 calc(12 * var(--u));
+  border: calc(1 * var(--u)) solid var(--taline);
+  border-radius: calc(8 * var(--u));
+  font-size: calc(12 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-status .ta-dot {
+  width: calc(7 * var(--u));
+  height: calc(7 * var(--u));
+  background: var(--tagreen);
+}
+
+.ta-status em {
+  font-style: normal;
+  color: var(--tamuted);
+}
+
+.ta-sqbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(30 * var(--u));
+  height: calc(30 * var(--u));
+  border: calc(1 * var(--u)) solid var(--taline);
+  border-radius: calc(8 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-sqbtn svg {
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+}
+
+.ta-ov-body {
+  display: grid;
+  grid-template-columns: calc(190 * var(--u)) 1fr;
+  min-height: calc(755 * var(--u));
+}
+
+.ta-ov-side {
+  background: var(--tasidebar);
+  border-right: calc(1 * var(--u)) solid var(--taline-soft);
+  padding: calc(14 * var(--u)) calc(10 * var(--u));
+}
+
+.ta-ov-brand {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  padding: calc(4 * var(--u)) calc(8 * var(--u)) calc(14 * var(--u));
+}
+
+.ta-ov-brand-name {
+  font-size: calc(15 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.ta-ov-brand-sub {
+  font-size: calc(8.5 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--tamuted);
+}
+
+.ta-nav {
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--u));
+}
+
+.ta-nav .item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  height: calc(34 * var(--u));
+  padding: 0 calc(12 * var(--u));
+  border-radius: calc(8 * var(--u));
+  color: var(--tamuted);
+  font-size: calc(13 * var(--u));
+}
+
+.ta-nav .item svg {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+  flex: 0 0 auto;
+}
+
+.ta-nav .item.active {
+  background: var(--tanav-active-bg);
+  color: var(--tanav-active-tx);
+  font-weight: 600;
+}
+
+.ta-nav a.active::before {
+  content: '';
+  position: absolute;
+  left: calc(2 * var(--u));
+  top: calc(7 * var(--u));
+  bottom: calc(7 * var(--u));
+  width: calc(3 * var(--u));
+  border-radius: calc(2 * var(--u));
+  background: var(--tanav-ind);
+}
+
+.ta-ov-main {
+  padding: calc(20 * var(--u)) calc(26 * var(--u)) calc(22 * var(--u));
+  min-width: 0;
+}
+
+.ta-ov-h1 {
+  font-size: calc(21 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ta-ov-sub {
+  margin-top: calc(4 * var(--u));
+  font-size: calc(12 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-ov-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(14 * var(--u));
+  margin-top: calc(16 * var(--u));
+}
+
+.ta-kpi {
+  padding: calc(14 * var(--u)) calc(16 * var(--u));
+}
+
+.ta-kpi-top {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  font-size: calc(12.5 * var(--u));
+  color: var(--takpititle);
+}
+
+.ta-kpi-val {
+  margin-top: calc(10 * var(--u));
+  font-size: calc(26 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.ta-kpi-foot {
+  display: flex;
+  align-items: baseline;
+  gap: calc(6 * var(--u));
+  margin-top: calc(8 * var(--u));
+  font-size: calc(11 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-kpi-foot .delta {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ta-kpi-foot .delta.up {
+  color: var(--tagreen);
+}
+
+.ta-kpi-foot .delta.down {
+  color: var(--tared);
+}
+
+.ta-ov-row {
+  display: grid;
+  grid-template-columns: 1fr calc(363 * var(--u));
+  gap: calc(14 * var(--u));
+  margin-top: calc(14 * var(--u));
+  align-items: stretch;
+}
+
+/* 第三行（模型分布 / 类型构成）两卡等宽 */
+.ta-ov-row.equal {
+  grid-template-columns: 1fr 1fr;
+}
+
+.ta-panel {
+  padding: calc(16 * var(--u)) calc(18 * var(--u));
+  min-width: 0;
+}
+
+.ta-legend {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+  white-space: nowrap;
+}
+
+.ta-legend .ta-dot {
+  width: calc(7 * var(--u));
+  height: calc(7 * var(--u));
+}
+
+.ta-legend b {
+  font-weight: 500;
+  color: var(--tamuted);
+}
+
+.ta-trend-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+}
+
+.ta-trend-head .l {
+  display: flex;
+  align-items: baseline;
+  gap: calc(14 * var(--u));
+}
+
+.ta-trend-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: calc(12 * var(--u));
+}
+
+/* 环形卡 */
+.ta-donut-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.ta-donut-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  padding: calc(8 * var(--u)) calc(4 * var(--u)) calc(2 * var(--u));
+}
+
+.ta-donut {
+  position: relative;
+  width: calc(158 * var(--u));
+  height: calc(158 * var(--u));
+  flex: 0 0 auto;
+}
+
+.ta-donut svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ta-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ta-donut-center b {
+  font-size: calc(21 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ta-donut-center span {
+  margin-top: calc(2 * var(--u));
+  font-size: calc(10.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-donut-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--u));
+  min-width: 0;
+}
+
+.ta-donut-legend .row {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  font-size: calc(12 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-donut-legend .row b {
+  margin-left: auto;
+  font-weight: 600;
+  padding-left: calc(12 * var(--u));
+}
+
+/* 模型分布（总览右下） */
+.ta-mdl-head {
+  display: grid;
+  grid-template-columns: 1fr calc(130 * var(--u)) calc(52 * var(--u));
+  gap: calc(12 * var(--u));
+  padding: calc(10 * var(--u)) calc(4 * var(--u)) calc(6 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-mdl-head .r {
+  text-align: right;
+}
+
+.ta-mdl-row {
+  padding: calc(7 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u));
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-mdl-row:last-child {
+  border-bottom: none;
+}
+
+.ta-mdl-line {
+  display: grid;
+  grid-template-columns: 1fr calc(130 * var(--u)) calc(52 * var(--u));
+  gap: calc(12 * var(--u));
+  align-items: center;
+}
+
+.ta-mdl-name {
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--u));
+  font-size: calc(12.5 * var(--u));
+  min-width: 0;
+}
+
+.ta-mdl-name span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ta-mdl-val {
+  font-size: calc(12.5 * var(--u));
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ta-mdl-track {
+  margin-top: calc(7 * var(--u));
+  margin-right: calc(206 * var(--u));
+}
+
+/* ── 表格视图公共（sessions/models/projects/agents/data-pricing）── */
+
+.ta-view-card {
+  margin: calc(10 * var(--u)) calc(24 * var(--u)) calc(18 * var(--u));
+  padding: calc(14 * var(--u)) calc(18 * var(--u));
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.ta-toolbar {
+  display: flex;
+  gap: calc(12 * var(--u));
+  margin-bottom: calc(12 * var(--u));
+}
+
+.ta-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--u));
+  height: calc(36 * var(--u));
+  padding: 0 calc(12 * var(--u));
+  border: calc(1 * var(--u)) solid var(--taline);
+  border-radius: calc(8 * var(--u));
+  background: var(--tapanel2);
+  color: var(--tamuted);
+  font-size: calc(12.5 * var(--u));
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ta-search svg {
+  width: calc(13 * var(--u));
+  height: calc(13 * var(--u));
+  flex: 0 0 auto;
+}
+
+.ta-rows {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ta-cell-name {
+  font-size: calc(12.5 * var(--u));
+  font-weight: 600;
+}
+
+.ta-cell-dim {
+  font-size: calc(11 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-cell {
+  font-size: calc(12.5 * var(--u));
+}
+
+.ta-entity {
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--u));
+  font-size: calc(12.5 * var(--u));
+  min-width: 0;
+}
+
+.ta-entity svg {
+  flex: 0 0 auto;
+}
+
+.ta-loadmore {
+  margin-top: calc(10 * var(--u));
+  font-size: calc(12.5 * var(--u));
+  font-weight: 600;
+  color: var(--talink);
+}
+
+.ta-count {
+  margin-top: calc(7 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+/* Agent/时间 KPI 行（4 卡） */
+.ta-kpis4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(14 * var(--u));
+  margin: calc(14 * var(--u)) calc(24 * var(--u)) 0;
+}
+
+.ta-kpis4 .ta-kpi {
+  padding: calc(13 * var(--u)) calc(15 * var(--u));
+}
+
+.ta-kpis4 .ta-kpi-val {
+  font-size: calc(22 * var(--u));
+  margin-top: calc(9 * var(--u));
+}
+
+.ta-kpis4 .ta-kpi-val.small {
+  font-size: calc(19 * var(--u));
+}
+
+/* 时间视图双卡行 */
+.ta-time-row {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: calc(14 * var(--u));
+  margin: calc(14 * var(--u)) calc(24 * var(--u)) 0;
+}
+
+.ta-hourly-note {
+  margin-top: calc(10 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-heat-legend {
+  display: flex;
+  gap: calc(10 * var(--u));
+  margin-top: calc(14 * var(--u));
+}
+
+.ta-heat-legend i {
+  width: calc(30 * var(--u));
+  height: calc(16 * var(--u));
+  border-radius: calc(4 * var(--u));
+}
+
+.ta-heat-legend i:first-child {
+  background: var(--taheat-fill);
+}
+
+.ta-heat-legend i:last-child {
+  background: var(--taheat-empty);
+}
+
+.ta-heat-note {
+  margin-top: calc(12 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+/* 星期分布 */
+.ta-week-rows {
+  margin-top: calc(10 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(9 * var(--u));
+}
+
+.ta-week-row {
+  display: grid;
+  grid-template-columns: calc(40 * var(--u)) 1fr auto;
+  gap: calc(14 * var(--u));
+  align-items: center;
+}
+
+.ta-week-row .lbl {
+  font-size: calc(12 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-week-row .track {
+  height: calc(8 * var(--u));
+  border-radius: calc(4 * var(--u));
+  background: var(--tatrack);
+  overflow: hidden;
+}
+
+.ta-week-row .track > i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3e7df0, #65b9ff);
+}
+
+.ta-week-row .val {
+  font-size: calc(12 * var(--u));
+  color: var(--tamuted);
+  white-space: nowrap;
+}
+
+.ta-foot-note {
+  margin-top: calc(12 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+/* 建议观察项 */
+.ta-obs-rows {
+  margin-top: calc(6 * var(--u));
+}
+
+.ta-obs-row {
+  display: grid;
+  grid-template-columns: calc(76 * var(--u)) 1fr;
+  gap: calc(16 * var(--u));
+  padding: calc(10 * var(--u)) 0;
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-obs-row:last-child {
+  border-bottom: none;
+}
+
+.ta-obs-row .k {
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+}
+
+.ta-obs-row .v {
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+  line-height: 1.55;
+}
+
+/* ── 成本视图 ── */
+
+.ta-cost-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(14 * var(--u));
+  margin: calc(14 * var(--u)) calc(24 * var(--u)) 0;
+}
+
+.ta-cost-grid .ta-kpi {
+  padding: calc(13 * var(--u)) calc(15 * var(--u));
+}
+
+.ta-cost-grid .ta-kpi-val {
+  font-size: calc(22 * var(--u));
+  margin-top: calc(9 * var(--u));
+}
+
+.ta-cost-grid .ta-kpi-foot {
+  margin-top: calc(7 * var(--u));
+  font-size: calc(10.5 * var(--u));
+  line-height: 1.5;
+  display: block;
+}
+
+.ta-cost-note {
+  margin: calc(12 * var(--u)) calc(24 * var(--u)) 0;
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-basis-head {
+  display: grid;
+  grid-template-columns: calc(160 * var(--u)) calc(280 * var(--u)) 1fr;
+  gap: calc(16 * var(--u));
+}
+
+.ta-basis-row {
+  display: grid;
+  grid-template-columns: calc(160 * var(--u)) calc(280 * var(--u)) 1fr;
+  gap: calc(16 * var(--u));
+  padding: calc(11 * var(--u)) 0;
+  border-top: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-basis-row .item {
+  font-size: calc(12.5 * var(--u));
+  font-weight: 600;
+}
+
+.ta-basis-row .note {
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+  line-height: 1.55;
+}
+
+/* ── 数据与计价 ── */
+
+.ta-dp-headbtn {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+}
+
+.ta-btn-soft {
+  display: inline-flex;
+  align-items: center;
+  height: calc(30 * var(--u));
+  padding: 0 calc(13 * var(--u));
+  border: calc(1 * var(--u)) solid #2b4c70;
+  border-radius: calc(8 * var(--u));
+  background: #172a42;
+  color: var(--talink);
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+[data-theme='light'] .ta-btn-soft {
+  border-color: #b9d2f2;
+  background: #dce9fb;
+}
+
+.ta-status-ok {
+  color: var(--tastatus-ok);
+  font-size: calc(11.5 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-status-warn {
+  color: var(--tastatus-warn);
+  font-size: calc(11.5 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-status-off {
+  color: var(--tastatus-off);
+  font-size: calc(11.5 * var(--u));
+  white-space: nowrap;
+}
+
+.ta-caliber-row {
+  display: grid;
+  grid-template-columns: calc(86 * var(--u)) 1.15fr 1.6fr;
+  gap: calc(16 * var(--u));
+  align-items: center;
+  padding: calc(7 * var(--u)) 0;
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-caliber-row:last-child {
+  border-bottom: none;
+}
+
+.ta-caliber-row .txt {
+  font-size: calc(12.5 * var(--u));
+  font-weight: 600;
+}
+
+.ta-caliber-row .note {
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-catalog-hint {
+  margin-top: calc(10 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  color: var(--tamuted);
+  line-height: 1.6;
+}
+
+.ta-catalog-tools {
+  display: flex;
+  gap: calc(8 * var(--u));
+  margin-top: calc(12 * var(--u));
+}
+
+.ta-catalog-tools .ta-chip {
+  display: inline-flex;
+  align-items: center;
+  height: calc(26 * var(--u));
+  padding: 0 calc(11 * var(--u));
+  font-size: calc(11 * var(--u));
+}
+
+/* ── 托盘弹层 ── */
+
+.ta-tray {
+  padding: calc(14 * var(--u)) calc(16 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(10 * var(--u));
+  background: var(--tapanel);
+  border: calc(1 * var(--u)) solid var(--tacardline);
+  display: flex;
+  flex-direction: column;
+}
+
+.ta-tray-head {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  padding-bottom: calc(10 * var(--u));
+  border-bottom: calc(1 * var(--u)) solid var(--taline-soft);
+}
+
+.ta-tray-head .name {
+  font-size: calc(14 * var(--u));
+  font-weight: 700;
+}
+
+.ta-tray-head .live {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(5 * var(--u));
+  font-size: calc(10.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-tray-head .live .ta-dot {
+  width: calc(6 * var(--u));
+  height: calc(6 * var(--u));
+  background: var(--tagreen);
+}
+
+.ta-tray-head .gear {
+  margin-left: auto;
+  color: var(--tamuted);
+  display: inline-flex;
+}
+
+.ta-tray-head .gear svg {
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+}
+
+.ta-tray-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: calc(10 * var(--u));
+  margin-top: calc(12 * var(--u));
+}
+
+.ta-tray-kpis .lbl {
+  font-size: calc(10.5 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-tray-kpis .val {
+  margin-top: calc(3 * var(--u));
+  font-size: calc(19 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ta-tray-kpis .foot {
+  margin-top: calc(3 * var(--u));
+  font-size: calc(10 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-tray-bar {
+  display: flex;
+  height: calc(5 * var(--u));
+  border-radius: calc(2.5 * var(--u));
+  overflow: hidden;
+  margin-top: calc(12 * var(--u));
+}
+
+.ta-tray-bar i {
+  display: block;
+  height: 100%;
+}
+
+.ta-tray-segs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: calc(7 * var(--u));
+  margin-top: calc(9 * var(--u));
+}
+
+.ta-tray-seg {
+  border: calc(1 * var(--u)) solid var(--tacardline);
+  border-radius: calc(7 * var(--u));
+  padding: calc(7 * var(--u)) calc(9 * var(--u));
+  background: var(--tabg);
+}
+
+.ta-tray-seg .l {
+  display: flex;
+  align-items: center;
+  gap: calc(5 * var(--u));
+  font-size: calc(10 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-tray-seg .l .ta-dot {
+  width: calc(5 * var(--u));
+  height: calc(5 * var(--u));
+}
+
+.ta-tray-seg .v {
+  margin-top: calc(4 * var(--u));
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+}
+
+.ta-tray-seg .p {
+  margin-top: calc(2 * var(--u));
+  font-size: calc(10 * var(--u));
+  color: var(--tamuted);
+}
+
+.ta-tray-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: calc(14 * var(--u));
+}
+
+.ta-tray-top .t {
+  font-size: calc(12.5 * var(--u));
+  font-weight: 700;
+}
+
+.ta-tray-top .a {
+  font-size: calc(10.5 * var(--u));
+  color: var(--talink);
+}
+
+.ta-tray-agents {
+  margin-top: calc(9 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(9 * var(--u));
+}
+
+.ta-tray-agent .line {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  font-size: calc(11.5 * var(--u));
+}
+
+.ta-tray-agent .line .v {
+  margin-left: auto;
+  color: var(--tatext);
+}
+
+.ta-tray-agent .ta-mini {
+  height: calc(2.5 * var(--u));
+  margin-top: calc(5 * var(--u));
+}
+
+.ta-tray-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: calc(9 * var(--u));
+  margin-top: calc(14 * var(--u));
+}
+
+.ta-tray-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(34 * var(--u));
+  border-radius: calc(8 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  font-weight: 600;
+  border: calc(1 * var(--u)) solid var(--taline);
+  color: var(--tatext);
+  background: transparent;
+}
+
+.ta-tray-btn.primary {
+  border: none;
+  background: linear-gradient(90deg, #397df5, #3670e7);
+  color: #fff;
+}
+
+/* ── 窄屏兜底：复刻随容器缩放，仅需防止极端小宽下模糊抗锯齿差异 ── */

@@ -1,0 +1,168 @@
+---
+/**
+ * 时间分析视图复刻（原 time-*.png）：四 KPI + 按小时分布面积图 + 活跃日历（图例区，
+ * 与截图同构）+ 星期分布 + 建议观察项。设计稿 1280×1080。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { timeKpi, hourlyM, hourlyYLabels, weekdayRows, fmtCompact, fmtN0 } from '../../data/app-demo';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+
+/* 小时分布面积图：viewBox 640×260，纵轴 0..2.6M */
+const W = 640;
+const L = 44;
+const R = 12;
+const TOP = 10;
+const BOTTOM = 232;
+const yMax = 2.6;
+const xAt = (i: number) => L + (i * (W - L - R)) / 23;
+const yAt = (v: number) => BOTTOM - (v / yMax) * (BOTTOM - TOP);
+const pts = hourlyM.map((v, i) => [xAt(i), yAt(v)] as const);
+const curve = (() => {
+  let d = `M ${pts[0]![0]} ${pts[0]![1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)]!;
+    const p1 = pts[i]!;
+    const p2 = pts[i + 1]!;
+    const p3 = pts[Math.min(pts.length - 1, i + 2)]!;
+    d += ` C ${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(2)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(2)}, ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(2)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(2)}, ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
+  }
+  return d;
+})();
+const areaPath = `${curve} L ${pts[23]![0]} ${BOTTOM} L ${pts[0]![0]} ${BOTTOM} Z`;
+
+const kpis = [
+  {
+    icon: 'clock',
+    tone: '',
+    label: t.kpiPeakHour,
+    value: timeKpi.peak,
+    small: true,
+    foot: t.kpiPeakHourFoot.replace('{0}', timeKpi.peakShare),
+  },
+  {
+    icon: 'bolt',
+    tone: 'purple',
+    label: t.kpiPeakDay,
+    value: timeKpi.peakDay,
+    small: true,
+    foot: t.kpiPeakDayFoot.replace('{0}', fmtCompact(timeKpi.peakDayTokens, locale)),
+  },
+  {
+    icon: 'avg',
+    tone: 'green',
+    label: t.kpiDailyAverage,
+    value: fmtCompact(timeKpi.dailyAvg, locale),
+    small: false,
+    foot: t.kpiDailyAvgFoot.replace('{0}', String(timeKpi.activeDays)),
+  },
+  {
+    icon: 'table',
+    tone: 'neutral',
+    label: t.kpiActiveDays,
+    value: String(timeKpi.activeDays),
+    small: false,
+    foot: t.kpiActiveDaysFoot.replace('{0}', String(timeKpi.activeDays)),
+  },
+];
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(1080 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.timeTitle}</h3>
+      <p class="ta-page-sub">{t.timeSubtitle}</p>
+    </div>
+
+    <div class="ta-kpis4">
+      {kpis.map((k) => (
+        <div class="ta-card ta-kpi">
+          <div class="ta-kpi-top">
+            <span class={`ta-ic ${k.tone}`} style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+              {k.icon === 'clock' && (
+                <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="5.4"></circle><path d="M8 5.2V8l1.9 1.4"></path></svg>
+              )}
+              {k.icon === 'bolt' && (
+                <svg width={15} height={15} viewBox="0 0 16 16" fill="currentColor"><path d="M9.2 1.8 3.8 9h3l-.9 5.2L11.9 7h-3.1z"></path></svg>
+              )}
+              {k.icon === 'avg' && (
+                <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.2 8A5.2 5.2 0 1 1 8 2.8M13.5 3 8.6 7.9"></path><path d="M13.6 3.1v2.6H11"></path></svg>
+              )}
+              {k.icon === 'table' && (
+                <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="1.4"></rect><path d="M2.8 6.1h10.4M2.8 9.9h10.4M6.1 6.1v7.1M9.9 6.1v7.1"></path></svg>
+              )}
+            </span>
+            {k.label}
+          </div>
+          <div class={`ta-kpi-val${k.small ? ' small' : ''}`}>{k.value}</div>
+          <div class="ta-kpi-foot">{k.foot}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="ta-time-row">
+      <div class="ta-card ta-panel">
+        <div class="ta-card-head">
+          <span class="ta-card-title">{t.panelHourly}</span>
+          <span class="ta-card-meta">{t.metaLocalTimePrecise}</span>
+        </div>
+        <svg class="ta-trend-chart" viewBox={`0 0 ${W} 258`} role="img" aria-label={t.panelHourly}>
+          {hourlyYLabels.map((label, i) => (
+            <g>
+              <line x1={L} x2={W - R} y1={yAt(i * 0.5)} y2={yAt(i * 0.5)} stroke={i === 0 ? 'var(--taaxis)' : 'var(--tagrid)'} stroke-width="1"></line>
+              <text x={L - 7} y={yAt(i * 0.5) + 3.5} text-anchor="end" font-size="10.5" fill="var(--tamuted)">{label}</text>
+            </g>
+          ))}
+          <path d={areaPath} fill="var(--tacyan)" opacity="0.16"></path>
+          <path d={curve} fill="none" stroke="var(--tacyan)" stroke-width="2" stroke-linejoin="round"></path>
+          {Array.from({ length: 24 }, (_, h) => (
+            <text x={xAt(h)} y={BOTTOM + 17} text-anchor="middle" font-size="10" fill="var(--tamuted)">{h}</text>
+          ))}
+        </svg>
+        <p class="ta-hourly-note">{t.unknownNote}</p>
+      </div>
+
+      <div class="ta-card ta-panel">
+        <div class="ta-card-head">
+          <span class="ta-card-title">{t.panelActivityCalendar}</span>
+          <span class="ta-card-meta">{t.metaDailyTokenIntensity}</span>
+        </div>
+        <div class="ta-heat-legend"><i></i><i></i></div>
+        <p class="ta-heat-note">{t.heatmapLegend}</p>
+      </div>
+    </div>
+
+    <div class="ta-card ta-view-card" style="margin-top:calc(14*var(--u)); flex:none">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.panelWeekday}</span>
+        <span class="ta-card-meta">{t.weekdayMeta}</span>
+      </div>
+      <div class="ta-week-rows">
+        {weekdayRows.map((row, i) => (
+          <div class="ta-week-row">
+            <span class="lbl">{t.weekdays[i]}</span>
+            <span class="track"><i style={`width:${row.share}%`}></i></span>
+            <span class="val">{fmtN0(row.tokens)} · {row.share}%</span>
+          </div>
+        ))}
+      </div>
+      <p class="ta-foot-note">{t.weekdayBasisFoot}</p>
+    </div>
+
+    <div class="ta-card ta-view-card" style="margin-top:calc(14*var(--u)); flex:none">
+      <span class="ta-card-title">{t.panelObservations}</span>
+      <div class="ta-obs-rows">
+        {t.obs.map((row) => (
+          <div class="ta-obs-row">
+            <span class="k">{row.title}</span>
+            <span class="v">{row.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

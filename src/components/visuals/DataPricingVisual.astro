@@ -1,0 +1,93 @@
+---
+/**
+ * 数据与计价视图复刻（原 data-pricing-*.png）：来源状态表 + 统计口径 + 模型目录
+ * （目录表被 900px 窗口裁剪，只露表头——与截图同构）。设计稿宽 1180。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { sourceRows, fmtN0 } from '../../data/app-demo';
+import Mark from './Mark.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+const cols = '2.2fr 1.15fr 0.9fr 0.75fr';
+const statusClass = { ok: 'ta-status-ok', partial: 'ta-status-warn', nodata: 'ta-status-off', notscanned: 'ta-status-off' };
+const statusText = { ok: t.statusOk, partial: t.statusPartial, nodata: t.statusNoData, notscanned: t.statusNotScanned };
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1180; height:calc(900 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.dataPricingTitle}</h3>
+      <p class="ta-page-sub">{t.dataPricingSubtitle}</p>
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.sourcesPanelTitle}</span>
+        <span class="ta-dp-headbtn">
+          <span class="ta-card-meta">{t.sourceMetaIdle}</span>
+          <span class="ta-btn-soft">{t.scanIdle}</span>
+        </span>
+      </div>
+
+      <div class="ta-grid head" style={`--cols:${cols}; margin-top:calc(8*var(--u))`}>
+        <span>{t.thSource}</span>
+        <span>{t.thStatus}</span>
+        <span>{t.thLastScan}</span>
+        <span class="ta-num">{t.thRecords}</span>
+      </div>
+
+      {sourceRows.map((s) => (
+        <div class="ta-grid row dense" style={`--cols:${cols}`}>
+          <span class="ta-entity"><Mark kind={s.logo} size={17} /><span>{s.key}</span></span>
+          <span class={statusClass[s.status]}>{statusText[s.status]}</span>
+          <span class="ta-cell-dim" style="font-size:calc(12*var(--u))">{s.scan ?? '—'}</span>
+          <span class="ta-cell ta-num">{s.records === null ? '—' : fmtN0(s.records)}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none; margin-top:calc(14*var(--u))">
+      <span class="ta-card-title">{t.caliberTitle}</span>
+      <div style="margin-top:calc(6*var(--u))">
+        {t.caliber.map((row, i) => (
+          <div class="ta-caliber-row">
+            <span>
+              {t.caliberBadges[i] === t.badgeAlways
+                ? <span class="ta-chip">{t.badgeAlways}</span>
+                : <span class="ta-chip ta-chip-neutral">{t.badgeNotProvided}</span>}
+            </span>
+            <span class="txt">{row.text}</span>
+            <span class="note">{row.note}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none; margin-top:calc(14*var(--u))">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.catalogPanelTitle}</span>
+        <span class="ta-btn-soft">{t.addModel}</span>
+      </div>
+      <p class="ta-catalog-hint">{t.catalogPanelHint}</p>
+      <p class="ta-catalog-hint" style="margin-top:calc(6*var(--u))">{t.catalogOfficialPriceNote}</p>
+      <div class="ta-catalog-tools">
+        <span class="ta-search" style="height:calc(34*var(--u))">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.4"></circle><path d="m10.4 10.4 3 3"></path></svg>
+          {t.modelSearchPlaceholder}
+        </span>
+        {t.filterChips.map((chip) => <span class="ta-chip">{chip}</span>)}
+      </div>
+      <div class="ta-grid head" style="--cols: 2.1fr 1fr 1.2fr 0.7fr 0.6fr; margin-top:calc(10*var(--u))">
+        <span>{t.thModelId}</span>
+        <span>{t.thModelVendor}</span>
+        <span>{t.thModelPrice}</span>
+        <span>{t.thModelOrigin}</span>
+        <span class="ta-num">{t.thModelActions}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -220,28 +220,6 @@ section {
   border-radius: 12px;
 }
 
-/* 双主题配图：同一位置两份资源，按当前主题显示其一 */
-.theme-dual {
-  position: relative;
-}
-
-.theme-dual img {
-  width: 100%;
-  height: auto;
-}
-
-.theme-dual img.t-light {
-  display: none;
-}
-
-[data-theme='light'] .theme-dual img.t-light {
-  display: block;
-}
-
-[data-theme='light'] .theme-dual img.t-dark {
-  display: none;
-}
-
 /* 数字用等宽变体，与产品的 tabular-nums 一致 */
 .num {
   font-variant-numeric: tabular-nums;

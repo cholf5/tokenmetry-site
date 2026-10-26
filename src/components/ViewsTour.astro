@@ -1,34 +1,12 @@
 ---
-import { Image } from 'astro:assets';
 import { ui, type Locale } from '../i18n/ui';
-import sessionsZhDark from '../assets/shots/sessions-zh-dark.png';
-import sessionsZhLight from '../assets/shots/sessions-zh-light.png';
-import sessionsEnDark from '../assets/shots/sessions-en-dark.png';
-import sessionsEnLight from '../assets/shots/sessions-en-light.png';
-import modelsZhDark from '../assets/shots/models-zh-dark.png';
-import modelsZhLight from '../assets/shots/models-zh-light.png';
-import modelsEnDark from '../assets/shots/models-en-dark.png';
-import modelsEnLight from '../assets/shots/models-en-light.png';
-import timeZhDark from '../assets/shots/time-zh-dark.png';
-import timeZhLight from '../assets/shots/time-zh-light.png';
-import timeEnDark from '../assets/shots/time-en-dark.png';
-import timeEnLight from '../assets/shots/time-en-light.png';
-import costZhDark from '../assets/shots/cost-zh-dark.png';
-import costZhLight from '../assets/shots/cost-zh-light.png';
-import costEnDark from '../assets/shots/cost-en-dark.png';
-import costEnLight from '../assets/shots/cost-en-light.png';
-import projectsZhDark from '../assets/shots/projects-zh-dark.png';
-import projectsZhLight from '../assets/shots/projects-zh-light.png';
-import projectsEnDark from '../assets/shots/projects-en-dark.png';
-import projectsEnLight from '../assets/shots/projects-en-light.png';
-import agentsZhDark from '../assets/shots/agents-zh-dark.png';
-import agentsZhLight from '../assets/shots/agents-zh-light.png';
-import agentsEnDark from '../assets/shots/agents-en-dark.png';
-import agentsEnLight from '../assets/shots/agents-en-light.png';
-import pricingZhDark from '../assets/shots/data-pricing-zh-dark.png';
-import pricingZhLight from '../assets/shots/data-pricing-zh-light.png';
-import pricingEnDark from '../assets/shots/data-pricing-en-dark.png';
-import pricingEnLight from '../assets/shots/data-pricing-en-light.png';
+import SessionsVisual from './visuals/SessionsVisual.astro';
+import ModelsVisual from './visuals/ModelsVisual.astro';
+import TimeVisual from './visuals/TimeVisual.astro';
+import CostVisual from './visuals/CostVisual.astro';
+import ProjectsVisual from './visuals/ProjectsVisual.astro';
+import AgentsVisual from './visuals/AgentsVisual.astro';
+import DataPricingVisual from './visuals/DataPricingVisual.astro';
 
 interface Props {
   locale: Locale;
@@ -36,14 +14,14 @@ interface Props {
 const { locale } = Astro.props;
 const t = ui[locale];
 
-const stopShots: Record<string, { dark: ImageMetadata; light: ImageMetadata }> = {
-  sessions: locale === 'zh' ? { dark: sessionsZhDark, light: sessionsZhLight } : { dark: sessionsEnDark, light: sessionsEnLight },
-  models: locale === 'zh' ? { dark: modelsZhDark, light: modelsZhLight } : { dark: modelsEnDark, light: modelsEnLight },
-  time: locale === 'zh' ? { dark: timeZhDark, light: timeZhLight } : { dark: timeEnDark, light: timeEnLight },
-  cost: locale === 'zh' ? { dark: costZhDark, light: costZhLight } : { dark: costEnDark, light: costEnLight },
-  projects: locale === 'zh' ? { dark: projectsZhDark, light: projectsZhLight } : { dark: projectsEnDark, light: projectsEnLight },
-  agents: locale === 'zh' ? { dark: agentsZhDark, light: agentsZhLight } : { dark: agentsEnDark, light: agentsEnLight },
-  'data-pricing': locale === 'zh' ? { dark: pricingZhDark, light: pricingZhLight } : { dark: pricingEnDark, light: pricingEnLight },
+const visuals: Record<string, typeof SessionsVisual> = {
+  sessions: SessionsVisual,
+  models: ModelsVisual,
+  time: TimeVisual,
+  cost: CostVisual,
+  projects: ProjectsVisual,
+  agents: AgentsVisual,
+  'data-pricing': DataPricingVisual,
 };
 
 const alts: Record<string, string> = {
@@ -86,22 +64,25 @@ for (const stop of t.tour.stops) {
       if (g.kind === 'duo') {
         return (
           <div class="duo">
-            {g.stops.map((stop) => (
-              <article class="stop mini" style={`--acc:var(--series-${stop.accent})`}>
-                <span class="no mono num">{stop.no}<em>/09</em></span>
-                <span class="view">{stop.view}</span>
-                <h3>{stop.title}</h3>
-                <p class="desc">{stop.desc}</p>
-                <div class="visual theme-dual">
-                  <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-dark" loading="lazy" />
-                  <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-light" loading="lazy" />
-                </div>
-              </article>
-            ))}
+            {g.stops.map((stop) => {
+              const Visual = visuals[stop.visual]!;
+              return (
+                <article class="stop mini" style={`--acc:var(--series-${stop.accent})`}>
+                  <span class="no mono num">{stop.no}<em>/09</em></span>
+                  <span class="view">{stop.view}</span>
+                  <h3>{stop.title}</h3>
+                  <p class="desc">{stop.desc}</p>
+                  <div class="visual" role="img" aria-label={alts[stop.visual]}>
+                    <Visual locale={locale} />
+                  </div>
+                </article>
+              );
+            })}
           </div>
         );
       }
       const stop = g.stop;
+      const Visual = visuals[stop.visual]!;
       return g.kind === 'full' ? (
         <article class="stop full" style={`--acc:var(--series-${stop.accent})`}>
           <header class="stop-head">
@@ -111,9 +92,8 @@ for (const stop of t.tour.stops) {
               <h3>{stop.title}</h3>
             </div>
           </header>
-          <div class="visual theme-dual">
-            <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-dark" loading="lazy" />
-            <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-light" loading="lazy" />
+          <div class="visual" role="img" aria-label={alts[stop.visual]}>
+            <Visual locale={locale} />
           </div>
           <p class="desc">{stop.desc}</p>
         </article>
@@ -125,9 +105,8 @@ for (const stop of t.tour.stops) {
             <h3>{stop.title}</h3>
             <p class="desc">{stop.desc}</p>
           </div>
-          <div class="visual theme-dual">
-            <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[640, 900]} sizes="(max-width: 900px) 100vw, 560px" format="webp" class="t-dark" loading="lazy" />
-            <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[640, 900]} sizes="(max-width: 900px) 100vw, 560px" format="webp" class="t-light" loading="lazy" />
+          <div class="visual" role="img" aria-label={alts[stop.visual]}>
+            <Visual locale={locale} />
           </div>
         </article>
       );

@@ -1,0 +1,68 @@
+---
+/**
+ * 会话明细视图复刻（原 sessions-*.png，SiteData 受控演示数据）。
+ * 设计稿宽 1280、高 860；第 10 行被行区裁剪、加载更多与计数在裁剪区外——与截图同构。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { sessionRows, fmtN0, fmtCost } from '../../data/app-demo';
+import Mark from './Mark.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+const rows = sessionRows[locale];
+const cols = '3.6fr 1fr 1.15fr 1fr 0.95fr 0.95fr';
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(860 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.sessionsTitle}</h3>
+      <p class="ta-page-sub">{t.sessionsSubtitle}</p>
+    </div>
+
+    <div class="ta-card ta-view-card">
+      <div class="ta-toolbar">
+        <span class="ta-search">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.4"></circle><path d="m10.4 10.4 3 3"></path></svg>
+          {t.searchPlaceholder}
+        </span>
+        <span class="ta-combo" style={`min-width:calc(150*var(--u))`}>{t.sortByTokens}
+          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5 5 6.5 8 3.5"></path></svg>
+        </span>
+      </div>
+
+      <div class="ta-grid head" style={`--cols:${cols}`}>
+        <span>{t.thSession}</span>
+        <span>{t.thAgent}</span>
+        <span>{t.thModels}</span>
+        <span class="ta-num">{t.thToken}</span>
+        <span class="ta-num">{t.thEstimatedCost}</span>
+        <span class="ta-num">{t.thLastActivity}</span>
+      </div>
+
+      <div class="ta-rows">
+        {rows.map((r) => (
+          <div class="ta-grid row" style={`--cols:${cols}`}>
+            <span>
+              <div class="ta-cell-name">{r.project}</div>
+              <div class="ta-cell-dim">{r.sessionId}</div>
+            </span>
+            <span class="ta-entity"><Mark kind={r.agentLogo} size={17} /><span>{r.agent}</span></span>
+            <span class="ta-cell">{r.model}</span>
+            <span class="ta-cell ta-num">{fmtN0(r.tokens)}</span>
+            <span class="ta-num">
+              {r.cost === null ? <span class="ta-chip">{t.unknown}</span> : <span class="ta-cell">{fmtCost(r.cost)}</span>}
+            </span>
+            <span class="ta-cell-dim ta-num" style="font-size:calc(12*var(--u))">{r.hoursAgo}{t.relHoursSuffix}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="ta-loadmore">{t.loadMore}</div>
+      <div class="ta-count">{t.countText}</div>
+    </div>
+  </div>
+</div>

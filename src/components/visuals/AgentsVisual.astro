@@ -1,0 +1,70 @@
+---
+/**
+ * Agent 统计视图复刻（原 agents-*.png）：四张 Agent KPI 卡 + Agent 排行表。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { agentRows, week, fmtCompact, fmtCost, fmtN0 } from '../../data/app-demo';
+import Mark from './Mark.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+const cols = '1.6fr 0.7fr 0.9fr 0.9fr 0.9fr 0.9fr 0.7fr';
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(860 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.agentsTitle}</h3>
+      <p class="ta-page-sub">{t.agentsSubtitle}</p>
+    </div>
+
+    <div class="ta-kpis4">
+      {agentRows.slice(0, 4).map((a) => (
+        <div class="ta-card ta-kpi">
+          <div class="ta-kpi-top">
+            <Mark kind={a.logo} size={22} />
+            <span style="color:var(--tatext)">{a.key}</span>
+          </div>
+          <div class="ta-kpi-val">{fmtCompact(a.total, locale)}</div>
+          <div class="ta-kpi-foot">
+            {a.sessions} {t.sessionsUnit} · {a.cost === null ? t.unknown : fmtCost(a.cost)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.panelAgentRanking}</span>
+        <span class="ta-card-meta">{t.metaClickableForSessions}</span>
+      </div>
+
+      <div class="ta-grid head" style={`--cols:${cols}; margin-top:calc(8*var(--u))`}>
+        <span>{t.thAgent}</span>
+        <span class="ta-num">{t.thSessionCount}</span>
+        <span class="ta-num">{t.thInputTokens}</span>
+        <span class="ta-num">{t.thOutputTokens}</span>
+        <span class="ta-num">{t.thTotalTokens}</span>
+        <span class="ta-num">{t.thEstimatedCost}</span>
+        <span class="ta-num">{t.thShare}</span>
+      </div>
+
+      {agentRows.map((a) => (
+        <div class="ta-grid row" style={`--cols:${cols}`}>
+          <span class="ta-entity"><Mark kind={a.logo} size={17} /><span>{a.key}</span></span>
+          <span class="ta-cell ta-num">{fmtN0(a.sessions)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(a.input, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(a.output, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(a.total, locale)}</span>
+          <span class="ta-num">
+            {a.cost === null ? <span class="ta-cell-dim">{t.unknown}</span> : <span class="ta-cell">{fmtCost(a.cost)}</span>}
+          </span>
+          <span class="ta-cell ta-num">{((a.total / week.tokens) * 100).toFixed(1)}%</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

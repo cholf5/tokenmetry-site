@@ -1,0 +1,71 @@
+---
+/**
+ * 模型统计视图复刻（原 models-*.png）：模型明细表 + 合计行，kimi-k2.5 成本未知 chip。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { modelRows, modelTotals, fmtCompact, fmtCost, fmtN0 } from '../../data/app-demo';
+import Mark from './Mark.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+const cols = '2.3fr 1.45fr 0.85fr 0.85fr 0.95fr 0.85fr 0.75fr';
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(860 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.modelsTitle}</h3>
+      <p class="ta-page-sub">{t.modelsSubtitle}</p>
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.panelModelDetails}</span>
+        <span class="ta-card-meta">{t.metaMissingPriceUnknown}</span>
+      </div>
+
+      <div class="ta-grid head" style={`--cols:${cols}; margin-top:calc(8*var(--u))`}>
+        <span>{t.thModel}</span>
+        <span>{t.thAssociatedAgents}</span>
+        <span class="ta-num">{t.thInputTokens}</span>
+        <span class="ta-num">{t.thOutputTokens}</span>
+        <span class="ta-num">{t.thCacheRead}</span>
+        <span class="ta-num">{t.thTotalTokens}</span>
+        <span class="ta-num">{t.thCost}</span>
+      </div>
+
+      {modelRows.map((m) => (
+        <div class="ta-grid row" style={`--cols:${cols}`}>
+          <span>
+            <div class="ta-entity"><Mark kind={m.logo} size={19} /><span class="ta-cell-name">{m.key}</span></div>
+            <div class="ta-cell-dim" style="margin-left:calc(28*var(--u))">{t.providerPrefix}{m.provider}</div>
+          </span>
+          <span class="ta-entity"><Mark kind={m.agentLogo} size={17} /><span>{m.agent}</span>
+            {m.agentExtra > 0 && <span style="color:var(--tamuted)">{t.associatedMultiSuffix.replace('{0}', String(m.agentExtra))}</span>}
+          </span>
+          <span class="ta-cell ta-num">{fmtCompact(m.input, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(m.output, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(m.cacheRead, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(m.total, locale)}</span>
+          <span class="ta-num">
+            {m.cost === null ? <span class="ta-chip">{t.unknown}</span> : <span class="ta-cell">{fmtCost(m.cost)}</span>}
+          </span>
+        </div>
+      ))}
+
+      <div class="ta-grid row" style={`--cols:${cols}; border-bottom:none`}>
+        <span class="ta-cell-name">{t.totalsModels.replace('{0}', '7')}</span>
+        <span></span>
+        <span class="ta-cell ta-num" style="font-weight:600">{fmtCompact(modelTotals.input, locale)}</span>
+        <span class="ta-cell ta-num" style="font-weight:600">{fmtCompact(modelTotals.output, locale)}</span>
+        <span class="ta-cell ta-num" style="font-weight:600">{fmtCompact(modelTotals.cacheRead, locale)}</span>
+        <span class="ta-cell ta-num" style="font-weight:600">{fmtCompact(modelTotals.total, locale)}</span>
+        <span class="ta-cell ta-num" style="font-weight:600">{fmtCost(modelTotals.cost)}+</span>
+      </div>
+      <div class="ta-cell-dim" style="margin-top:calc(4*var(--u))">{t.totalsUnknownNote}</div>
+    </div>
+  </div>
+</div>

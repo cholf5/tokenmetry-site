@@ -1,17 +1,12 @@
 ---
-import { Image } from 'astro:assets';
 import { ui, type Locale } from '../i18n/ui';
-import trayZhDark from '../assets/shots/tray-zh-dark.png';
-import trayZhLight from '../assets/shots/tray-zh-light.png';
-import trayEnDark from '../assets/shots/tray-en-dark.png';
-import trayEnLight from '../assets/shots/tray-en-light.png';
+import TrayVisual from './visuals/TrayVisual.astro';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const shot = locale === 'zh' ? { dark: trayZhDark, light: trayZhLight } : { dark: trayEnDark, light: trayEnLight };
 ---
 
 <section id="tray" class="full-bleed">
@@ -30,27 +25,9 @@ const shot = locale === 'zh' ? { dark: trayZhDark, light: trayZhLight } : { dark
       </ul>
     </div>
 
-    <div class="visual theme-dual">
-      <Image
-        src={shot.dark}
-        alt={t.tray.shotAlt}
-        widths={[420, 560]}
-        sizes="(max-width: 900px) 92vw, 460px"
-        format="webp"
-        class="t-dark"
-        loading="lazy"
-      />
-      <Image
-        src={shot.light}
-        alt=""
-        aria-hidden="true"
-        widths={[420, 560]}
-        sizes="(max-width: 900px) 92vw, 460px"
-        format="webp"
-        class="t-light"
-        loading="lazy"
-      />
-    </div>
+    <figure class="visual" role="img" aria-label={t.tray.shotAlt} style="margin:0">
+      <TrayVisual locale={locale} />
+    </figure>
   </div>
 </section>
 

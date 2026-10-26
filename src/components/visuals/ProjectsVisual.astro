@@ -1,0 +1,50 @@
+---
+/**
+ * 项目统计视图复刻（原 projects-*.png）：项目排行表（按成本降序）。
+ */
+import { ui, type Locale } from '../../i18n/ui';
+import { projectRows, fmtCompact, fmtCost, fmtPct1, fmtN0 } from '../../data/app-demo';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = ui[locale].app;
+const cols = '2.2fr 0.75fr 0.85fr 0.85fr 0.7fr 1fr';
+---
+
+<div class="tapp-frame">
+  <div class="tapp ta-page" style="--dw:1280; height:calc(860 * var(--u))">
+    <div class="ta-page-head">
+      <h3 class="ta-page-title">{t.projectsTitle}</h3>
+      <p class="ta-page-sub">{t.projectsSubtitle}</p>
+    </div>
+
+    <div class="ta-card ta-view-card" style="flex:none">
+      <div class="ta-card-head">
+        <span class="ta-card-title">{t.panelProjectRankingShort}</span>
+        <span class="ta-card-meta">{t.metaClickableForSessions}</span>
+      </div>
+
+      <div class="ta-grid head" style={`--cols:${cols}; margin-top:calc(8*var(--u))`}>
+        <span>{t.thProjectDir}</span>
+        <span class="ta-num">{t.thSessionCount}</span>
+        <span class="ta-num">{t.thTotalTokens}</span>
+        <span class="ta-num">{t.thEstimatedCost}</span>
+        <span class="ta-num">{t.thShare}</span>
+        <span class="ta-num">{t.thAvgPerSession}</span>
+      </div>
+
+      {projectRows.map((p) => (
+        <div class="ta-grid row" style={`--cols:${cols}`}>
+          <span class="ta-cell-name" style="font-weight:500">{p.key}</span>
+          <span class="ta-cell ta-num">{fmtN0(p.sessions)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(p.total, locale)}</span>
+          <span class="ta-cell ta-num">{fmtCost(p.cost)}</span>
+          <span class="ta-cell ta-num">{fmtPct1(p.share)}</span>
+          <span class="ta-cell ta-num">{fmtCompact(p.avg, locale)}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

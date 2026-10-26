@@ -1,18 +1,13 @@
 ---
-import { Image } from 'astro:assets';
 import { site } from '../config/site';
 import { ui, type Locale } from '../i18n/ui';
-import zhDark from '../assets/shots/overview-zh-dark.png';
-import zhLight from '../assets/shots/overview-zh-light.png';
-import enDark from '../assets/shots/overview-en-dark.png';
-import enLight from '../assets/shots/overview-en-light.png';
+import OverviewVisual from './visuals/OverviewVisual.astro';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const shot = locale === 'zh' ? { dark: zhDark, light: zhLight } : { dark: enDark, light: enLight };
 const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 ---
 
@@ -48,28 +43,9 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
     </div>
 
     <div class="shot-wrap rise rise-2">
-      <div class="shot theme-dual">
-        <Image
-          src={shot.dark}
-          alt={t.hero.shotAlt}
-          widths={[880, 1280]}
-          sizes="(max-width: 1080px) 100vw, 1032px"
-          format="webp"
-          class="t-dark"
-          loading="eager"
-          fetchpriority="high"
-        />
-        <Image
-          src={shot.light}
-          alt=""
-          aria-hidden="true"
-          widths={[880, 1280]}
-          sizes="(max-width: 1080px) 100vw, 1032px"
-          format="webp"
-          class="t-light"
-          loading="lazy"
-        />
-      </div>
+      <figure class="shot" role="img" aria-label={t.hero.shotAlt} style="margin:0">
+        <OverviewVisual locale={locale} />
+      </figure>
     </div>
   </div>
 
@@ -181,6 +157,7 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 
   .shot {
     border-radius: 14px;
+    overflow: hidden;
     filter: drop-shadow(0 24px 60px rgba(2, 8, 20, 0.4));
   }
 
