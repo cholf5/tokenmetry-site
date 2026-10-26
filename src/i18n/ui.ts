@@ -113,6 +113,7 @@ const zh = {
     title: '视图是替你选好的',
     subtitle:
       '固定信息架构，不做插件、不做布局自定义。总览、会话、Agent、模型、项目、时间、成本、数据与计价、设置——时间范围与四维筛选贯穿所有视图。',
+    /* 数组顺序即页面顺序（ViewsTour 按序渲染，相邻 duo 归并为一组） */
     stops: [
       {
         no: '02',
@@ -123,6 +124,16 @@ const zh = {
         layout: 'full',
         flip: false,
         accent: 0,
+      },
+      {
+        no: '07',
+        title: '成本怎么算的，写在明面上',
+        desc: '成本分析：日成本趋势、模型构成、环比变化，附成本口径三行——日志自带 costUSD 直接采用、缺价不折零、口径可对账。',
+        view: '成本分析',
+        visual: 'cost',
+        layout: 'full',
+        flip: false,
+        accent: 1,
       },
       {
         no: '04',
@@ -145,16 +156,6 @@ const zh = {
         accent: 2,
       },
       {
-        no: '07',
-        title: '成本怎么算的，写在明面上',
-        desc: '成本分析：日成本趋势、模型构成、环比变化，附成本口径三行——日志自带 costUSD 直接采用、缺价不折零、口径可对账。',
-        view: '成本分析',
-        visual: 'cost',
-        layout: 'full',
-        flip: false,
-        accent: 1,
-      },
-      {
         no: '05',
         title: '哪个项目在烧钱',
         desc: '项目统计：占比、会话数、均值，点击直达该项目的会话明细。',
@@ -174,8 +175,18 @@ const zh = {
         flip: false,
         accent: 6,
       },
+      {
+        no: '08',
+        title: '数据与计价：三级定价回退',
+        desc: '用户覆盖 → models.dev 远程刷新（后台、永不阻塞 UI）→ 内置价格快照。数据源状态、记录数与模型目录一页可见。',
+        view: '数据与计价',
+        visual: 'data-pricing',
+        layout: 'full',
+        flip: false,
+        accent: 5,
+      },
     ],
-    more: '还有 08 数据与计价（见下）与 09 设置——主题、语言、数据源、价格覆盖都在明处。',
+    more: '还有 09 设置——主题、语言、数据源、价格覆盖都在明处。',
   },
   tray: {
     kicker: '§04 · 常驻',
@@ -215,13 +226,6 @@ const zh = {
       { name: 'OpenClaw', method: 'SQLite + 双格式' },
       { name: 'Antigravity', method: 'SQLite 多根去重' },
     ],
-    pricingTeaser: {
-      no: '08',
-      title: '数据与计价：三级定价回退',
-      desc: '用户覆盖 → models.dev 远程刷新（后台、永不阻塞 UI）→ 内置价格快照。数据源状态、记录数与模型目录一页可见。',
-      view: '数据与计价',
-      visual: 'data-pricing',
-    },
   },
   local: {
     kicker: '§06 · 立场',
@@ -361,6 +365,7 @@ const en: typeof zh = {
     title: 'The views are chosen for you',
     subtitle:
       'A fixed information architecture — no plugins, no layout customization. Overview, sessions, agents, models, projects, time, cost, data & pricing, settings, with time-range and four-dimension filters running through every view.',
+    /* 数组顺序即页面顺序（与 zh 保持逐项对应） */
     stops: [
       {
         no: '02',
@@ -371,6 +376,16 @@ const en: typeof zh = {
         layout: 'full',
         flip: false,
         accent: 0,
+      },
+      {
+        no: '07',
+        title: 'The math is on the record',
+        desc: 'Cost analysis: daily cost trend, model composition and period-over-period deltas, plus the three-line methodology — costUSD as-is, unknown never zeroed, reconcilable.',
+        view: 'Cost analysis',
+        visual: 'cost',
+        layout: 'full',
+        flip: false,
+        accent: 1,
       },
       {
         no: '04',
@@ -393,16 +408,6 @@ const en: typeof zh = {
         accent: 2,
       },
       {
-        no: '07',
-        title: 'The math is on the record',
-        desc: 'Cost analysis: daily cost trend, model composition and period-over-period deltas, plus the three-line methodology — costUSD as-is, unknown never zeroed, reconcilable.',
-        view: 'Cost analysis',
-        visual: 'cost',
-        layout: 'full',
-        flip: false,
-        accent: 1,
-      },
-      {
         no: '05',
         title: 'Which project burns cash',
         desc: 'Projects: share, sessions, averages — click through to that project’s sessions.',
@@ -422,8 +427,18 @@ const en: typeof zh = {
         flip: false,
         accent: 6,
       },
+      {
+        no: '08',
+        title: 'Data & pricing: three-tier fallback',
+        desc: 'Your overrides → models.dev refresh (background, never blocks the UI) → bundled price snapshot. Source status, record counts and the model catalog on one page.',
+        view: 'Data & pricing',
+        visual: 'data-pricing',
+        layout: 'full',
+        flip: false,
+        accent: 5,
+      },
     ],
-    more: 'Plus 08 Data & pricing (below) and 09 Settings — theme, language, sources and price overrides all in plain sight.',
+    more: 'Plus 09 Settings — theme, language, sources and price overrides all in plain sight.',
   },
   tray: {
     kicker: '§04 · Always on',
@@ -463,13 +478,6 @@ const en: typeof zh = {
       { name: 'OpenClaw', method: 'SQLite + dual format' },
       { name: 'Antigravity', method: 'SQLite multi-root' },
     ],
-    pricingTeaser: {
-      no: '08',
-      title: 'Data & pricing: three-tier fallback',
-      desc: 'Your overrides → models.dev refresh (background, never blocks the UI) → bundled price snapshot. Source status, record counts and the model catalog on one page.',
-      view: 'Data & pricing',
-      visual: 'data-pricing',
-    },
   },
   local: {
     kicker: '§06 · Stance',

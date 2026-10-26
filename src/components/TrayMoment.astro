@@ -106,7 +106,8 @@ const shot = locale === 'zh' ? { dark: trayZhDark, light: trayZhLight } : { dark
     flex: 0 0 auto;
   }
 
-  /* 真实弹层截图直接展示（不做任何 CSS 场景合成） */
+  /* 真实弹层截图直接展示（不做任何 CSS 场景合成）；
+     产品仓库日后产出真实桌面场景截图时，可直接替换此 Image 对（设计记录见 docs/plans/2026-10-26-landing-polish-design.md 改动二） */
   .visual {
     max-width: 460px;
     border: 1px solid var(--line);

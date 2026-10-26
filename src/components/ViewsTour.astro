@@ -25,6 +25,10 @@ import agentsZhDark from '../assets/shots/agents-zh-dark.png';
 import agentsZhLight from '../assets/shots/agents-zh-light.png';
 import agentsEnDark from '../assets/shots/agents-en-dark.png';
 import agentsEnLight from '../assets/shots/agents-en-light.png';
+import pricingZhDark from '../assets/shots/data-pricing-zh-dark.png';
+import pricingZhLight from '../assets/shots/data-pricing-zh-light.png';
+import pricingEnDark from '../assets/shots/data-pricing-en-dark.png';
+import pricingEnLight from '../assets/shots/data-pricing-en-light.png';
 
 interface Props {
   locale: Locale;
@@ -39,6 +43,7 @@ const stopShots: Record<string, { dark: ImageMetadata; light: ImageMetadata }> =
   cost: locale === 'zh' ? { dark: costZhDark, light: costZhLight } : { dark: costEnDark, light: costEnLight },
   projects: locale === 'zh' ? { dark: projectsZhDark, light: projectsZhLight } : { dark: projectsEnDark, light: projectsEnLight },
   agents: locale === 'zh' ? { dark: agentsZhDark, light: agentsZhLight } : { dark: agentsEnDark, light: agentsEnLight },
+  'data-pricing': locale === 'zh' ? { dark: pricingZhDark, light: pricingZhLight } : { dark: pricingEnDark, light: pricingEnLight },
 };
 
 const alts: Record<string, string> = {
@@ -48,11 +53,25 @@ const alts: Record<string, string> = {
   cost: locale === 'zh' ? 'Tokenmetry 成本分析视图：成本 KPI、日成本趋势与构成' : 'Tokenmetry cost analysis: cost KPIs, daily trend and composition',
   projects: locale === 'zh' ? 'Tokenmetry 项目统计视图：项目占比与会话排行' : 'Tokenmetry projects view: shares and session rankings',
   agents: locale === 'zh' ? 'Tokenmetry Agent 统计视图：Top KPI 与 Agent 排行' : 'Tokenmetry agents view: top KPIs and agent rankings',
+  'data-pricing':
+    locale === 'zh'
+      ? 'Tokenmetry 数据与计价视图：数据源状态表（正常/部分/无数据/尚未扫描）与模型价格目录'
+      : 'Tokenmetry data & pricing view: source status table (ok/partial/no data/not scanned) and the model price catalog',
 };
 
-const fullStops = t.tour.stops.filter((s) => s.layout === 'full');
-const splitStops = t.tour.stops.filter((s) => s.layout === 'split');
-const duoStops = t.tour.stops.filter((s) => s.layout === 'duo');
+/* 按数组顺序渲染：full/split 独占一拍，相邻 duo 归并为一组双卡 */
+type Stop = (typeof t.tour.stops)[number];
+type Group = { kind: 'full' | 'split'; stop: Stop } | { kind: 'duo'; stops: Stop[] };
+const groups: Group[] = [];
+for (const stop of t.tour.stops) {
+  const last = groups[groups.length - 1];
+  if (stop.layout === 'duo') {
+    if (last?.kind === 'duo') last.stops.push(stop);
+    else groups.push({ kind: 'duo', stops: [stop] });
+  } else {
+    groups.push({ kind: stop.layout === 'full' ? 'full' : 'split', stop });
+  }
+}
 ---
 
 <section id="views">
@@ -63,25 +82,42 @@ const duoStops = t.tour.stops.filter((s) => s.layout === 'duo');
       <p class="sub">{t.tour.subtitle}</p>
     </div>
 
-    {fullStops.map((stop) => (
-      <article class="stop full" style={`--acc:var(--series-${stop.accent})`}>
-        <header class="stop-head">
-          <span class="no mono num">{stop.no}<em>/09</em></span>
-          <div>
-            <span class="view">{stop.view}</span>
-            <h3>{stop.title}</h3>
+    {groups.map((g) => {
+      if (g.kind === 'duo') {
+        return (
+          <div class="duo">
+            {g.stops.map((stop) => (
+              <article class="stop mini" style={`--acc:var(--series-${stop.accent})`}>
+                <span class="no mono num">{stop.no}<em>/09</em></span>
+                <span class="view">{stop.view}</span>
+                <h3>{stop.title}</h3>
+                <p class="desc">{stop.desc}</p>
+                <div class="visual theme-dual">
+                  <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-dark" loading="lazy" />
+                  <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-light" loading="lazy" />
+                </div>
+              </article>
+            ))}
           </div>
-        </header>
-        <div class="visual theme-dual">
-          <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-dark" loading="lazy" />
-          <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-light" loading="lazy" />
-        </div>
-        <p class="desc">{stop.desc}</p>
-      </article>
-    ))}
-
-    <div class="splits">
-      {splitStops.map((stop) => (
+        );
+      }
+      const stop = g.stop;
+      return g.kind === 'full' ? (
+        <article class="stop full" style={`--acc:var(--series-${stop.accent})`}>
+          <header class="stop-head">
+            <span class="no mono num">{stop.no}<em>/09</em></span>
+            <div>
+              <span class="view">{stop.view}</span>
+              <h3>{stop.title}</h3>
+            </div>
+          </header>
+          <div class="visual theme-dual">
+            <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-dark" loading="lazy" />
+            <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[880, 1280]} sizes="(max-width: 1140px) 100vw, 1032px" format="webp" class="t-light" loading="lazy" />
+          </div>
+          <p class="desc">{stop.desc}</p>
+        </article>
+      ) : (
         <article class:list={['stop', 'split', { flip: stop.flip }]} style={`--acc:var(--series-${stop.accent})`}>
           <div class="txt">
             <span class="no mono num">{stop.no}<em>/09</em></span>
@@ -94,23 +130,8 @@ const duoStops = t.tour.stops.filter((s) => s.layout === 'duo');
             <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[640, 900]} sizes="(max-width: 900px) 100vw, 560px" format="webp" class="t-light" loading="lazy" />
           </div>
         </article>
-      ))}
-    </div>
-
-    <div class="duo">
-      {duoStops.map((stop) => (
-        <article class="stop mini" style={`--acc:var(--series-${stop.accent})`}>
-          <span class="no mono num">{stop.no}<em>/09</em></span>
-          <span class="view">{stop.view}</span>
-          <h3>{stop.title}</h3>
-          <p class="desc">{stop.desc}</p>
-          <div class="visual theme-dual">
-            <Image src={stopShots[stop.visual].dark} alt={alts[stop.visual]} widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-dark" loading="lazy" />
-            <Image src={stopShots[stop.visual].light} alt="" aria-hidden="true" widths={[520, 760]} sizes="(max-width: 900px) 100vw, 480px" format="webp" class="t-light" loading="lazy" />
-          </div>
-        </article>
-      ))}
-    </div>
+      );
+    })}
 
     <p class="more mono">{t.tour.more}</p>
   </div>
@@ -196,18 +217,12 @@ const duoStops = t.tour.stops.filter((s) => s.layout === 'duo');
   }
 
   /* 分栏交替 */
-  .splits {
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-    margin-bottom: 56px;
-  }
-
   .stop.split {
     display: grid;
     grid-template-columns: 5fr 7fr;
     gap: 40px;
     align-items: center;
+    margin-bottom: 56px;
   }
 
   .stop.split.flip {

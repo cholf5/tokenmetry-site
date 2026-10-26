@@ -70,3 +70,12 @@
 - `src/i18n/ui.ts`（nav 删/增键、sources.legend 双语）
 - `scripts/generate-og.mjs`（Windows 盘符路径修复，fileURLToPath）
 
+## 后续落地：评审 #5——08 预告移入视图巡礼（2026-10-26 同日）
+
+原第五项（信息架构变更，当时暂缓）已按「全宽呼吸位」落地：
+
+- **`ui.ts`**：`sources.pricingTeaser`（zh/en）删除，08 作为正式 stop 并入 `tour.stops`（layout `full`、accent 5）；`tour.more` 改为只提 09 设置（原「08 见下」指路已失效）。
+- **`ViewsTour.astro`**：渲染从「按版式分组」（所有 full→split→duo，迫使 stops 乱序书写）改为**按数组顺序渲染**（相邻 duo 自动归并双卡），数组顺序即页面顺序；stops 重排为 02→07→04→06→05→03 保持既有页面节奏，08 追加收尾——双小卡之后、more 行之前的全宽一拍，并语义上衔接其后 §05 数据源墙。
+- **`SourcesWall.astro`**：预告 aside 与 7:5 栅格移除，数据源墙转正为全宽 3 列（≤900px 2 列、≤560px 1 列）。
+- 托盘区块维持弹层直展示；产品仓库产出真实桌面场景截图后可直接替换（替换点已在 `TrayMoment.astro` 注明，当前产品仓库 docs/ 下无该资产）。
+
