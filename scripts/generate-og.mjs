@@ -6,6 +6,7 @@
 import { Resvg } from '@resvg/resvg-js';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const W = 1200;
 const H = 630;
@@ -93,7 +94,8 @@ function svg(d) {
 </svg>`;
 }
 
-const outDir = new URL('../public', import.meta.url).pathname;
+// URL.pathname 在 Windows 上是 "/E:/..."，会被当成相对路径拼出 E:\E:\；必须走 fileURLToPath
+const outDir = fileURLToPath(new URL('../public', import.meta.url));
 mkdirSync(outDir, { recursive: true });
 
 for (const [locale, d] of [['zh', zh], ['en', en]]) {
