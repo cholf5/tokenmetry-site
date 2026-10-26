@@ -17,6 +17,15 @@ const pricingShot = locale === 'zh'
 const pricingAlt = locale === 'zh'
   ? 'Tokenmetry 数据与计价视图：数据源状态表（正常/部分/无数据/尚未扫描）与模型价格目录'
   : 'Tokenmetry data & pricing view: source status table (ok/partial/no data/not scanned) and the model price catalog';
+
+/* 圆点语义 = 读取方式三分类，与 subtitle 口径一致：SQLite 只读（绿）/ 流式解析（蓝）/ 专用格式（橙） */
+const familyColors = ['var(--series-0)', 'var(--series-1)', 'var(--series-2)'];
+const familyOf = (method: string) => {
+  const m = method.toUpperCase();
+  if (m.includes('SQLITE')) return 1;
+  if (m.includes('JSON')) return 0;
+  return 2;
+};
 ---
 
 <section id="sources">
@@ -25,13 +34,18 @@ const pricingAlt = locale === 'zh'
       <span class="kicker">{t.sources.kicker}</span>
       <h2>{t.sources.title}</h2>
       <p class="sub">{t.sources.subtitle}</p>
+      <ul class="legend" aria-label={locale === 'zh' ? '读取方式图例' : 'read-method legend'}>
+        {t.sources.legend.map((label, i) => (
+          <li><span class="dot" style={`--dot:${familyColors[i]}`}></span>{label}</li>
+        ))}
+      </ul>
     </div>
 
     <div class="layout">
       <ul class="wall">
-        {t.sources.items.map((item, i) => (
+        {t.sources.items.map((item) => (
           <li class="cell">
-            <span class="dot" style={`--dot:var(--series-${i % 7})`}></span>
+            <span class="dot" style={`--dot:${familyColors[familyOf(item.method)]}`}></span>
             <span class="name">{item.name}</span>
             <span class="method mono">{item.method}</span>
           </li>
@@ -72,6 +86,23 @@ const pricingAlt = locale === 'zh'
     margin-top: 10px;
     color: var(--muted);
     font-size: 15px;
+  }
+
+  .legend {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 14px 0 0;
+    padding: 0;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
   }
 
   .layout {

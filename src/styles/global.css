@@ -31,13 +31,13 @@
 
 [data-theme='light'] {
   --bg: #f4f6fa;
-  --bg-soft: #eef2f8;
+  --bg-soft: #e9eef7;
   --panel: #ffffff;
   --panel-2: #f4f7fb;
   --text: #1c2735;
-  --muted: #66788f;
-  --line: #d8e0eb;
-  --line-soft: #e4eaf2;
+  --muted: #5d7089;
+  --line: #c9d4e3;
+  --line-soft: #d7dfe9;
   --link: #2f6bd8;
   --chip-bg: #e3ecfb;
   --accent: #2f6bd8;
@@ -50,7 +50,7 @@
   --btn-primary-b: #2c5fd4;
   --btn-ghost-bg: #ffffff;
   --btn-ghost-line: #c9d5e3;
-  --hero-glow: rgba(47, 107, 216, 0.08);
+  --hero-glow: rgba(47, 107, 216, 0.12);
   color-scheme: light;
 }
 

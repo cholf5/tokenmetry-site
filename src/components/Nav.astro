@@ -22,12 +22,13 @@ const otherPath = locale === 'zh' ? '/en' : '/';
       <a href="#views">{t.nav.views}</a>
       <a href="#recon">{t.nav.recon}</a>
       <a href="#sources">{t.nav.sources}</a>
-      <a href="#local">{t.nav.local}</a>
-      <a href={site.repo} target="_blank" rel="noopener">{t.nav.github}</a>
     </nav>
 
     <div class="actions">
-      <a class="icon-link lang" href={otherPath} aria-label={t.nav.langAria}>{t.nav.langLabel}</a>
+      <a class="icon-link lang" href={otherPath} aria-label={t.nav.langAria}>
+        <span class="lang-full">{t.nav.langLabel}</span>
+        <span class="lang-short">{t.nav.langShort}</span>
+      </a>
       <button
         class="icon-link"
         type="button"
@@ -126,6 +127,10 @@ const otherPath = locale === 'zh' ? '/en' : '/';
     text-decoration: none;
   }
 
+  .lang-short {
+    display: none;
+  }
+
   .ico-sun {
     display: none;
   }
@@ -151,6 +156,14 @@ const otherPath = locale === 'zh' ? '/en' : '/';
     .lang {
       font-size: 12.5px;
       padding: 0 8px;
+    }
+
+    .lang-full {
+      display: none;
+    }
+
+    .lang .lang-short {
+      display: inline;
     }
 
     .btn-dl {
