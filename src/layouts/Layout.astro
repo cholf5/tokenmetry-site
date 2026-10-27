@@ -64,22 +64,27 @@ const otherLanguages = LANGUAGES.filter((l) => l.id !== locale);
     </script>
 
     <!--
-      首访语言协商：默认语言是英文，但浏览器语言命中已支持语种时替访客切过去。
-      守卫：仅裸根路径；每会话一次；localStorage 里有显式选择（语言菜单写入 tk-locale）则尊重之；
-      站内跳转（referrer 同源，如从 /ja 点导航回根路径）不重定向。
+      裸根路径语言协商：默认语言是英文。
+      - localStorage 有显式选择（语言菜单写入 tk-locale）→ 一律送回所选语言（en 即根路径，无需跳）；
+      - 无显式选择 → 每会话一次按浏览器语言替访客切过去；站内跳转（referrer 同源）不重定向。
     -->
     <script is:inline>
       (function () {
         try {
           if (location.pathname.replace(/\/+$/, '') !== '') return;
-          if (sessionStorage.getItem('tk-locale-redirected')) return;
-          if (localStorage.getItem('tk-locale')) return;
-          if (document.referrer && document.referrer.lastIndexOf(location.origin, 0) === 0) return;
           var target = {
             en: 'en', zh: 'zh', 'zh-cn': 'zh', 'zh-sg': 'zh', 'zh-my': 'zh',
             'zh-hant': 'zh-hant', 'zh-tw': 'zh-hant', 'zh-hk': 'zh-hant', 'zh-mo': 'zh-hant',
             ja: 'ja', ko: 'ko', 'pt-br': 'pt-br', pt: 'pt-br', ru: 'ru', es: 'es', de: 'de', fr: 'fr',
           };
+          var saved = localStorage.getItem('tk-locale');
+          if (saved) {
+            var picked = target[saved.toLowerCase()];
+            if (picked && picked !== 'en') location.replace('/' + picked);
+            if (picked) return;
+          }
+          if (sessionStorage.getItem('tk-locale-redirected')) return;
+          if (document.referrer && document.referrer.lastIndexOf(location.origin, 0) === 0) return;
           var candidates =
             navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
           var hit = '';
@@ -106,7 +111,7 @@ const otherLanguages = LANGUAGES.filter((l) => l.id !== locale);
     <slot />
     <!--
       交互委托（站内唯二的运行时 JS 之二）：主题切换、语言菜单开合、语言选择记忆。
-      语言选择写入 localStorage tk-locale，供首访语言协商尊重显式选择。
+      语言选择写入 localStorage tk-locale，供裸根路径协商把访客送回所选语言。
     -->
     <script is:inline>
       (function () {

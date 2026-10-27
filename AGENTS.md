@@ -35,7 +35,7 @@ pnpm icons           # 重新烘焙站点图标（public/favicon-{16,32}.png、a
 
 1. **多语同步**：首页模板只有 `src/components/HomePage.astro` 一份，所有语种共用；新增语种 = 在 `src/i18n/locales/` 加字典（从占位模板起）+ 在 `ui.ts` 的 `LANGUAGES` 与 `ui` 装配各加一条，页面无需改动。**文案改动**要同步改所有已翻译语种（至少 zh + en，其余语种按 `pnpm locales:check` 的结构校验保证不漏 key）。
 2. **文案改动**改 `src/i18n/locales/{locale}.ts`，不是改组件里的字符串；**链接改动**改 `src/config/site.ts`；**语种元数据**（URL/hreflang/本名）改 `ui.ts` 的 `LANGUAGES`。
-3. **零框架 JS**：站内唯一运行时 JS 是 Layout.astro 里三段内联脚本（主题初始化必须首帧前执行防闪烁，localStorage key `tk-theme`；首访语言协商，`tk-locale` 存显式语言选择；交互委托处理 `[data-theme-toggle]`、语言菜单开合与 `[data-lang-link]` 选择记忆）。不要引入前端框架或额外脚本。
+3. **零框架 JS**：站内唯一运行时 JS 是 Layout.astro 里三段内联脚本（主题初始化必须首帧前执行防闪烁，localStorage key `tk-theme`；语言协商：`tk-locale` 存语言菜单的显式选择，裸根路径一律自动送回所选语言，无显式选择时才按浏览器语言每会话协商一次；交互委托处理 `[data-theme-toggle]`、语言菜单开合与 `[data-lang-link]` 选择记忆）。不要引入前端框架或额外脚本。
 4. **内容不虚构**：产品功能表述以主仓库 README 与代码为准；配色令牌与主仓库 `src/Tokenmetry.App/Styles/Tokens.axaml` 同源，产品改版需同步 `global.css` 与 `app-ui.css`。图表系列色（`--series-*`）明暗共用，不随主题翻转。
 5. 功能配图用 `src/components/visuals/` 的 HTML 复刻（一套组件随 `[data-theme]`/`VisualLocale` 出明暗双语四变体，矢量清晰、零图片请求；2e69663 的截图方案已于 2026-10-26 回撤，`src/assets/shots/` 已删）。复刻的数字与文案不许虚构：stub 视图以主仓库 `tests/Tokenmetry.App.Headless.Tests/Shell/SiteShotsTests.cs` 的 `SiteData` 为准，总览为真机手记数字；产品 UI 改版需同步复刻组件。**app 段不随站点语种走**：产品本体只有 zh/en 两语，`visualLocale()` 把 zh/zh-hant 映射到 zh.app、其余语种映射到 en.app；产品内新增语言时才扩此映射与字典 app 段。
 6. 默认主题为 dark（`<html data-theme="dark">`）；默认语言为 en（根路径 `/`）；`trailingSlash: 'never'`，canonical 由 `ui.ts` 的 `localePath()` 拼接（en 为 `/`，其余为 `/{lang}`）；旧路径 `/en` 由 astro.config 的 redirects 跳回根路径。
