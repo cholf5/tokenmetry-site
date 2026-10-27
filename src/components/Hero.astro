@@ -1,6 +1,6 @@
 ---
 import { site } from '../config/site';
-import { ui, type Locale } from '../i18n/ui';
+import { ui, visualLocale, type Locale } from '../i18n/ui';
 import OverviewVisual from './visuals/OverviewVisual.astro';
 
 interface Props {
@@ -44,7 +44,7 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 
     <div class="shot-wrap rise rise-2">
       <figure class="shot" role="img" aria-label={t.hero.shotAlt} style="margin:0">
-        <OverviewVisual locale={locale} />
+        <OverviewVisual locale={visualLocale(locale)} />
       </figure>
     </div>
   </div>

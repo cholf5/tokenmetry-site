@@ -2,11 +2,11 @@
 /**
  * 项目统计视图复刻（原 projects-*.png）：项目排行表（按成本降序）。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 import { projectRows, fmtCompact, fmtCost, fmtPct1, fmtN0 } from '../../data/app-demo';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;

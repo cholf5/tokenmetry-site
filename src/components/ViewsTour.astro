@@ -1,5 +1,5 @@
 ---
-import { ui, type Locale } from '../i18n/ui';
+import { ui, visualLocale, type Locale } from '../i18n/ui';
 import SessionsVisual from './visuals/SessionsVisual.astro';
 import ModelsVisual from './visuals/ModelsVisual.astro';
 import TimeVisual from './visuals/TimeVisual.astro';
@@ -13,6 +13,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = ui[locale];
+const v = visualLocale(locale);
 
 const visuals: Record<string, typeof SessionsVisual> = {
   sessions: SessionsVisual,
@@ -25,14 +26,14 @@ const visuals: Record<string, typeof SessionsVisual> = {
 };
 
 const alts: Record<string, string> = {
-  sessions: locale === 'zh' ? 'Tokenmetry 会话明细视图：Agent、主模型、项目、token 与成本逐行的表格，带搜索与筛选' : 'Tokenmetry sessions view: a table of agent, model, project, tokens and cost per session, with search and filters',
-  models: locale === 'zh' ? 'Tokenmetry 模型统计视图：模型、厂商、关联 Agent 与成本占比表格' : 'Tokenmetry models view: models, providers, associated agents and cost shares',
-  time: locale === 'zh' ? 'Tokenmetry 时间分析视图：时间 KPI、按小时分布图、星期分布与活跃日历' : 'Tokenmetry time analysis: time KPIs, hourly distribution, weekday spread and activity calendar',
-  cost: locale === 'zh' ? 'Tokenmetry 成本分析视图：成本 KPI、日成本趋势与构成' : 'Tokenmetry cost analysis: cost KPIs, daily trend and composition',
-  projects: locale === 'zh' ? 'Tokenmetry 项目统计视图：项目占比与会话排行' : 'Tokenmetry projects view: shares and session rankings',
-  agents: locale === 'zh' ? 'Tokenmetry Agent 统计视图：Top KPI 与 Agent 排行' : 'Tokenmetry agents view: top KPIs and agent rankings',
+  sessions: v === 'zh' ? 'Tokenmetry 会话明细视图：Agent、主模型、项目、token 与成本逐行的表格，带搜索与筛选' : 'Tokenmetry sessions view: a table of agent, model, project, tokens and cost per session, with search and filters',
+  models: v === 'zh' ? 'Tokenmetry 模型统计视图：模型、厂商、关联 Agent 与成本占比表格' : 'Tokenmetry models view: models, providers, associated agents and cost shares',
+  time: v === 'zh' ? 'Tokenmetry 时间分析视图：时间 KPI、按小时分布图、星期分布与活跃日历' : 'Tokenmetry time analysis: time KPIs, hourly distribution, weekday spread and activity calendar',
+  cost: v === 'zh' ? 'Tokenmetry 成本分析视图：成本 KPI、日成本趋势与构成' : 'Tokenmetry cost analysis: cost KPIs, daily trend and composition',
+  projects: v === 'zh' ? 'Tokenmetry 项目统计视图：项目占比与会话排行' : 'Tokenmetry projects view: shares and session rankings',
+  agents: v === 'zh' ? 'Tokenmetry Agent 统计视图：Top KPI 与 Agent 排行' : 'Tokenmetry agents view: top KPIs and agent rankings',
   'data-pricing':
-    locale === 'zh'
+    v === 'zh'
       ? 'Tokenmetry 数据与计价视图：数据源状态表（正常/部分/无数据/尚未扫描）与模型价格目录'
       : 'Tokenmetry data & pricing view: source status table (ok/partial/no data/not scanned) and the model price catalog',
 };
@@ -73,7 +74,7 @@ for (const stop of t.tour.stops) {
                   <h3>{stop.title}</h3>
                   <p class="desc">{stop.desc}</p>
                   <div class="visual" role="img" aria-label={alts[stop.visual]}>
-                    <Visual locale={locale} />
+                    <Visual locale={v} />
                   </div>
                 </article>
               );
@@ -93,7 +94,7 @@ for (const stop of t.tour.stops) {
             </div>
           </header>
           <div class="visual" role="img" aria-label={alts[stop.visual]}>
-            <Visual locale={locale} />
+            <Visual locale={v} />
           </div>
           <p class="desc">{stop.desc}</p>
         </article>
@@ -106,7 +107,7 @@ for (const stop of t.tour.stops) {
             <p class="desc">{stop.desc}</p>
           </div>
           <div class="visual" role="img" aria-label={alts[stop.visual]}>
-            <Visual locale={locale} />
+            <Visual locale={v} />
           </div>
         </article>
       );

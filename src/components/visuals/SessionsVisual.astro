@@ -3,12 +3,12 @@
  * 会话明细视图复刻（原 sessions-*.png，SiteData 受控演示数据）。
  * 设计稿宽 1280、高 860；第 10 行被行区裁剪、加载更多与计数在裁剪区外——与截图同构。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 import { sessionRows, fmtN0, fmtCost } from '../../data/app-demo';
 import Mark from './Mark.astro';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;

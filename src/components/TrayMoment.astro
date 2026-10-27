@@ -1,5 +1,5 @@
 ---
-import { ui, type Locale } from '../i18n/ui';
+import { ui, visualLocale, type Locale } from '../i18n/ui';
 import TrayVisual from './visuals/TrayVisual.astro';
 
 interface Props {
@@ -26,7 +26,7 @@ const t = ui[locale];
     </div>
 
     <figure class="visual" role="img" aria-label={t.tray.shotAlt} style="margin:0">
-      <TrayVisual locale={locale} />
+      <TrayVisual locale={visualLocale(locale)} />
     </figure>
   </div>
 </section>

@@ -1,6 +1,6 @@
 ---
 import { site } from '../config/site';
-import { ui, type Locale } from '../i18n/ui';
+import { ui, LANGUAGES, localePath, type Locale } from '../i18n/ui';
 import Logo from './Logo.astro';
 
 interface Props {
@@ -8,27 +8,48 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const otherPath = locale === 'zh' ? '/en' : '/';
+const self = LANGUAGES.find((l) => l.id === locale)!;
+const home = localePath(locale) || '/';
 ---
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="brand" href={`/${locale === 'zh' ? '' : 'en'}`} aria-label="Tokenmetry">
+    <a class="brand" href={home} aria-label="Tokenmetry">
       <Logo size={26}></Logo>
       <span>Tokenmetry</span>
     </a>
 
-    <nav class="links" aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
+    <nav class="links" aria-label={t.nav.ariaMain}>
       <a href="#views">{t.nav.views}</a>
       <a href="#recon">{t.nav.recon}</a>
       <a href="#sources">{t.nav.sources}</a>
     </nav>
 
     <div class="actions">
-      <a class="icon-link lang" href={otherPath} aria-label={t.nav.langAria}>
-        <span class="lang-full">{t.nav.langLabel}</span>
-        <span class="lang-short">{t.nav.langShort}</span>
-      </a>
+      <details class="lang" data-lang-menu>
+        <summary aria-label={t.nav.langAria}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"></path>
+          </svg>
+          <span class="lang-full">{self.nativeName}</span>
+          <span class="lang-short">{self.short}</span>
+        </summary>
+        <ul class="lang-menu">
+          {LANGUAGES.map((l) => (
+            <li>
+              <a
+                href={l.path || '/'}
+                data-lang-link={l.id}
+                hreflang={l.tag}
+                aria-current={l.id === locale ? 'true' : undefined}
+              >
+                {l.nativeName}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
       <button
         class="icon-link"
         type="button"
@@ -127,6 +148,86 @@ const otherPath = locale === 'zh' ? '/en' : '/';
     text-decoration: none;
   }
 
+  /* 语言切换：details/summary 纯 HTML 开合，外观对齐 icon-link */
+  .lang {
+    position: relative;
+  }
+
+  .lang summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: var(--muted);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  }
+
+  .lang summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lang summary:hover,
+  .lang[open] summary {
+    color: var(--text);
+    background: var(--panel-2);
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 176px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(2, 8, 20, 0.35);
+    z-index: 60;
+  }
+
+  [data-theme='light'] .lang-menu {
+    box-shadow: 0 12px 32px rgba(30, 50, 90, 0.22);
+  }
+
+  .lang-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .lang-menu a:hover {
+    color: var(--text);
+    background: var(--panel-2);
+    text-decoration: none;
+  }
+
+  .lang-menu a[aria-current='true'] {
+    color: var(--text);
+  }
+
+  .lang-menu a[aria-current='true']::after {
+    content: '✓';
+    font-size: 12px;
+    color: var(--accent);
+  }
+
   .lang-short {
     display: none;
   }
@@ -153,7 +254,7 @@ const otherPath = locale === 'zh' ? '/en' : '/';
       display: none;
     }
 
-    .lang {
+    .lang summary {
       font-size: 12.5px;
       padding: 0 8px;
     }

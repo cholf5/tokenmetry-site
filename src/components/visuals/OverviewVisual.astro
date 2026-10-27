@@ -4,12 +4,12 @@
  * 全窗外壳：macOS 标题栏 + 筛选栏 + 侧栏 + 四 KPI + 趋势/Agent 环 + 模型分布/类型环。
  * 设计稿宽 1280（--u 换算见 app-ui.css 头注）。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 import { overview } from '../../data/app-demo';
 import Mark from './Mark.astro';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;

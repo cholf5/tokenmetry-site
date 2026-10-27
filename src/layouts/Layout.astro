@@ -1,33 +1,31 @@
 ---
 import { site } from '../config/site';
-import { ui, defaultLocale, type Locale } from '../i18n/ui';
+import { ui, LANGUAGES, localePath, type Locale } from '../i18n/ui';
 import '../styles/global.css';
 import '../styles/app-ui.css';
 
 interface Props {
   locale: Locale;
-  /** 当前页面路径（无尾斜杠），如 '' 或 '/en' */
-  path: '' | '/en';
 }
 
-const { locale, path } = Astro.props;
+const { locale } = Astro.props;
 const t = ui[locale];
-const other: Locale = locale === 'zh' ? 'en' : 'zh';
-const otherPath = locale === 'zh' ? '/en' : '';
-const canonical = `${site.url}${path === '' ? '/' : path}`;
-const ogImage = `${site.url}/og-${locale}.png`;
+const self = LANGUAGES.find((l) => l.id === locale)!;
+const canonical = `${site.url}${localePath(locale) || '/'}`;
+/* OG 分享图只烘焙了中英两版：中文语种共用 og-zh，其余共用 og-en（见 scripts/generate-og.mjs） */
+const ogImage = `${site.url}/og-${locale === 'zh' || locale === 'zh-hant' ? 'zh' : 'en'}.png`;
+const otherLanguages = LANGUAGES.filter((l) => l.id !== locale);
 ---
 
 <!doctype html>
-<html lang={locale === 'zh' ? 'zh-CN' : 'en'} data-theme="dark">
+<html lang={self.tag} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{t.meta.title}</title>
     <meta name="description" content={t.meta.description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="zh-CN" href={`${site.url}/`} />
-    <link rel="alternate" hreflang="en" href={`${site.url}/en`} />
+    {LANGUAGES.map((l) => <link rel="alternate" hreflang={l.tag} href={`${site.url}${l.path || '/'}`} />)}
     <link rel="alternate" hreflang="x-default" href={`${site.url}/`} />
 
     <meta property="og:type" content="website" />
@@ -38,8 +36,8 @@ const ogImage = `${site.url}/og-${locale}.png`;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
-    <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta property="og:locale" content={self.ogLocale} />
+    {otherLanguages.map((l) => <meta property="og:locale:alternate" content={l.ogLocale} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={t.meta.title} />
     <meta name="twitter:description" content={t.meta.description} />
@@ -64,21 +62,83 @@ const ogImage = `${site.url}/og-${locale}.png`;
         } catch (e) {}
       })();
     </script>
+
+    <!--
+      首访语言协商：默认语言是英文，但浏览器语言命中已支持语种时替访客切过去。
+      守卫：仅裸根路径；每会话一次；localStorage 里有显式选择（语言菜单写入 tk-locale）则尊重之；
+      站内跳转（referrer 同源，如从 /ja 点导航回根路径）不重定向。
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          if (location.pathname.replace(/\/+$/, '') !== '') return;
+          if (sessionStorage.getItem('tk-locale-redirected')) return;
+          if (localStorage.getItem('tk-locale')) return;
+          if (document.referrer && document.referrer.lastIndexOf(location.origin, 0) === 0) return;
+          var target = {
+            en: 'en', zh: 'zh', 'zh-cn': 'zh', 'zh-sg': 'zh', 'zh-my': 'zh',
+            'zh-hant': 'zh-hant', 'zh-tw': 'zh-hant', 'zh-hk': 'zh-hant', 'zh-mo': 'zh-hant',
+            ja: 'ja', ko: 'ko', 'pt-br': 'pt-br', pt: 'pt-br', ru: 'ru', es: 'es', de: 'de', fr: 'fr',
+          };
+          var candidates =
+            navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+          var hit = '';
+          for (var i = 0; i < candidates.length && !hit; i++) {
+            var tag = String(candidates[i] || '').toLowerCase();
+            while (tag && !hit) {
+              if (target[tag]) {
+                hit = target[tag];
+                break;
+              }
+              var cut = tag.lastIndexOf('-');
+              if (cut < 1) break;
+              tag = tag.slice(0, cut);
+            }
+          }
+          if (!hit || hit === 'en') return;
+          sessionStorage.setItem('tk-locale-redirected', '1');
+          location.replace('/' + hit);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <slot />
-    <!-- 主题切换（惰性绑定，无框架依赖） -->
+    <!--
+      交互委托（站内唯二的运行时 JS 之二）：主题切换、语言菜单开合、语言选择记忆。
+      语言选择写入 localStorage tk-locale，供首访语言协商尊重显式选择。
+    -->
     <script is:inline>
       (function () {
+        var closeLangMenus = function (except) {
+          document.querySelectorAll('details[data-lang-menu][open]').forEach(function (d) {
+            if (d !== except) d.removeAttribute('open');
+          });
+        };
         document.addEventListener('click', function (e) {
           var btn = e.target.closest('[data-theme-toggle]');
-          if (!btn) return;
-          var root = document.documentElement;
-          var next = root.dataset.theme === 'light' ? 'dark' : 'light';
-          root.dataset.theme = next;
-          try {
-            localStorage.setItem('tk-theme', next);
-          } catch (e) {}
+          if (btn) {
+            var root = document.documentElement;
+            var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+            root.dataset.theme = next;
+            try {
+              localStorage.setItem('tk-theme', next);
+            } catch (err) {}
+            return;
+          }
+          var langLink = e.target.closest('[data-lang-link]');
+          if (langLink) {
+            try {
+              localStorage.setItem('tk-locale', langLink.getAttribute('data-lang-link'));
+            } catch (err) {}
+            closeLangMenus();
+            return;
+          }
+          var summary = e.target.closest('details[data-lang-menu] summary');
+          if (!summary) closeLangMenus();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeLangMenus();
         });
       })();
     </script>

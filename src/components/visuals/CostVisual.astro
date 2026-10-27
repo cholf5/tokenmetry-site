@@ -3,10 +3,10 @@
  * 成本分析视图复刻（原 cost-*.png）：六张口径 KPI 卡 + 口径说明表。
  * 12.0/5.0/78.0/5.0 为 Token 四分量占比（成本按方向拆价口径待扩展，产品如实标注）。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;

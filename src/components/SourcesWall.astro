@@ -23,7 +23,7 @@ const familyOf = (method: string) => {
       <span class="kicker">{t.sources.kicker}</span>
       <h2>{t.sources.title}</h2>
       <p class="sub">{t.sources.subtitle}</p>
-      <ul class="legend" aria-label={locale === 'zh' ? '读取方式图例' : 'read-method legend'}>
+      <ul class="legend" aria-label={t.sources.legendAria}>
         {t.sources.legend.map((label, i) => (
           <li><span class="dot" style={`--dot:${familyColors[i]}`}></span>{label}</li>
         ))}
@@ -40,7 +40,7 @@ const familyOf = (method: string) => {
       ))}
       <li class="cell count">
         <strong class="num">19</strong>
-        <span>{locale === 'zh' ? '源 · 只读' : 'sources · read-only'}</span>
+        <span>{t.sources.countLabel}</span>
       </li>
     </ul>
   </div>

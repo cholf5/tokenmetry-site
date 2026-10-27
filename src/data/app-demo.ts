@@ -9,7 +9,7 @@
  * FormatCompact / FormatCost 移植自主仓库 Controls/TrendChart.axaml.cs（尾数 ≥1000 取整、
  * ≥100 一位小数、其余两位，越档尾数升档），保证两语言数字与产品逐字相同。
  */
-import type { Locale } from '../i18n/ui';
+import type { VisualLocale } from '../i18n/ui';
 
 /* ── 数字格式化（移植 TrendChart.FormatCompact / FormatCostUsd）── */
 
@@ -26,7 +26,7 @@ const enUnits = [
   { threshold: 1e12, divisor: 1e12, unit: 'T' },
 ];
 
-export function fmtCompact(value: number, locale: Locale): string {
+export function fmtCompact(value: number, locale: VisualLocale): string {
   const units = locale === 'zh' ? zhUnits : enUnits;
   const abs = Math.abs(value);
   let index = -1;
@@ -56,7 +56,7 @@ export const fmtPct1 = (share: number): string => `${(share * 100).toFixed(1)}%`
 /* ── 总览（真机手记，与原截图逐字一致）── */
 
 export const overview = {
-  totalText: { zh: '35.22亿', en: '3.52B' } as Record<Locale, string>,
+  totalText: { zh: '35.22亿', en: '3.52B' } as Record<VisualLocale, string>,
   /** KPI 与脚注：值 + 涨跌方向 + 百分比文案 */
   kpis: {
     tokens: { delta: '158.2%', dir: 'up' as const },
@@ -90,7 +90,7 @@ export const overview = {
       { share: 96.6, color: '#38d6a4' },
     ],
   },
-  updated: { zh: '19:39', en: '19:44' } as Record<Locale, string>,
+  updated: { zh: '19:39', en: '19:44' } as Record<VisualLocale, string>,
 };
 
 /* ── 会话/Agent/模型/项目/时间/成本（SiteData，周口径：36.44M token / $81.22+ / 214 会话）── */
@@ -170,7 +170,7 @@ export type SessionRow = {
 };
 
 /** 与 SiteData.Sessions() 同序；会话 ID 每次 headless 渲染重新生成，取自原截图留档 */
-export const sessionRows: Record<Locale, SessionRow[]> = {
+export const sessionRows: Record<VisualLocale, SessionRow[]> = {
   zh: [
     { project: 'checkout-api', sessionId: 'c1d18efd-605d-46c3-b4ed-ba2c6e78f0de', agent: 'Claude Code', agentLogo: 'claudeCode', model: 'claude-sonnet-4-5', tokens: 2_410_000, cost: 5.87, hoursAgo: 9 },
     { project: 'checkout-api', sessionId: '34bd5246-0805-45ec-8ff8-ff3a846bfe09', agent: 'Codex', agentLogo: 'codex', model: 'gpt-5.1', tokens: 860_000, cost: 2.03, hoursAgo: 11 },

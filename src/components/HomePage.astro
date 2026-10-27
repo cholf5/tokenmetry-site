@@ -1,0 +1,39 @@
+---
+/**
+ * 首页唯一模板：所有语种共用（en 在根路径，其余在 /{lang}，见 pages/[lang]/index.astro）。
+ * 语种差异全部来自 ui[locale]，区块结构只此一份——双语/多语「逐区块一致」由此保证。
+ */
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import Why from './Why.astro';
+import Reconciliation from './Reconciliation.astro';
+import ViewsTour from './ViewsTour.astro';
+import TrayMoment from './TrayMoment.astro';
+import SourcesWall from './SourcesWall.astro';
+import LocalFirst from './LocalFirst.astro';
+import Outro from './Outro.astro';
+import Footer from './Footer.astro';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Layout locale={locale}>
+  <Nav locale={locale} />
+  <main>
+    <Hero locale={locale} />
+    <Why locale={locale} />
+    <Reconciliation locale={locale} />
+    <ViewsTour locale={locale} />
+    <TrayMoment locale={locale} />
+    <SourcesWall locale={locale} />
+    <LocalFirst locale={locale} />
+    <Outro locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>

@@ -3,12 +3,12 @@
  * 数据与计价视图复刻（原 data-pricing-*.png）：来源状态表 + 统计口径 + 模型目录
  * （目录表被 900px 窗口裁剪，只露表头——与截图同构）。设计稿宽 1180。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 import { sourceRows, fmtN0 } from '../../data/app-demo';
 import Mark from './Mark.astro';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;

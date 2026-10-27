@@ -2,12 +2,12 @@
 /**
  * 模型统计视图复刻（原 models-*.png）：模型明细表 + 合计行，kimi-k2.5 成本未知 chip。
  */
-import { ui, type Locale } from '../../i18n/ui';
+import { ui, type VisualLocale } from '../../i18n/ui';
 import { modelRows, modelTotals, fmtCompact, fmtCost, fmtN0 } from '../../data/app-demo';
 import Mark from './Mark.astro';
 
 interface Props {
-  locale: Locale;
+  locale: VisualLocale;
 }
 const { locale } = Astro.props;
 const t = ui[locale].app;
