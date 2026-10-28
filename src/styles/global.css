@@ -4,17 +4,17 @@
  * 图表系列色不随明暗翻转（与产品 design-tokens.md §2 口径一致）。
  */
 :root {
-  /* dark（产品 Dark ThemeDictionary 原值） */
-  --bg: #0b1120;
-  --bg-soft: #0e1728;
-  --panel: #111c2e;
-  --panel-2: #142137;
+  /* dark（产品 Dark ThemeDictionary 现值，Q-019 降饱和批次后） */
+  --bg: #0f1118;
+  --bg-soft: #13171f;
+  --panel: #171c25;
+  --panel-2: #1b212c;
   --text: #e8eef9;
   --muted: #8293ad;
-  --line: #22324a;
-  --line-soft: #1c2b40;
+  --line: #2a323d;
+  --line-soft: #242b34;
   --link: #80adff;
-  --chip-bg: #1b2c44;
+  --chip-bg: #232c39;
   --accent: #4c8dff;
   --green: #38d6a4;
   --red: #ff7185;
@@ -23,8 +23,8 @@
   --cyan: #57c7e8;
   --btn-primary-a: #397df5;
   --btn-primary-b: #3670e7;
-  --btn-ghost-bg: #17263c;
-  --btn-ghost-line: #2a3b54;
+  --btn-ghost-bg: #1e2531;
+  --btn-ghost-line: #313b48;
   --hero-glow: rgba(76, 141, 255, 0.13);
   color-scheme: dark;
 }
@@ -35,7 +35,7 @@
   --panel: #ffffff;
   --panel-2: #f4f7fb;
   --text: #1c2735;
-  --muted: #5d7089;
+  --muted: #546783;
   --line: #c9d4e3;
   --line-soft: #d7dfe9;
   --link: #2f6bd8;

@@ -19,19 +19,19 @@
   /* 缩放：--u = 设计稿 1px（--dw 由各复刻组件内联传入） */
   --u: calc(100cqw / var(--dw, 1280));
 
-  /* ── 产品令牌：dark（Tokens.axaml Dark 原值）── */
-  --tabg: #0b1120;
-  --tasidebar: #0d1626;
-  --tatopbar: #0e1728;
-  --tapanel: #111c2e;
-  --tapanel2: #142137;
-  --taline: #24344d;
-  --taline-soft: #1c2b40;
+  /* ── 产品令牌：dark（Tokens.axaml Dark 现值，Q-019 降饱和批次后）── */
+  --tabg: #0f1118;
+  --tasidebar: #12161e;
+  --tatopbar: #13171f;
+  --tapanel: #171c25;
+  --tapanel2: #1b212c;
+  --taline: #2c3440;
+  --taline-soft: #252c36;
   --tatext: #e8eef9;
   --tamuted: #8293ad;
   --takpititle: #b7c5d9;
-  --tacard: linear-gradient(145deg, #121e31, #101a2b);
-  --tacardline: #22324a;
+  --tacard: linear-gradient(145deg, #181e27, #151a22);
+  --tacardline: #2a323d;
   --tablue: #4c8dff;
   --tacyan: #57c7e8;
   --tapurple: #a779ff;
@@ -39,17 +39,18 @@
   --taorange: #ffb454;
   --tared: #ff7185;
   --talink: #80adff;
-  --tachip-bg: #1b2c44;
+  --tachip-bg: #232c39;
   --tachip-tx: #a8c8ff;
   --tachip-neutral-bg: #263143;
   --tachip-neutral-tx: #bac8da;
-  --tatrack: #23334b;
-  --tagrid: #23344b;
-  --taaxis: #35465e;
-  --tanav-active-bg: #1b2d49;
+  --tatrack: #2a3340;
+  --tagrid: #2c343f;
+  --taaxis: #3d4651;
+  --tanav-fg: #8293ad;
+  --tanav-active-bg: #242d3c;
   --tanav-active-tx: #9dc2ff;
   --tanav-ind: #5794ff;
-  --tanav-hover: #17253b;
+  --tanav-hover: #1e2531;
   --taic-blue: #20395b;
   --taic-blue-fg: #8db8ff;
   --taic-amber: #3c3321;
@@ -62,8 +63,9 @@
   --taic-neutral-fg: #bac8da;
   --tatitlebar: #373737;
   --tatitlebar-tx: #d3d3d3;
-  --taheat-empty: #1b2c44;
-  --taheat-fill: #2c4a6e;
+  /* 热力图图例（产品 Heatmap：空格 = AppPanelAltBrush，满强度 = #4c8dff @ alpha 0.90 叠底预混） */
+  --taheat-empty: #1b212c;
+  --taheat-fill: #4782ea;
   --tastatus-ok: #38d6a4;
   --tastatus-warn: #ffb454;
   --tastatus-off: #6d7f98;
@@ -89,7 +91,7 @@
   --taline: #d4dbe6;
   --taline-soft: #e3e9f1;
   --tatext: #1c2735;
-  --tamuted: #66788f;
+  --tamuted: #546783;
   --takpititle: #5d6f86;
   --tacard: linear-gradient(145deg, #ffffff, #f7f9fc);
   --tacardline: #d8e0eb;
@@ -107,6 +109,7 @@
   --tatrack: #e2e8f0;
   --tagrid: #d9e1ec;
   --taaxis: #b9c5d7;
+  --tanav-fg: #3d4c63;
   --tanav-active-bg: #dbe7fb;
   --tanav-active-tx: #2b5d9f;
   --tanav-ind: #2e6bdc;
@@ -123,8 +126,8 @@
   --taic-neutral-fg: #5a6b80;
   --tatitlebar: #f4f4f4;
   --tatitlebar-tx: #555a61;
-  --taheat-empty: #e3ecfb;
-  --taheat-fill: #b9d2f2;
+  --taheat-empty: #eef1f6;
+  --taheat-fill: #5c97fe;
   --tastatus-ok: #0e9e77;
   --tastatus-warn: #c77700;
   --tastatus-off: #8b9ab0;
@@ -142,7 +145,7 @@
   font-weight: 650;
 }
 
-/* 卡片（.kpi/.panel：145deg 渐变 + 1px #22324a） */
+/* 卡片（.kpi/.panel：145deg 渐变 + 1px 描边） */
 .ta-card {
   background: var(--tacard);
   border: calc(1 * var(--u)) solid var(--tacardline);
@@ -498,7 +501,7 @@
   height: calc(34 * var(--u));
   padding: 0 calc(12 * var(--u));
   border-radius: calc(8 * var(--u));
-  color: var(--tamuted);
+  color: var(--tanav-fg);
   font-size: calc(13 * var(--u));
 }
 
@@ -1062,9 +1065,9 @@
   align-items: center;
   height: calc(30 * var(--u));
   padding: 0 calc(13 * var(--u));
-  border: calc(1 * var(--u)) solid #2b4c70;
+  border: calc(1 * var(--u)) solid #3a4c5f;
   border-radius: calc(8 * var(--u));
-  background: #172a42;
+  background: #202a37;
   color: var(--talink);
   font-size: calc(12 * var(--u));
   font-weight: 600;
@@ -1327,7 +1330,7 @@
 
 .ta-tray-btn.primary {
   border: none;
-  background: linear-gradient(90deg, #397df5, #3670e7);
+  background: var(--tablue); /* 产品 popover-btn.primary：实色 AppAccentBlueBrush + 恒白字 */
   color: #fff;
 }
 

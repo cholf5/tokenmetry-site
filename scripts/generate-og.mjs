@@ -11,11 +11,11 @@ import { fileURLToPath } from 'node:url';
 const W = 1200;
 const H = 630;
 
-// 与产品视觉一致：bg / 面板 / 文字取自 Tokens.axaml Dark 值
+// 与产品视觉一致：bg / 面板 / 文字取自 Tokens.axaml Dark 值（Q-019 降饱和批次后）
 const C = {
-  bg: '#0b1120',
-  panel: '#111c2e',
-  line: '#22324a',
+  bg: '#0f1118',
+  panel: '#171c25',
+  line: '#2a323d',
   text: '#e8eef9',
   muted: '#8293ad',
   blue: '#4c8dff',
@@ -57,8 +57,9 @@ function bars(x, yBase, widths) {
 function svg(d) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
-    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3986ed"/><stop offset="1" stop-color="#8a68e9"/>
+    <!-- D-018 定稿应用图标底：深蓝黑方角渐变，坐标同 Logo.astro（userSpaceOnUse 走 1024 视图空间） -->
+    <linearGradient id="tkapp" x1="150" y1="0" x2="874" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14263f"/><stop offset="1" stop-color="#0a1322"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.72" cy="0" r="0.85">
       <stop offset="0" stop-color="${C.blue}" stop-opacity="0.16"/>
@@ -68,9 +69,13 @@ function svg(d) {
   <rect width="${W}" height="${H}" fill="${C.bg}"/>
   <rect width="${W}" height="${H}" fill="url(#glow)"/>
 
-  <!-- brand -->
-  <rect x="96" y="86" width="66" height="66" rx="17" fill="url(#lg)"/>
-  <path d="M114 108h30M129 108v26" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/>
+  <!-- brand：D-018 绿柱图标整组缩放 66/1024（几何与 src/components/Logo.astro 同源） -->
+  <g transform="translate(96 86) scale(0.0644531)">
+    <rect width="1024" height="1024" rx="239" fill="url(#tkapp)"/>
+    <rect x="177" y="530" width="170" height="290" rx="85" fill="#1d9e79"/>
+    <rect x="427" y="365" width="170" height="455" rx="85" fill="#27c496"/>
+    <rect x="677" y="200" width="170" height="620" rx="85" fill="#38d6a4"/>
+  </g>
   <text x="184" y="116" font-family="${d.sans}" font-size="34" font-weight="700" fill="${C.text}" letter-spacing="-0.5">Tokenmetry</text>
   <text x="185" y="146" font-family="${d.sans}" font-size="16" fill="${C.muted}">tokenmetry.app</text>
 
