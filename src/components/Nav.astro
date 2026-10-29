@@ -195,7 +195,7 @@ const home = localePath(locale) || '/';
     z-index: 60;
   }
 
-  [data-theme='light'] .lang-menu {
+  :global([data-theme='light']) .lang-menu {
     box-shadow: 0 12px 32px rgba(30, 50, 90, 0.22);
   }
 
@@ -236,11 +236,11 @@ const home = localePath(locale) || '/';
     display: none;
   }
 
-  [data-theme='light'] .ico-sun {
+  :global([data-theme='light']) .ico-sun {
     display: block;
   }
 
-  [data-theme='light'] .ico-moon {
+  :global([data-theme='light']) .ico-moon {
     display: none;
   }
 

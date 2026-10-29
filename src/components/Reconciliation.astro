@@ -84,7 +84,7 @@ const fiveDots = [0, 1, 2, 3, 4].map((i) => `var(--series-${i})`);
   }
 
   /* 浅色底上青色端失去对比，换浅色 accent → 紫（产品浅色令牌原值） */
-  [data-theme='light'] .big {
+  :global([data-theme='light']) .big {
     background: linear-gradient(100deg, var(--accent), var(--purple));
   }
 
