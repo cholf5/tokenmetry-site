@@ -294,7 +294,7 @@ const dict = {
     thModel: '模型',
     thTokenCount: 'Token 数',
     thShare: '占比',
-    totalTokens: 'Total Tokens',
+    totalTokens: '总 Token',
     metaNormalizedAcrossSources: '跨来源归一化',
     panelTypeDonut: 'Token 类型构成',
     tokenTypeInput: '输入(未缓存)',

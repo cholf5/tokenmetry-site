@@ -8,6 +8,8 @@
  *
  * FormatCompact / FormatCost 移植自主仓库 Controls/TrendChart.axaml.cs（尾数 ≥1000 取整、
  * ≥100 一位小数、其余两位，越档尾数升档），保证两语言数字与产品逐字相同。
+ * 0ebdcdf 起：未达单位档（zh<1万 / en<1K）保留千分位（产品 "#,0.##"），两处同步；
+ * 总览预览表 token 同批改紧凑格式（DimensionRowViewModel 与模型/项目页同口径）。
  */
 import type { VisualLocale } from '../i18n/ui';
 
@@ -36,7 +38,10 @@ export function fmtCompact(value: number, locale: VisualLocale): string {
       break;
     }
   }
-  if (index < 0) return value.toString();
+  if (index < 0) {
+    // 未达首个单位档时保留千分位（0ebdcdf：产品 "#,0.##"；zh/en 分组符同为逗号）
+    return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  }
   // 尾数取整达到本档上限（9999.5万 → 10000万）时升入上一档（上限 = 下一档阈值 / 本档除数）
   if (index + 1 < units.length && Math.round(abs / units[index].divisor) >= units[index + 1].threshold / units[index].divisor) index++;
   const scaled = value / units[index].divisor;
@@ -57,12 +62,12 @@ export const fmtPct1 = (share: number): string => `${(share * 100).toFixed(1)}%`
 
 export const overview = {
   totalText: { zh: '35.22亿', en: '3.52B' } as Record<VisualLocale, string>,
-  /** KPI 与脚注：值 + 涨跌方向 + 百分比文案 */
+  /** KPI 与脚注：值 + 环比极性（0ebdcdf 语义色：cost 降=好/升=坏，用量与会话数中性，缓存占比升=好） */
   kpis: {
-    tokens: { delta: '158.2%', dir: 'up' as const },
-    cost: { delta: '128.3%', dir: 'up' as const, value: '$137.49' },
-    sessions: { delta: '163.4%', dir: 'up' as const, value: '432' },
-    cache: { delta: '0.4%', dir: 'down' as const, value: '96.6%' },
+    tokens: { delta: '158.2%', valence: 'neutral' as const },
+    cost: { delta: '128.3%', valence: 'bad' as const, value: '$137.49' },
+    sessions: { delta: '163.4%', valence: 'neutral' as const, value: '432' },
+    cache: { delta: '0.4%', valence: 'bad' as const, value: '96.6%' },
   },
   /** 按日汇总 10/1–10/25（单位 M），与原趋势图逐点校准 */
   trendM: [
@@ -77,11 +82,12 @@ export const overview = {
       { name: 'OpenCode', share: 2.1, color: 'var(--series-1)' },
     ],
   },
+  /** 预览表：原始 token 数按 fmtCompact 出文案（0ebdcdf 起总览预览表与模型页同口径） */
   models: [
-    { logo: 'zai', name: 'glm-5-3-flash', tokens: '3,386,191,480', share: '96.2%' },
-    { logo: 'deepseek', name: 'deepseek-flash', tokens: '95,470,684', share: '2.7%' },
-    { logo: 'zai', name: 'glm-5-3', tokens: '39,842,526', share: '1.1%' },
-    { logo: 'zai', name: 'ark-code-latest', tokens: '344,941', share: '0.0%' },
+    { logo: 'zai', name: 'glm-5-3-flash', tokens: 3_386_191_480, share: '96.2%' },
+    { logo: 'deepseek', name: 'deepseek-flash', tokens: 95_470_684, share: '2.7%' },
+    { logo: 'zai', name: 'glm-5-3', tokens: 39_842_526, share: '1.1%' },
+    { logo: 'zai', name: 'ark-code-latest', tokens: 344_941, share: '0.0%' },
   ],
   typeDonut: {
     segments: [

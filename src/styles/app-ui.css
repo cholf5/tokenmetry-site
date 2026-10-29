@@ -41,8 +41,6 @@
   --talink: #80adff;
   --tachip-bg: #232c39;
   --tachip-tx: #a8c8ff;
-  --tachip-neutral-bg: #263143;
-  --tachip-neutral-tx: #bac8da;
   --tatrack: #2a3340;
   --tagrid: #2c343f;
   --taaxis: #3d4651;
@@ -74,7 +72,10 @@
   width: 100%;
   background: var(--tabg);
   color: var(--tatext);
-  font-family: inherit;
+  /* 0ebdcdf：产品显式启用 Inter（AppFontFamily），拉丁字形不再随平台漂移；
+     CJK 仍由系统回退字体补（Inter 无中文字形），与产品行为一致 */
+  font-family: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
   text-align: left;
@@ -104,8 +105,6 @@
   --talink: #2f6bd8;
   --tachip-bg: #e3ecfb;
   --tachip-tx: #2b5d9f;
-  --tachip-neutral-bg: #e8ecf2;
-  --tachip-neutral-tx: #5a6b80;
   --tatrack: #e2e8f0;
   --tagrid: #d9e1ec;
   --taaxis: #b9c5d7;
@@ -267,21 +266,27 @@
   background: linear-gradient(90deg, #3e7df0, #65b9ff);
 }
 
-/* chip（.chip） */
+/* chip（.chip）：字号 10→11（0ebdcdf，10px 中文笔画糊） */
 .ta-chip {
   display: inline-block;
   border-radius: calc(6 * var(--u));
   background: var(--tachip-bg);
   color: var(--tachip-tx);
-  font-size: calc(10.5 * var(--u));
+  font-size: calc(11 * var(--u));
   line-height: 1;
   padding: calc(4 * var(--u)) calc(8 * var(--u));
   white-space: nowrap;
 }
 
+/* 口径徽章状态变体（0ebdcdf chip.ok|muted）：ok = 始终生效（绿软底），muted = 未提供（中性退后） */
+.ta-chip.ok {
+  background: var(--taic-green);
+  color: var(--taic-green-fg);
+}
+
 .ta-chip-neutral {
-  background: var(--tachip-neutral-bg);
-  color: var(--tachip-neutral-tx);
+  background: var(--tapanel2);
+  color: var(--tamuted);
 }
 
 /* KPI 卡图标芯片（.kpi-icon 四色 + 中性） */
@@ -581,16 +586,18 @@
   color: var(--tamuted);
 }
 
+/* KPI 环比色（0ebdcdf 语义极性 KpiChangeValence）：good=朝好的方向（成本降/缓存升），
+   bad=朝坏的方向（成本升/缓存降），neutral=用量/会话数（涨跌无好坏，继承脚注 muted） */
 .ta-kpi-foot .delta {
   font-weight: 600;
   white-space: nowrap;
 }
 
-.ta-kpi-foot .delta.up {
+.ta-kpi-foot .delta.good {
   color: var(--tagreen);
 }
 
-.ta-kpi-foot .delta.down {
+.ta-kpi-foot .delta.bad {
   color: var(--tared);
 }
 
@@ -1060,23 +1067,19 @@
   gap: calc(10 * var(--u));
 }
 
+/* 应用级按钮（0ebdcdf app-btn）：AppPanelAlt 底 + AppLine 描边 + 正文色，脱离 Semi Secondary 软蓝皮肤 */
 .ta-btn-soft {
   display: inline-flex;
   align-items: center;
   height: calc(30 * var(--u));
   padding: 0 calc(13 * var(--u));
-  border: calc(1 * var(--u)) solid #3a4c5f;
-  border-radius: calc(8 * var(--u));
-  background: #202a37;
-  color: var(--talink);
+  border: calc(1 * var(--u)) solid var(--taline);
+  border-radius: calc(7 * var(--u));
+  background: var(--tapanel2);
+  color: var(--tatext);
   font-size: calc(12 * var(--u));
-  font-weight: 600;
+  font-weight: 400;
   white-space: nowrap;
-}
-
-[data-theme='light'] .ta-btn-soft {
-  border-color: #b9d2f2;
-  background: #dce9fb;
 }
 
 .ta-status-ok {

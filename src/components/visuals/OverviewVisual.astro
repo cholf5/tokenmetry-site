@@ -5,7 +5,7 @@
  * 设计稿宽 1280（--u 换算见 app-ui.css 头注）。
  */
 import { ui, type VisualLocale } from '../../i18n/ui';
-import { overview } from '../../data/app-demo';
+import { overview, fmtCompact } from '../../data/app-demo';
 import Mark from './Mark.astro';
 
 interface Props {
@@ -149,7 +149,8 @@ const navIcons = [
               {t.kpiTotalTokens}
             </div>
             <div class="ta-kpi-val">{total}</div>
-            <div class="ta-kpi-foot"><span class="delta up">↑ {o.kpis.tokens.delta}</span>{t.kpiFootVsPrevious}</div>
+            {/* 环比色 = 语义极性（0ebdcdf）：用量/会话数中性 muted，成本↑坏红，缓存↓坏红 */}
+            <div class="ta-kpi-foot"><span class={`delta ${o.kpis.tokens.valence}`}>↑ {o.kpis.tokens.delta}</span>{t.kpiFootVsPrevious}</div>
           </div>
           <div class="ta-card ta-kpi">
             <div class="ta-kpi-top">
@@ -159,7 +160,7 @@ const navIcons = [
               {t.kpiEstimatedCost}
             </div>
             <div class="ta-kpi-val">{o.kpis.cost.value}</div>
-            <div class="ta-kpi-foot"><span class="delta up">↑ {o.kpis.cost.delta}</span>{t.kpiFootPriceEstimate}</div>
+            <div class="ta-kpi-foot"><span class={`delta ${o.kpis.cost.valence}`}>↑ {o.kpis.cost.delta}</span>{t.kpiFootPriceEstimate}</div>
           </div>
           <div class="ta-card ta-kpi">
             <div class="ta-kpi-top">
@@ -169,7 +170,7 @@ const navIcons = [
               {t.kpiSessions}
             </div>
             <div class="ta-kpi-val">{o.kpis.sessions.value}</div>
-            <div class="ta-kpi-foot"><span class="delta up">↑ {o.kpis.sessions.delta}</span>{t.kpiFootAcrossAgents}</div>
+            <div class="ta-kpi-foot"><span class={`delta ${o.kpis.sessions.valence}`}>↑ {o.kpis.sessions.delta}</span>{t.kpiFootAcrossAgents}</div>
           </div>
           <div class="ta-card ta-kpi">
             <div class="ta-kpi-top">
@@ -179,7 +180,7 @@ const navIcons = [
               {t.kpiCacheShare}
             </div>
             <div class="ta-kpi-val">{o.kpis.cache.value}</div>
-            <div class="ta-kpi-foot"><span class="delta down">↓ {o.kpis.cache.delta}</span>{t.kpiFootCacheOfInput}</div>
+            <div class="ta-kpi-foot"><span class={`delta ${o.kpis.cache.valence}`}>↓ {o.kpis.cache.delta}</span>{t.kpiFootCacheOfInput}</div>
           </div>
         </div>
 
@@ -266,7 +267,7 @@ const navIcons = [
               <div class="ta-mdl-row">
                 <div class="ta-mdl-line">
                   <span class="ta-mdl-name"><Mark kind={m.logo} size={18} /><span>{m.name}</span></span>
-                  <span class="ta-mdl-val">{m.tokens}</span>
+                  <span class="ta-mdl-val">{fmtCompact(m.tokens, locale)}</span>
                   <span class="ta-mdl-val">{m.share}</span>
                 </div>
                 <div class="ta-mini ta-mdl-track"><i style={`width:${parseFloat(m.share) < 1 ? 0.8 : parseFloat(m.share)}%`}></i></div>

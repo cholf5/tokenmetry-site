@@ -291,7 +291,7 @@ const dict: Dict = {
     thModel: 'Model',
     thTokenCount: 'Tokens',
     thShare: 'Share',
-    totalTokens: 'Total Tokens',
+    totalTokens: 'Total tokens',
     metaNormalizedAcrossSources: 'Normalized across sources',
     panelTypeDonut: 'Token type mix',
     tokenTypeInput: 'Input (uncached)',

@@ -56,8 +56,9 @@ const statusText = { ok: t.statusOk, partial: t.statusPartial, nodata: t.statusN
         {t.caliber.map((row, i) => (
           <div class="ta-caliber-row">
             <span>
+              {/* 0ebdcdf：口径徽章带状态色 —— 始终生效=绿软底，未提供=中性退后 */}
               {t.caliberBadges[i] === t.badgeAlways
-                ? <span class="ta-chip">{t.badgeAlways}</span>
+                ? <span class="ta-chip ok">{t.badgeAlways}</span>
                 : <span class="ta-chip ta-chip-neutral">{t.badgeNotProvided}</span>}
             </span>
             <span class="txt">{row.text}</span>

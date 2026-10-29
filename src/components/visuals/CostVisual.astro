@@ -25,7 +25,8 @@ const footBasis = t.kpiFootTokenShareBasis;
       <div class="ta-card ta-kpi">
         <div class="ta-kpi-top">
           <span class="ta-ic amber" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
-            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2.2v11.6M10.4 4.4c-.5-.8-4.3-1.2-4.5.8-.2 2.3 4.7 1.4 4.6 3.6-.1 2-4 1.8-4.8.8"></path></svg>
+            {/* 0ebdcdf："$" 文本字形 → circle-dollar-sign 矢量图标 */}
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.7"></circle><path d="M10.7 5.3h-4a1.33 1.33 0 1 0 0 2.66h2.6a1.33 1.33 0 1 1 0 2.66H5.3M8 12V4"></path></svg>
           </span>
           {t.kpiTotalCost}
         </div>
@@ -35,7 +36,8 @@ const footBasis = t.kpiFootTokenShareBasis;
       <div class="ta-card ta-kpi">
         <div class="ta-kpi-top">
           <span class="ta-ic" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
-            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v9M4.5 8.6 8 12.2l3.5-3.6"></path></svg>
+            {/* 0ebdcdf：↓ 文本字形 → lucide arrow-down */}
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3.3v9.3M12.7 8 8 12.7 3.3 8"></path></svg>
           </span>
           {t.kpiInputCostShare}
         </div>
@@ -45,7 +47,8 @@ const footBasis = t.kpiFootTokenShareBasis;
       <div class="ta-card ta-kpi">
         <div class="ta-kpi-top">
           <span class="ta-ic purple" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
-            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V4M4.5 7.4 8 3.8l3.5 3.6"></path></svg>
+            {/* 0ebdcdf：↑ 文本字形 → lucide arrow-up */}
+            <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12.7V3.3M3.3 8 8 3.3l4.7 4.7"></path></svg>
           </span>
           {t.kpiOutputCostShare}
         </div>
@@ -74,7 +77,8 @@ const footBasis = t.kpiFootTokenShareBasis;
       </div>
       <div class="ta-card ta-kpi">
         <div class="ta-kpi-top">
-          <span class="ta-ic green" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
+          {/* 0ebdcdf：缺价芯片按数量切中性/琥珀，不再用成功绿；演示数据 0 个 = 中性 */}
+          <span class="ta-ic neutral" style={`width:calc(30*var(--u));height:calc(30*var(--u))`}>
             <svg width={15} height={15} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5.6 5.4a2.5 2.5 0 0 1 4.9.6c0 1.7-2.4 2-2.4 3.4M8 12.2h.01"></path></svg>
           </span>
           {t.kpiUnpriced}
