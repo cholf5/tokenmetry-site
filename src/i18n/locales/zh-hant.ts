@@ -232,11 +232,11 @@ const dict: Omit<Dict, 'app'> = {
   outro: {
     title: '開源，可稽核，現在就能跑',
     subtitle: 'AGPL-3.0-or-later（品牌名與圖示不在授權內）。原始碼即產品，clone 下來就能跑。',
-    runTitle: '從原始碼執行（目前主要方式）',
+    runTitle: '從原始碼執行（備選方式）',
     run: ['git clone https://github.com/cholf5/tokenmetry.git', 'cd tokenmetry', 'dotnet run --project src/Tokenmetry.App'],
     download: '從 Releases 下載',
     github: '在 GitHub 查看',
-    note: '三平台安裝包由版本 tag 觸發 CI 產出；首個公開版本發佈前，請先用原始碼方式。前提：本機裝有 .NET 10 SDK 與任一受支援 Agent 的本機日誌。',
+    note: '三平台安裝包由版本 tag 觸發 CI 產出，可從 Releases 下載；也可以從原始碼執行，前提：本機裝有 .NET 10 SDK 與任一受支援 Agent 的本機日誌。',
   },
   footer: {
     tagline: '打開就知道 AI 編程花了多少錢、是否異常、錢花在哪。',

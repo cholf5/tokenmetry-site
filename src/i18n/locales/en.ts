@@ -232,11 +232,11 @@ const dict: Dict = {
   outro: {
     title: 'Open source, auditable, runs now',
     subtitle: 'AGPL-3.0-or-later (brand name and logo not covered). The source is the product — clone and run.',
-    runTitle: 'Run from source (primary today)',
+    runTitle: 'Run from source (alternative)',
     run: ['git clone https://github.com/cholf5/tokenmetry.git', 'cd tokenmetry', 'dotnet run --project src/Tokenmetry.App'],
     download: 'Download from Releases',
     github: 'View on GitHub',
-    note: 'Platform packages are built by tag-triggered CI; before the first public release, please run from source. Prerequisites: .NET 10 SDK and local logs from any supported agent.',
+    note: 'Platform packages are built by tag-triggered CI and available on Releases; you can also run from source. Prerequisites: .NET 10 SDK and local logs from any supported agent.',
   },
   footer: {
     tagline: 'Know what your AI coding costs, whether it’s abnormal, and where it goes.',

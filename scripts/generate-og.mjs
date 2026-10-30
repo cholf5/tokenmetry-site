@@ -7,6 +7,7 @@ import { Resvg } from '@resvg/resvg-js';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { site } from '../src/config/site.ts'; // sourceCount 以 site.ts 为准，避免 OG 文案再写死数字漂移
 
 const W = 1200;
 const H = 630;
@@ -26,14 +27,14 @@ const C = {
 
 const zh = {
   headline: '看清你的 Token 花在了哪里。',
-  sub: '开源的 AI 编程用量分析 · 直读 19 个 Agent 本地日志',
+  sub: `开源的 AI 编程用量分析 · 直读 ${site.sourceCount} 个 Agent 本地日志`,
   badges: '开源 · 免费 · AGPL-3.0 · Windows / macOS / Linux',
   sans: 'PingFang SC, Hiragino Sans GB, Noto Sans CJK SC, sans-serif',
 };
 
 const en = {
   headline: 'Understand where your tokens go.',
-  sub: 'Open-source token analytics for AI development · reads 19 coding agents',
+  sub: `Open-source token analytics for AI development · reads ${site.sourceCount} coding agents`,
   badges: 'Open source · Free · AGPL-3.0 · Windows / macOS / Linux',
   sans: 'Helvetica Neue, Arial, PingFang SC, sans-serif',
 };

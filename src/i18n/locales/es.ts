@@ -232,11 +232,11 @@ const dict: Omit<Dict, 'app'> = {
   outro: {
     title: 'Código abierto, auditable, funciona ya',
     subtitle: 'AGPL-3.0-or-later (el nombre de marca y el logo no están cubiertos). El código es el producto — clona y ejecuta.',
-    runTitle: 'Ejecutar desde el código (la vía principal hoy)',
+    runTitle: 'Ejecutar desde el código (alternativa)',
     run: ['git clone https://github.com/cholf5/tokenmetry.git', 'cd tokenmetry', 'dotnet run --project src/Tokenmetry.App'],
     download: 'Descargar de Releases',
     github: 'Ver en GitHub',
-    note: 'Los paquetes para cada plataforma los genera un CI activado por etiqueta; antes del primer lanzamiento público, ejecuta desde el código. Requisitos: SDK de .NET 10 y registros locales de cualquier agente compatible.',
+    note: 'Los paquetes para cada plataforma los genera un CI activado por etiqueta y están disponibles en Releases; también puedes ejecutar desde el código. Requisitos: SDK de .NET 10 y registros locales de cualquier agente compatible.',
   },
   footer: {
     tagline: 'Sabe cuánto cuesta tu programación con IA, si va anómala y a dónde va el dinero.',

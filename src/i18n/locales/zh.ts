@@ -235,11 +235,11 @@ const dict = {
   outro: {
     title: '开源，可审计，现在就能跑',
     subtitle: 'AGPL-3.0-or-later（品牌名与图标不在授权内）。源码即产品，克隆下来就能跑。',
-    runTitle: '从源码运行（当前主要方式）',
+    runTitle: '从源码运行（备选方式）',
     run: ['git clone https://github.com/cholf5/tokenmetry.git', 'cd tokenmetry', 'dotnet run --project src/Tokenmetry.App'],
     download: '从 Releases 下载',
     github: '在 GitHub 查看',
-    note: '三平台安装包由版本 tag 触发 CI 产出；首个公开版本发布前，请先用源码方式。前提：本机装有 .NET 10 SDK 与任一受支持 Agent 的本地日志。',
+    note: '三平台安装包由版本 tag 触发 CI 产出，可从 Releases 下载；也可以从源码运行，前提：本机装有 .NET 10 SDK 与任一受支持 Agent 的本地日志。',
   },
   footer: {
     tagline: '打开就知道 AI 编程花了多少钱、是否异常、钱花在哪。',

@@ -232,11 +232,11 @@ const dict: Omit<Dict, 'app'> = {
   outro: {
     title: 'オープンソース、監査可能、今すぐ動く',
     subtitle: 'AGPL-3.0-or-later（ブランド名とロゴは対象外）。ソースこそがプロダクト——clone してすぐ動かせます。',
-    runTitle: 'ソースから実行（現在一番確実な方法）',
+    runTitle: 'ソースからの実行（代替手段）',
     run: ['git clone https://github.com/cholf5/tokenmetry.git', 'cd tokenmetry', 'dotnet run --project src/Tokenmetry.App'],
     download: 'Releases からダウンロード',
     github: 'GitHub で見る',
-    note: '3 プラットフォームのインストーラーはタグ起点の CI が生成します。初回公開版のリリースまでは、まずソースからの実行を。前提：.NET 10 SDK とサポート対象 Agent のローカルログ。',
+    note: '3 プラットフォームのインストーラーはタグ起点の CI が生成し、Releases からダウンロードできます。ソースからの実行も可能です。前提：.NET 10 SDK とサポート対象 Agent のローカルログ。',
   },
   footer: {
     tagline: 'AI コーディングがいくらかかったか、異常がないか、お金がどこへ向かったか——開けばわかります。',
