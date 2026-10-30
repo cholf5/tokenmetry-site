@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · Por qué',
     title: 'Tus números están dispersos — hasta que caen en una sola tabla',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · Ancla de confianza',
     title: 'Cada número de costo sobrevive a una auditoría',
     big: '$101.3856438',
     bigNote: 'Medido con datos reales (Codex local: 19 archivos / 2931 registros) — exacto al centavo frente a ccusage en todo el período.',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: 'Las pruebas de conciliación analizan solo el golden JSON comprometido en el repositorio — reproducibles sin conexión.',
   },
   tour: {
-    kicker: '§03 · Recorrido de vistas',
     title: 'Las vistas están elegidas por ti',
     subtitle:
       'Una arquitectura de información fija — sin plugins, sin personalización de diseño. Resumen, sesiones, agentes, modelos, proyectos, tiempo, costo, datos y precios, ajustes; el rango de tiempo y los filtros de cuatro dimensiones atraviesan todas las vistas.',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'Más 09 Ajustes — tema, idioma, fuentes y anulaciones de precios, todo a la vista.',
   },
   tray: {
-    kicker: '§04 · Siempre presente',
     title: 'Vive en la bandeja, avisa de anomalías primero',
     subtitle: 'Sin abrir la ventana principal: tokens de hoy, costo estimado, tasa de acierto de caché y velocidad en tiempo real de un vistazo; el gasto anómalo recibe una insignia.',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Popover de bandeja de Tokenmetry: KPIs de tokens de hoy, costo estimado y acierto de caché, mezcla de entrada/salida/caché y agentes principales',
   },
   sources: {
-    kicker: '§05 · Cobertura',
     title: '20 fuentes de agentes, de solo lectura',
     subtitle: 'Todo con acceso de solo lectura (análisis de JSONL/JSON en flujo o conexiones SQLite de solo lectura), detección automática sin configuración, con anulación mediante variables de entorno.',
     legend: ['análisis en flujo', 'SQLite solo lectura', 'formatos propietarios'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy solo cubre el runtime Pi: las sesiones de Claude Code / Codex que inicia siguen contando para esos agentes; el coste 0 que rellena su gateway se trata como «sin precio»; un mismo archivo de sesión se factura una sola vez.',
   },
   local: {
-    kicker: '§06 · Postura',
     title: 'Los datos se quedan en tu máquina — completos sin conexión',
     stances: [
       { title: 'Local-first', desc: 'Sin subida, sin inicio de sesión, sin sincronización en la nube.' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: 'Siendo honestos: los únicos dos puntos de contacto con la red son la actualización en segundo plano de models.dev y la comprobación de actualización en la app.',
   },
   outro: {
-    kicker: '§07 · Consíguelo',
     title: 'Código abierto, auditable, funciona ya',
     subtitle: 'AGPL-3.0-or-later (el nombre de marca y el logo no están cubiertos). El código es el producto — clona y ejecuta.',
     runTitle: 'Ejecutar desde el código (la vía principal hoy)',

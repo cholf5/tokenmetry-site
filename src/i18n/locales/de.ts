@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · Warum',
     title: 'Deine Zahlen sind verstreut — bis sie in einer Tabelle landen',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · Vertrauensanker',
     title: 'Jede Kostenzahl hält einem Abgleich stand',
     big: '$101.3856438',
     bigNote: 'An echten Daten gemessen (lokales Codex: 19 Dateien / 2.931 Datensätze) — auf den Cent genau gegenüber ccusage über den gesamten Zeitraum.',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: 'Abgleich-Tests parsen nur das im Repo committete golden JSON — offline reproduzierbar.',
   },
   tour: {
-    kicker: '§03 · Ansichtstour',
     title: 'Die Ansichten sind für dich gewählt',
     subtitle:
       'Eine feste Informationsarchitektur — keine Plugins, kein Layout-Basteln. Übersicht, Sitzungen, Agents, Modelle, Projekte, Zeit, Kosten, Daten & Preise, Einstellungen — Zeitraum- und Vier-Dimensionen-Filter ziehen sich durch alle Ansichten.',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'Dazu 09 Einstellungen — Farbschema, Sprache, Quellen und Preis-Overrides, alles sichtbar.',
   },
   tray: {
-    kicker: '§04 · Immer aktiv',
     title: 'Lebt im Tray, meldet Anomalien zuerst',
     subtitle: 'Ohne das Hauptfenster zu öffnen: heutige Token, geschätzte Kosten, Cache-Trefferquote und Live-Rate auf einen Blick; anomale Ausgaben bekommen ein Badge.',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Tokenmetry-Tray-Popover: KPIs für heutige Token, geschätzte Kosten und Cache-Treffer, Ein-/Ausgabe-/Cache-Mix und Top-Agents',
   },
   sources: {
-    kicker: '§05 · Abdeckung',
     title: '20 Agent-Quellen, schreibgeschützt',
     subtitle: 'Alles schreibgeschützt (gestreamtes JSONL/JSON-Parsing oder SQLite-Verbindungen im Lesemodus), automatisch erkannt ohne Konfiguration, per Umgebungsvariablen überschreibbar.',
     legend: ['gestreamtes Parsing', 'SQLite schreibgeschützt', 'proprietäre Formate'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy deckt nur die Pi-Runtime ab: mit ihr gestartete Claude Code-/Codex-Sitzungen zählen weiter für diese Agents; vom Gateway aufgefülte 0-Kosten gelten als „nicht bepreist“; jede Sitzungsdatei wird nur einmal abgerechnet.',
   },
   local: {
-    kicker: '§06 · Haltung',
     title: 'Daten bleiben auf deiner Maschine — komplett offline',
     stances: [
       { title: 'Local-first', desc: 'Kein Upload, kein Login, keine Cloud-Synchronisierung.' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: 'Zur Ehrlichkeit: Die einzigen zwei Netz-Kontaktpunkte sind die models.dev-Hintergrundaktualisierung und die Update-Prüfung in der App.',
   },
   outro: {
-    kicker: '§07 · Holen',
     title: 'Open Source, prüfbar, läuft jetzt',
     subtitle: 'AGPL-3.0-or-later (Markenname und Logo ausgenommen). Der Code ist das Produkt — klonen und los.',
     runTitle: 'Aus dem Quellcode (heute der Hauptweg)',

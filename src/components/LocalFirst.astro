@@ -6,17 +6,15 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const accents = ['var(--series-1)', 'var(--series-4)', 'var(--series-0)', 'var(--series-2)'];
 ---
 
 <section id="local">
   <div class="container inner">
     <div class="head">
-      <span class="kicker">{t.local.kicker}</span>
       <h2>{t.local.title}</h2>
       <ul class="stances">
-        {t.local.stances.map((s, i) => (
-          <li style={`--acc:${accents[i]}`}>
+        {t.local.stances.map((s) => (
+          <li>
             <strong>{s.title}</strong>
             <span>{s.desc}</span>
           </li>
@@ -65,8 +63,6 @@ const accents = ['var(--series-1)', 'var(--series-4)', 'var(--series-0)', 'var(-
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding-left: 16px;
-    border-left: 2px solid var(--acc);
   }
 
   .stances strong {
@@ -87,10 +83,8 @@ const accents = ['var(--series-1)', 'var(--series-4)', 'var(--series-0)', 'var(-
   }
 
   .p-title {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 14px;
   }

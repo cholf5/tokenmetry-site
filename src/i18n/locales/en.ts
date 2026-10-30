@@ -60,7 +60,6 @@ const dict: Dict = {
     ],
   },
   why: {
-    kicker: '§01 · Why',
     title: 'Your numbers are scattered — until they land in one table',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Dict = {
     ],
   },
   recon: {
-    kicker: '§02 · Trust anchor',
     title: 'Every cost number survives an audit',
     big: '$101.3856438',
     bigNote: 'Measured on real data (local Codex: 19 files / 2,931 records) — cent-exact against ccusage over the full period.',
@@ -103,7 +101,6 @@ const dict: Dict = {
     offlineNote: 'Reconciliation tests parse only the golden JSON committed to the repo — repeatable offline.',
   },
   tour: {
-    kicker: '§03 · View tour',
     title: 'The views are chosen for you',
     subtitle:
       'A fixed information architecture — no plugins, no layout customization. Overview, sessions, agents, models, projects, time, cost, data & pricing, settings, with time-range and four-dimension filters running through every view.',
@@ -117,7 +114,6 @@ const dict: Dict = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Dict = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Dict = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Dict = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Dict = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Dict = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Dict = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'Plus 09 Settings — theme, language, sources and price overrides all in plain sight.',
   },
   tray: {
-    kicker: '§04 · Always on',
     title: 'Lives in your tray, flags anomalies first',
     subtitle: 'No need to open the main window: today’s tokens, estimated cost, cache-hit rate and live rate at a glance; abnormal spend gets a badge.',
     points: [
@@ -194,7 +183,6 @@ const dict: Dict = {
     shotAlt: 'Tokenmetry tray popover: today’s tokens, estimated cost and cache-hit KPIs, input/output/cache mix and top agents',
   },
   sources: {
-    kicker: '§05 · Coverage',
     title: '20 agent sources, read-only',
     subtitle: 'All read-only access (streamed JSONL/JSON parsing or SQLite read-only connections), auto-detected with zero config, overridable via environment variables.',
     legend: ['streamed parsing', 'SQLite read-only', 'proprietary formats'],
@@ -226,7 +214,6 @@ const dict: Dict = {
     note: 'Cindy covers the Pi runtime only: Claude Code / Codex sessions it starts still count toward those agents; zero cost backfilled by its gateway is unknown, never zeroed; one session file is billed once, never twice.',
   },
   local: {
-    kicker: '§06 · Stance',
     title: 'Data stays on your machine — complete offline',
     stances: [
       { title: 'Local-first', desc: 'No upload, no login, no cloud sync.' },
@@ -243,7 +230,6 @@ const dict: Dict = {
     honesty: 'To be honest: the only two network touchpoints are the models.dev background refresh and the in-app update check.',
   },
   outro: {
-    kicker: '§07 · Get it',
     title: 'Open source, auditable, runs now',
     subtitle: 'AGPL-3.0-or-later (brand name and logo not covered). The source is the product — clone and run.',
     runTitle: 'Run from source (primary today)',

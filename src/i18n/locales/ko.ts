@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · 왜',
     title: '흩어진 숫자가, 한 표로 모일 때까지',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · 신뢰의 닻',
     title: '모든 비용 숫자는 대조를 견딥니다',
     big: '$101.3856438',
     bigNote: '실제 데이터로 측정 (로컬 Codex: 19개 파일 / 2,931개 레코드) — 전 기간에 걸쳐 ccusage와 센트 단위까지 일치.',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: '대조 테스트는 저장소에 커밋된 golden JSON만 파싱 — 오프라인에서 재현 가능.',
   },
   tour: {
-    kicker: '§03 · 뷰 둘러보기',
     title: '뷰는 여러분 대신 골라 둔 것',
     subtitle:
       '고정된 정보 구조 — 플러그인도, 레이아웃 커스터마이징도 없습니다. 개요, 세션, Agent, 모델, 프로젝트, 시간, 비용, 데이터와 가격, 설정 — 기간과 4축 필터가 모든 뷰를 관통합니다.',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: '그리고 09 설정 — 테마, 언어, 데이터 소스, 가격 재정의가 모두 눈에 보이는 곳에.',
   },
   tray: {
-    kicker: '§04 · 상주',
     title: '트레이 상주, 이상 징후를 먼저 알립니다',
     subtitle: '메인 창을 열 필요 없이: 오늘의 토큰, 추정 비용, 캐시 적중률, 실시간 속도를 한눈에. 이상 비용은 배지로 표시하고 클릭으로 바로 이동.',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Tokenmetry 트레이 팝오버: 오늘의 토큰, 추정 비용, 캐시 적중 KPI, 입력/출력/캐시 구성과 주요 Agent',
   },
   sources: {
-    kicker: '§05 · 커버리지',
     title: '20개 데이터 소스, 읽기 전용 직접 읽기',
     subtitle: '모두 읽기 전용 접근 (JSONL/JSON 스트리밍 파싱 또는 SQLite 읽기 전용 연결), 설정 없이 자동 탐지, 환경 변수로 데이터 디렉터리 재정의 가능.',
     legend: ['스트리밍 파싱', 'SQLite 읽기 전용', '전용 포맷'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy는 Pi runtime만 지원합니다. Cindy에서 실행한 Claude Code / Codex 세션은 각 Agent로 집계되고, 게이트웨이가 채우는 0 비용은 「미산정」으로 처리하며, 같은 세션 파일을 두 번 집계하지 않습니다.',
   },
   local: {
-    kicker: '§06 · 입장',
     title: '데이터는 내 컴퓨터에, 오프라인에서도 완전하게',
     stances: [
       { title: '로컬 퍼스트', desc: '업로드 없음, 로그인 없음, 클라우드 동기화 없음.' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: '솔직히 말하면: 네트워크 접점은 models.dev 백그라운드 갱신과 앱 내 업데이트 확인, 단 두 곳뿐입니다.',
   },
   outro: {
-    kicker: '§07 · 받기',
     title: '오픈 소스, 감사 가능, 지금 바로 실행',
     subtitle: 'AGPL-3.0-or-later (브랜드명과 로고는 제외). 소스가 곧 제품 — 클론해서 바로 실행하세요.',
     runTitle: '소스에서 실행 (현재 주요 방식)',

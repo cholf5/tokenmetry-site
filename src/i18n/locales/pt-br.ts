@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · Por quê',
     title: 'Seus números estão espalhados — até caírem numa única tabela',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · Âncora de confiança',
     title: 'Todo número de custo sobrevive a uma auditoria',
     big: '$101.3856438',
     bigNote: 'Medido com dados reais (Codex local: 19 arquivos / 2.931 registros) — centavo a centavo contra o ccusage no período completo.',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: 'Os testes de conciliação analisam apenas o golden JSON commitado no repositório — reproduzíveis offline.',
   },
   tour: {
-    kicker: '§03 · Tour das visões',
     title: 'As visões são escolhidas para você',
     subtitle:
       'Uma arquitetura de informação fixa — sem plugins, sem personalização de layout. Visão geral, sessões, agentes, modelos, projetos, tempo, custo, dados e preços, configurações, com intervalo de tempo e filtros de quatro dimensões em todas as visões.',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'Mais 09 Configurações — tema, idioma, fontes e sobrescritas de preço, tudo à vista.',
   },
   tray: {
-    kicker: '§04 · Sempre ativo',
     title: 'Vive na bandeja, sinaliza anomalias primeiro',
     subtitle: 'Sem abrir a janela principal: tokens de hoje, custo estimado, taxa de acerto do cache e taxa em tempo real num relance; gasto anômalo ganha um badge.',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Popover de bandeja do Tokenmetry: KPIs de tokens de hoje, custo estimado e acerto de cache, mistura entrada/saída/cache e principais agentes',
   },
   sources: {
-    kicker: '§05 · Cobertura',
     title: '20 fontes de agentes, somente leitura',
     subtitle: 'Tudo com acesso somente leitura (parsing de JSONL/JSON em stream ou conexões SQLite somente leitura), detecção automática sem configuração, com sobrescrita por variáveis de ambiente.',
     legend: ['parsing em stream', 'SQLite somente leitura', 'formatos proprietários'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'O Cindy cobre apenas o runtime Pi: sessões de Claude Code / Codex iniciadas por ele continuam contando para esses agentes; o custo 0 preenchido pelo gateway é tratado como “sem preço”; um mesmo arquivo de sessão é cobrado uma única vez.',
   },
   local: {
-    kicker: '§06 · Postura',
     title: 'Os dados ficam na sua máquina — completos offline',
     stances: [
       { title: 'Local-first', desc: 'Sem upload, sem login, sem sincronização na nuvem.' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: 'Para ser honesto: os únicos dois pontos de contato com a rede são a atualização em segundo plano do models.dev e a verificação de atualização no app.',
   },
   outro: {
-    kicker: '§07 · Obtenha',
     title: 'Código aberto, auditável, roda agora',
     subtitle: 'AGPL-3.0-or-later (nome de marca e logo não cobertos). A fonte é o produto — clone e rode.',
     runTitle: 'Rode do código-fonte (o caminho principal hoje)',

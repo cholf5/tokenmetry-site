@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · なぜ',
     title: '散らばった数字が、1 枚の表に収まるまで',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · 信頼の拠り所',
     title: 'すべてのコスト数字は照合に耐える',
     big: '$101.3856438',
     bigNote: '実データで計測（ローカル Codex：19 ファイル / 2,931 レコード）——全期間で ccusage と 1 セント単位まで一致。',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: '照合テストはリポジトリにコミット済みの golden JSON だけを解析——オフラインで再現可能。',
   },
   tour: {
-    kicker: '§03 · ビュー巡り',
     title: 'ビューはあなたの代わりに選ばれている',
     subtitle:
       '固定された情報アーキテクチャ——プラグインなし、レイアウトのカスタマイズなし。概要・セッション・Agent・モデル・プロジェクト・時間・コスト・データと料金・設定。期間と 4 軸フィルターが全ビューを貫きます。',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'さらに 09 設定——テーマ・言語・データソース・価格上書きがすべて目のつく場所に。',
   },
   tray: {
-    kicker: '§04 · 常駐',
     title: 'トレイに常駐、異常をいち早く通知',
     subtitle: 'メインウィンドウを開かなくても：今日のトークン・推定コスト・キャッシュ命中率・リアルタイム速度がひと目でわかる。異常な支出はバッジで表示、クリックで即ジャンプ。',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Tokenmetry のトレイポップアップ：今日のトークン・推定コスト・キャッシュ命中 KPI、入力/出力/キャッシュ構成と上位 Agent',
   },
   sources: {
-    kicker: '§05 · カバレッジ',
     title: '20 のデータソースを読み取り専用で直接解析',
     subtitle: 'すべて読み取り専用アクセス（JSONL/JSON のストリーム解析または SQLite の読み取り専用接続）。設定ゼロで自動検出、環境変数でデータディレクトリを上書き可能。',
     legend: ['ストリーム解析', 'SQLite 読み取り専用', '専用フォーマット'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy は Pi runtime のみ対応：Cindy から起動した Claude Code / Codex のセッションは各 Agent に計上されます。ゲートウェイが返す 0 コストは「未計価」として扱い、同じセッションファイルを二重計上しません。',
   },
   local: {
-    kicker: '§06 · 立場',
     title: 'データは手元に残る。オフラインでも完全動作',
     stances: [
       { title: 'ローカルファースト', desc: 'アップロードなし、ログインなし、クラウド同期なし。' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: '正直に言うと：ネットワークに触れるのは models.dev のバックグラウンド更新とアプリ内の更新確認の 2 箇所だけです。',
   },
   outro: {
-    kicker: '§07 · 入手',
     title: 'オープンソース、監査可能、今すぐ動く',
     subtitle: 'AGPL-3.0-or-later（ブランド名とロゴは対象外）。ソースこそがプロダクト——clone してすぐ動かせます。',
     runTitle: 'ソースから実行（現在一番確実な方法）',

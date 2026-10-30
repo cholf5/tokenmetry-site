@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · Pourquoi',
     title: 'Vos chiffres sont éparpillés — jusqu’à ce qu’ils atterrissent dans une table',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · Ancre de confiance',
     title: 'Chaque chiffre de coût survit à un audit',
     big: '$101.3856438',
     bigNote: 'Mesuré sur données réelles (Codex local : 19 fichiers / 2 931 enregistrements) — au centime près face à ccusage sur toute la période.',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: 'Les tests de réconciliation ne parsent que le golden JSON commité dans le dépôt — reproductibles hors ligne.',
   },
   tour: {
-    kicker: '§03 · Visite des vues',
     title: 'Les vues sont choisies pour vous',
     subtitle:
       'Une architecture d’information figée — pas de plugins, pas de personnalisation de mise en page. Vue d’ensemble, sessions, agents, modèles, projets, temps, coûts, données et tarifs, réglages — la plage temporelle et les filtres à quatre dimensions traversent toutes les vues.',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: 'Et 09 Réglages — thème, langue, sources et surcharges de tarifs, tout en vue.',
   },
   tray: {
-    kicker: '§04 · Toujours là',
     title: 'Vit dans le tray, signale les anomalies d’abord',
     subtitle: 'Sans ouvrir la fenêtre principale : tokens du jour, coût estimé, taux de cache-hit et débit en temps réel d’un coup d’œil ; la dépense anormale reçoit un badge.',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Popover du tray Tokenmetry : KPIs tokens du jour, coût estimé et cache-hit, répartition entrée/sortie/cache et agents principaux',
   },
   sources: {
-    kicker: '§05 · Couverture',
     title: '20 sources d’agents, en lecture seule',
     subtitle: 'Tout en accès lecture seule (parsing de JSONL/JSON en flux ou connexions SQLite en lecture seule), détection automatique sans configuration, répertoires de données remplaçables par variables d’environnement.',
     legend: ['parsing en flux', 'SQLite lecture seule', 'formats propriétaires'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy ne couvre que le runtime Pi : les sessions Claude Code / Codex qu’elle lance restent comptées pour ces agents ; le coût 0 renseigné par sa passerelle est traité comme « non tarifé » ; un même fichier de session n’est facturé qu’une fois.',
   },
   local: {
-    kicker: '§06 · Position',
     title: 'Les données restent sur votre machine — complet hors ligne',
     stances: [
       { title: 'Local-first', desc: 'Pas d’envoi, pas de connexion, pas de synchronisation cloud.' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: 'Par honnêteté : les deux seuls points de contact réseau sont le rafraîchissement models.dev en arrière-plan et la vérification de mise à jour dans l’app.',
   },
   outro: {
-    kicker: '§07 · Obtenir',
     title: 'Open source, auditable, ça tourne maintenant',
     subtitle: 'AGPL-3.0-or-later (le nom de marque et le logo ne sont pas couverts). La source est le produit — clonez et lancez.',
     runTitle: 'Lancer depuis les sources (la voie principale aujourd’hui)',

@@ -60,7 +60,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   why: {
-    kicker: '§01 · 為什麼',
     title: '數字散落各處，直到有人把它們收進一張表',
     rows: [
       {
@@ -84,7 +83,6 @@ const dict: Omit<Dict, 'app'> = {
     ],
   },
   recon: {
-    kicker: '§02 · 信任錨',
     title: '每個成本數字，都經得起對帳',
     big: '$101.3856438',
     bigNote: '真實資料實測（本機 Codex：19 個檔案 / 2,931 筆記錄），與 ccusage 全期逐分錢一致。',
@@ -103,7 +101,6 @@ const dict: Omit<Dict, 'app'> = {
     offlineNote: '對帳測試只解析提交進儲存庫的 golden JSON，離線可重複。',
   },
   tour: {
-    kicker: '§03 · 檢視巡禮',
     title: '檢視是替你選好的',
     subtitle:
       '固定資訊架構，不做外掛、不做版面自訂。總覽、工作階段、Agent、模型、專案、時間、成本、資料與計價、設定——時間範圍與四維篩選貫穿所有檢視。',
@@ -117,7 +114,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -127,7 +123,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -137,7 +132,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -147,7 +141,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -157,7 +150,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -167,7 +159,6 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -177,13 +168,11 @@ const dict: Omit<Dict, 'app'> = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: '還有 09 設定——主題、語言、資料來源、價格覆寫都在明處。',
   },
   tray: {
-    kicker: '§04 · 常駐',
     title: '常駐系統匣，異常先知道',
     subtitle: '不用打開主視窗：今日 Token、估算成本、快取命中、即時速率一眼可見；成本異常以徽章標出，彈出層即達。',
     points: [
@@ -194,7 +183,6 @@ const dict: Omit<Dict, 'app'> = {
     shotAlt: 'Tokenmetry 系統匣快捷資訊窗：今日 Token、估算成本、快取命中 KPI，輸入/輸出/快取構成與主要 Agent',
   },
   sources: {
-    kicker: '§05 · 覆蓋',
     title: '20 個資料來源，唯讀直讀',
     subtitle: '全部為唯讀存取（JSONL/JSON 串流解析或 SQLite 唯讀連線），零配置自動偵測，支援以環境變數覆寫資料目錄。',
     legend: ['串流解析', 'SQLite 唯讀', '專用格式'],
@@ -226,7 +214,6 @@ const dict: Omit<Dict, 'app'> = {
     note: 'Cindy 只接 Pi runtime：用它啟動的 Claude Code / Codex 工作階段仍計入各自 Agent；閘道回填的 0 成本按「未計價」處理；同一份工作階段檔案只出一份帳，不雙算。',
   },
   local: {
-    kicker: '§06 · 立場',
     title: '資料留在本機，離線也完整',
     stances: [
       { title: '本機優先', desc: '不上傳、不登入、不雲端同步。' },
@@ -243,7 +230,6 @@ const dict: Omit<Dict, 'app'> = {
     honesty: '誠實起見：僅有的兩個網路接觸點是 models.dev 背景重新整理與應用程式內更新檢查。',
   },
   outro: {
-    kicker: '§07 · 取得',
     title: '開源，可稽核，現在就能跑',
     subtitle: 'AGPL-3.0-or-later（品牌名與圖示不在授權內）。原始碼即產品，clone 下來就能跑。',
     runTitle: '從原始碼執行（目前主要方式）',

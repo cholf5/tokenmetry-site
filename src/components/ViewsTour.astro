@@ -56,7 +56,6 @@ for (const stop of t.tour.stops) {
 <section id="views">
   <div class="container">
     <div class="section-head">
-      <span class="kicker">{t.tour.kicker}</span>
       <h2>{t.tour.title}</h2>
       <p class="sub">{t.tour.subtitle}</p>
     </div>
@@ -68,7 +67,7 @@ for (const stop of t.tour.stops) {
             {g.stops.map((stop) => {
               const Visual = visuals[stop.visual]!;
               return (
-                <article class="stop mini" style={`--acc:var(--series-${stop.accent})`}>
+                <article class="stop mini">
                   <span class="no mono num">{stop.no}<em>/09</em></span>
                   <span class="view">{stop.view}</span>
                   <h3>{stop.title}</h3>
@@ -85,7 +84,7 @@ for (const stop of t.tour.stops) {
       const stop = g.stop;
       const Visual = visuals[stop.visual]!;
       return g.kind === 'full' ? (
-        <article class="stop full" style={`--acc:var(--series-${stop.accent})`}>
+        <article class="stop full">
           <header class="stop-head">
             <span class="no mono num">{stop.no}<em>/09</em></span>
             <div>
@@ -99,7 +98,7 @@ for (const stop of t.tour.stops) {
           <p class="desc">{stop.desc}</p>
         </article>
       ) : (
-        <article class:list={['stop', 'split', { flip: stop.flip }]} style={`--acc:var(--series-${stop.accent})`}>
+        <article class:list={['stop', 'split', { flip: stop.flip }]}>
           <div class="txt">
             <span class="no mono num">{stop.no}<em>/09</em></span>
             <span class="view">{stop.view}</span>
@@ -138,7 +137,7 @@ for (const stop of t.tour.stops) {
   .no {
     font-size: 17px;
     font-weight: 700;
-    color: var(--acc);
+    color: var(--muted);
   }
 
   .no em {
@@ -261,7 +260,6 @@ for (const stop of t.tour.stops) {
   .stop.mini {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-top: 2px solid var(--acc);
     border-radius: 14px;
     padding: 22px;
   }

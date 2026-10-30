@@ -6,13 +6,11 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const fiveDots = [0, 1, 2, 3, 4].map((i) => `var(--series-${i})`);
 ---
 
 <section id="recon" class="full-bleed">
   <div class="container">
     <div class="head">
-      <span class="kicker">{t.recon.kicker}</span>
       <h2>{t.recon.title}</h2>
     </div>
 
@@ -25,9 +23,8 @@ const fiveDots = [0, 1, 2, 3, 4].map((i) => `var(--series-${i})`);
       <div class="facts-side">
         <p class="five-title">{t.recon.fiveTitle}</p>
         <ul class="five">
-          {t.recon.five.map((f, i) => (
+          {t.recon.five.map((f) => (
             <li>
-              <span class="dot" style={`--dot:${fiveDots[i]}`}></span>
               <span class="mono k">{f.key}</span>
               <span class="lab">{f.label}</span>
             </li>
@@ -77,15 +74,7 @@ const fiveDots = [0, 1, 2, 3, 4].map((i) => `var(--series-${i})`);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1;
-    background: linear-gradient(100deg, var(--series-0), var(--series-4));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* 浅色底上青色端失去对比，换浅色 accent → 紫（产品浅色令牌原值） */
-  :global([data-theme='light']) .big {
-    background: linear-gradient(100deg, var(--accent), var(--purple));
+    color: var(--text);
   }
 
   .note {
@@ -163,12 +152,10 @@ const fiveDots = [0, 1, 2, 3, 4].map((i) => `var(--series-${i})`);
   }
 
   .pl-title {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     margin-right: 10px;
-    color: var(--text);
+    color: var(--muted);
   }
 
   .pl-step {

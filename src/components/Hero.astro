@@ -8,7 +8,6 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = ui[locale];
-const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 ---
 
 <section class="hero">
@@ -32,9 +31,8 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
           {t.hero.github}</a>
       </div>
       <div class="facts num">
-        {t.hero.badges.map((b, i) => (
+        {t.hero.badges.map((b) => (
           <span class="fact">
-            <span class="dot" style={`--dot:${badgeDots[i]}`}></span>
             <strong>{b.value}</strong>{b.label}
           </span>
         ))}
@@ -54,7 +52,7 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
       <div class="ticker-track mono">
         {[0, 1].map(() => (
           t.hero.ticker.map((item, i) => (
-            <span class="tk"><span class="dot" style={`--dot:var(--series-${i % 7})`}></span>{item}</span>
+            <span class="tk">{item}</span>
           ))
         ))}
       </div>
@@ -65,26 +63,12 @@ const badgeDots = ['var(--series-0)', 'var(--series-1)', 'var(--series-3)'];
 <style>
   .hero {
     padding: 64px 0 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: -240px 0 auto;
-    height: 560px;
-    background:
-      radial-gradient(600px 320px at 68% -40px, var(--hero-glow), transparent 70%),
-      radial-gradient(500px 300px at 12% -80px, var(--hero-glow), transparent 70%);
-    pointer-events: none;
   }
 
   .lead {
     max-width: 760px;
     margin: 0 auto;
     text-align: center;
-    position: relative;
   }
 
   h1 {

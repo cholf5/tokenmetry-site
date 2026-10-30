@@ -63,7 +63,6 @@ const dict = {
     ],
   },
   why: {
-    kicker: '§01 · 为什么',
     title: '数字散落各处，直到有人把它们收进一张表',
     rows: [
       {
@@ -87,7 +86,6 @@ const dict = {
     ],
   },
   recon: {
-    kicker: '§02 · 信任锚',
     title: '每个成本数字，都经得起对账',
     big: '$101.3856438',
     bigNote: '真实数据实测（本机 Codex：19 个文件 / 2,931 条记录），与 ccusage 全期逐分钱一致。',
@@ -106,7 +104,6 @@ const dict = {
     offlineNote: '对账测试只解析提交进仓库的 golden JSON，离线可重复。',
   },
   tour: {
-    kicker: '§03 · 视图巡礼',
     title: '视图是替你选好的',
     subtitle:
       '固定信息架构，不做插件、不做布局自定义。总览、会话、Agent、模型、项目、时间、成本、数据与计价、设置——时间范围与四维筛选贯穿所有视图。',
@@ -120,7 +117,6 @@ const dict = {
         visual: 'sessions',
         layout: 'full',
         flip: false,
-        accent: 0,
       },
       {
         no: '07',
@@ -130,7 +126,6 @@ const dict = {
         visual: 'cost',
         layout: 'full',
         flip: false,
-        accent: 1,
       },
       {
         no: '04',
@@ -140,7 +135,6 @@ const dict = {
         visual: 'models',
         layout: 'split',
         flip: false,
-        accent: 3,
       },
       {
         no: '06',
@@ -150,7 +144,6 @@ const dict = {
         visual: 'time',
         layout: 'split',
         flip: true,
-        accent: 2,
       },
       {
         no: '05',
@@ -160,7 +153,6 @@ const dict = {
         visual: 'projects',
         layout: 'duo',
         flip: false,
-        accent: 4,
       },
       {
         no: '03',
@@ -170,7 +162,6 @@ const dict = {
         visual: 'agents',
         layout: 'duo',
         flip: false,
-        accent: 6,
       },
       {
         no: '08',
@@ -180,13 +171,11 @@ const dict = {
         visual: 'data-pricing',
         layout: 'full',
         flip: false,
-        accent: 5,
       },
     ],
     more: '还有 09 设置——主题、语言、数据源、价格覆盖都在明处。',
   },
   tray: {
-    kicker: '§04 · 常驻',
     title: '常驻托盘，异常先知道',
     subtitle: '不用打开主窗口：今日 Token、估算成本、缓存命中、实时速率一眼可见；成本异常以徽章标出，弹层即达。',
     points: [
@@ -197,7 +186,6 @@ const dict = {
     shotAlt: 'Tokenmetry 托盘快捷信息窗：今日 Token、估算成本、缓存命中 KPI，输入/输出/缓存构成与主要 Agent',
   },
   sources: {
-    kicker: '§05 · 覆盖',
     title: '20 个数据源，只读直读',
     subtitle: '全部为只读访问（JSONL/JSON 流式解析或 SQLite 只读连接），零配置自动探测，支持环境变量覆盖数据目录。',
     legend: ['流式解析', 'SQLite 只读', '专用格式'],
@@ -229,7 +217,6 @@ const dict = {
     note: 'Cindy 只接 Pi runtime：用它启动的 Claude Code / Codex 会话仍计入各自 Agent；网关回填的 0 成本按「未知」处理，不折零；同一份会话文件只出一份账，不双算。',
   },
   local: {
-    kicker: '§06 · 立场',
     title: '数据留在本机，断网也完整',
     stances: [
       { title: '本地优先', desc: '不上传、不登录、不云同步。' },
@@ -246,7 +233,6 @@ const dict = {
     honesty: '诚实起见：仅有的两个网络触点是 models.dev 后台刷新与应用内更新检查。',
   },
   outro: {
-    kicker: '§07 · 获取',
     title: '开源，可审计，现在就能跑',
     subtitle: 'AGPL-3.0-or-later（品牌名与图标不在授权内）。源码即产品，克隆下来就能跑。',
     runTitle: '从源码运行（当前主要方式）',
