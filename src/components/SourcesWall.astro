@@ -1,4 +1,5 @@
 ---
+import { site } from '../config/site';
 import { ui, type Locale } from '../i18n/ui';
 
 interface Props {
@@ -39,10 +40,12 @@ const familyOf = (method: string) => {
         </li>
       ))}
       <li class="cell count">
-        <strong class="num">19</strong>
+        <strong class="num">{site.sourceCount}</strong>
         <span>{t.sources.countLabel}</span>
       </li>
     </ul>
+
+    <p class="wall-note">{t.sources.note}</p>
   </div>
 </section>
 
@@ -128,13 +131,20 @@ const familyOf = (method: string) => {
   }
 
   .cell.count {
-    grid-column: 1 / -1;
     justify-content: center;
     gap: 12px;
     border-style: dashed;
     background: transparent;
     color: var(--muted);
     font-size: 13px;
+  }
+
+  .wall-note {
+    max-width: 780px;
+    margin: 18px 0 0;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--muted);
   }
 
   .cell.count strong {
@@ -146,6 +156,11 @@ const familyOf = (method: string) => {
   @media (max-width: 900px) {
     .wall {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 两列时源数为偶数会刚好填满，计数条改回整行，避免只剩半格 */
+    .cell.count {
+      grid-column: 1 / -1;
     }
   }
 

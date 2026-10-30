@@ -8,7 +8,7 @@ const dict: Omit<Dict, 'app'> = {
   meta: {
     title: 'Tokenmetry — AI コーディングのコストがひと目でわかる',
     description:
-      'ローカルファーストのオープンソース AI コーディング使用量分析：19 の Agent のローカルログを読み取り専用で直接解析し、SQLite に増分取り込み、9 つの固定ビューに集約。コストは ccusage と日別・モデル別に照合可能。トレイに常駐し、オフラインでも動作。',
+      'ローカルファーストのオープンソース AI コーディング使用量分析：20 の Agent のローカルログを読み取り専用で直接解析し、SQLite に増分取り込み、9 つの固定ビューに集約。コストは ccusage と日別・モデル別に照合可能。トレイに常駐し、オフラインでも動作。',
     ogAlt: 'Tokenmetry の概要ビュー',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Omit<Dict, 'app'> = {
     title: '開けばわかる、',
     titleLine2: 'AI コーディングにかかった費用',
     subtitle:
-      'Claude Code、Codex、ZCode など 19 の Agent がローカルに散らばるログを読み取り専用で直接読み込み、SQLite へ増分取り込み、あなたの代わりに選び抜かれた固定ビューに集約します。ローカルファースト、照合可能。',
+      'Claude Code、Codex、ZCode、Cindy など 20 の Agent がローカルに散らばるログを読み取り専用で直接読み込み、SQLite へ増分取り込み、あなたの代わりに選び抜かれた固定ビューに集約します。ローカルファースト、照合可能。',
     download: 'Releases から入手',
     github: 'GitHub',
     badges: [
-      { value: '19', label: 'のデータソースを読み取り専用で直接解析' },
+      { value: '20', label: 'のデータソースを読み取り専用で直接解析' },
       { value: '9', label: '個の固定ビュー' },
       { value: '±0.00', label: 'コスト照合の誤差' },
     ],
@@ -56,6 +56,7 @@ const dict: Omit<Dict, 'app'> = {
       'pi-agent · セッションディレクトリ',
       'OpenClaw · SQLite 読み取り専用',
       'Antigravity · SQLite 読み取り専用',
+      'Cindy · pi セッションディレクトリ',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Omit<Dict, 'app'> = {
       {
         problem: 'Agent ごとにログの形式が違う',
         detail: 'JSONL、セッションスナップショット、SQLite……形式も場所もバラバラでは、今日いくら使ったのか正直わかりません。',
-        stance: '19 ソースを読み取り専用で直接解析。設定ゼロで自動検出、外部プロセスは起動しません。',
-        evidence: '19 formats → 1 ledger',
+        stance: '20 ソースを読み取り専用で直接解析。設定ゼロで自動検出、外部プロセスは起動しません。',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: '既存 CLI は毎回全件再スキャン',
@@ -194,7 +195,7 @@ const dict: Omit<Dict, 'app'> = {
   },
   sources: {
     kicker: '§05 · カバレッジ',
-    title: '19 のデータソースを読み取り専用で直接解析',
+    title: '20 のデータソースを読み取り専用で直接解析',
     subtitle: 'すべて読み取り専用アクセス（JSONL/JSON のストリーム解析または SQLite の読み取り専用接続）。設定ゼロで自動検出、環境変数でデータディレクトリを上書き可能。',
     legend: ['ストリーム解析', 'SQLite 読み取り専用', '専用フォーマット'],
     legendAria: '読み取り方式の凡例',
@@ -220,7 +221,9 @@ const dict: Omit<Dict, 'app'> = {
       { name: 'pi-agent', method: 'セッションディレクトリ' },
       { name: 'OpenClaw', method: 'SQLite + デュアルフォーマット' },
       { name: 'Antigravity', method: 'SQLite マルチルート重複排除' },
+      { name: 'Cindy', method: 'pi セッションディレクトリ' },
     ],
+    note: 'Cindy は Pi runtime のみ対応：Cindy から起動した Claude Code / Codex のセッションは各 Agent に計上されます。ゲートウェイが返す 0 コストは「未計価」として扱い、同じセッションファイルを二重計上しません。',
   },
   local: {
     kicker: '§06 · 立場',

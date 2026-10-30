@@ -8,7 +8,7 @@ const dict: Dict = {
   meta: {
     title: 'Tokenmetry — Know what your AI coding costs',
     description:
-      'Local-first, open-source analytics for AI coding usage: read-only access to local logs from 19 agents, incremental indexing into SQLite, and 9 curated views. Costs reconcile with ccusage day by day and model by model. Lives in your tray, works offline.',
+      'Local-first, open-source analytics for AI coding usage: read-only access to local logs from 20 agents, incremental indexing into SQLite, and 9 curated views. Costs reconcile with ccusage day by day and model by model. Lives in your tray, works offline.',
     ogAlt: 'Tokenmetry overview interface',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Dict = {
     title: 'Open it and know',
     titleLine2: 'what your AI coding costs',
     subtitle:
-      'Reads the local logs of Claude Code, Codex, ZCode and 19 agents total — read-only, incrementally indexed into SQLite, rolled up into a fixed set of views chosen for you. Local-first, reconcilable.',
+      'Reads the local logs of Claude Code, Codex, ZCode, Cindy and 20 agents total — read-only, incrementally indexed into SQLite, rolled up into a fixed set of views chosen for you. Local-first, reconcilable.',
     download: 'Get it from Releases',
     github: 'GitHub',
     badges: [
-      { value: '19', label: 'agent sources, read-only' },
+      { value: '20', label: 'agent sources, read-only' },
       { value: '9', label: 'fixed views' },
       { value: '±0.00', label: 'cost reconciliation drift' },
     ],
@@ -56,6 +56,7 @@ const dict: Dict = {
       'pi-agent · session dirs',
       'OpenClaw · SQLite read-only',
       'Antigravity · SQLite read-only',
+      'Cindy · pi session dirs',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Dict = {
       {
         problem: 'Every agent keeps its own log',
         detail: 'JSONL here, session snapshots there, SQLite elsewhere. Mixed together, you honestly cannot say what today cost.',
-        stance: 'Read-only access to 19 sources, auto-detected with zero config. No external processes spawned.',
-        evidence: '19 formats → 1 ledger',
+        stance: 'Read-only access to 20 sources, auto-detected with zero config. No external processes spawned.',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: 'Existing CLIs rescan everything',
@@ -194,7 +195,7 @@ const dict: Dict = {
   },
   sources: {
     kicker: '§05 · Coverage',
-    title: '19 agent sources, read-only',
+    title: '20 agent sources, read-only',
     subtitle: 'All read-only access (streamed JSONL/JSON parsing or SQLite read-only connections), auto-detected with zero config, overridable via environment variables.',
     legend: ['streamed parsing', 'SQLite read-only', 'proprietary formats'],
     legendAria: 'read-method legend',
@@ -220,7 +221,9 @@ const dict: Dict = {
       { name: 'pi-agent', method: 'session dirs' },
       { name: 'OpenClaw', method: 'SQLite + dual format' },
       { name: 'Antigravity', method: 'SQLite multi-root' },
+      { name: 'Cindy', method: 'pi session dirs' },
     ],
+    note: 'Cindy covers the Pi runtime only: Claude Code / Codex sessions it starts still count toward those agents; zero cost backfilled by its gateway is unknown, never zeroed; one session file is billed once, never twice.',
   },
   local: {
     kicker: '§06 · Stance',

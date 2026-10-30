@@ -8,7 +8,7 @@ const dict: Omit<Dict, 'app'> = {
   meta: {
     title: 'Tokenmetry — sieh sofort, was dein AI-Coding kostet',
     description:
-      'Local-first Open-Source-Analytik für AI-Coding-Nutzung: schreibgeschützter Zugriff auf lokale Logs von 19 Agents, inkrementelle Indizierung in SQLite, 9 kuratierte Ansichten. Kosten stimmen mit ccusage taggenau und modellgenau überein. Lebt im Tray, funktioniert offline.',
+      'Local-first Open-Source-Analytik für AI-Coding-Nutzung: schreibgeschützter Zugriff auf lokale Logs von 20 Agents, inkrementelle Indizierung in SQLite, 9 kuratierte Ansichten. Kosten stimmen mit ccusage taggenau und modellgenau überein. Lebt im Tray, funktioniert offline.',
     ogAlt: 'Tokenmetry Übersichtsansicht',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Omit<Dict, 'app'> = {
     title: 'Öffnen und wissen,',
     titleLine2: 'was dein AI-Coding kostet',
     subtitle:
-      'Liest die lokalen Logs von Claude Code, Codex, ZCode und insgesamt 19 Agents — schreibgeschützt, inkrementell in SQLite indiziert, verdichtet zu einem festen Satz Ansichten, der für dich gewählt wurde. Local-first, abgleichbar.',
+      'Liest die lokalen Logs von Claude Code, Codex, ZCode, Cindy und insgesamt 20 Agents — schreibgeschützt, inkrementell in SQLite indiziert, verdichtet zu einem festen Satz Ansichten, der für dich gewählt wurde. Local-first, abgleichbar.',
     download: 'Von Releases laden',
     github: 'GitHub',
     badges: [
-      { value: '19', label: 'Agent-Quellen, schreibgeschützt' },
+      { value: '20', label: 'Agent-Quellen, schreibgeschützt' },
       { value: '9', label: 'feste Ansichten' },
       { value: '±0.00', label: 'Abgleich-Abweichung der Kosten' },
     ],
@@ -56,6 +56,7 @@ const dict: Omit<Dict, 'app'> = {
       'pi-agent · Sitzungsverzeichnisse',
       'OpenClaw · SQLite schreibgeschützt',
       'Antigravity · SQLite schreibgeschützt',
+      'Cindy · Pi-Sitzungsverzeichnis',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Omit<Dict, 'app'> = {
       {
         problem: 'Jeder Agent führt sein eigenes Log',
         detail: 'JSONL hier, Sitzungs-Snapshots dort, SQLite woanders. Vermischt kannst du ehrlich nicht sagen, was der Tag gekostet hat.',
-        stance: 'Schreibgeschützter Zugriff auf 19 Quellen, automatisch erkannt ohne Konfiguration. Keine externen Prozesse.',
-        evidence: '19 formats → 1 ledger',
+        stance: 'Schreibgeschützter Zugriff auf 20 Quellen, automatisch erkannt ohne Konfiguration. Keine externen Prozesse.',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: 'Bestehende CLIs scannen alles neu',
@@ -194,7 +195,7 @@ const dict: Omit<Dict, 'app'> = {
   },
   sources: {
     kicker: '§05 · Abdeckung',
-    title: '19 Agent-Quellen, schreibgeschützt',
+    title: '20 Agent-Quellen, schreibgeschützt',
     subtitle: 'Alles schreibgeschützt (gestreamtes JSONL/JSON-Parsing oder SQLite-Verbindungen im Lesemodus), automatisch erkannt ohne Konfiguration, per Umgebungsvariablen überschreibbar.',
     legend: ['gestreamtes Parsing', 'SQLite schreibgeschützt', 'proprietäre Formate'],
     legendAria: 'Lesemethode-Legende',
@@ -220,7 +221,9 @@ const dict: Omit<Dict, 'app'> = {
       { name: 'pi-agent', method: 'Sitzungsverzeichnisse' },
       { name: 'OpenClaw', method: 'SQLite + Doppelformat' },
       { name: 'Antigravity', method: 'SQLite Multi-Root-Dedup' },
+      { name: 'Cindy', method: 'Pi-Sitzungsverzeichnis' },
     ],
+    note: 'Cindy deckt nur die Pi-Runtime ab: mit ihr gestartete Claude Code-/Codex-Sitzungen zählen weiter für diese Agents; vom Gateway aufgefülte 0-Kosten gelten als „nicht bepreist“; jede Sitzungsdatei wird nur einmal abgerechnet.',
   },
   local: {
     kicker: '§06 · Haltung',

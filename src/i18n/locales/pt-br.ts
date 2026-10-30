@@ -8,7 +8,7 @@ const dict: Omit<Dict, 'app'> = {
   meta: {
     title: 'Tokenmetry — saiba quanto sua programação com IA custa',
     description:
-      'Análise local-first e de código aberto do uso de IA para programação: acesso somente leitura aos logs locais de 19 agentes, indexação incremental em SQLite e 9 visões prontas. Custos conciliam com o ccusage dia a dia e modelo a modelo. Vive na bandeja, funciona offline.',
+      'Análise local-first e de código aberto do uso de IA para programação: acesso somente leitura aos logs locais de 20 agentes, indexação incremental em SQLite e 9 visões prontas. Custos conciliam com o ccusage dia a dia e modelo a modelo. Vive na bandeja, funciona offline.',
     ogAlt: 'Interface de visão geral do Tokenmetry',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Omit<Dict, 'app'> = {
     title: 'Abra e saiba',
     titleLine2: 'quanto sua programação com IA custa',
     subtitle:
-      'Lê os logs locais de Claude Code, Codex, ZCode e de 19 agentes ao todo — somente leitura, indexados incrementalmente em SQLite, consolidados num conjunto fixo de visões escolhidas para você. Local-first, conciliável.',
+      'Lê os logs locais de Claude Code, Codex, ZCode, Cindy e de 20 agentes ao todo — somente leitura, indexados incrementalmente em SQLite, consolidados num conjunto fixo de visões escolhidas para você. Local-first, conciliável.',
     download: 'Baixe no Releases',
     github: 'GitHub',
     badges: [
-      { value: '19', label: 'fontes de agentes, somente leitura' },
+      { value: '20', label: 'fontes de agentes, somente leitura' },
       { value: '9', label: 'visões fixas' },
       { value: '±0.00', label: 'desvio de conciliação de custo' },
     ],
@@ -56,6 +56,7 @@ const dict: Omit<Dict, 'app'> = {
       'pi-agent · diretórios de sessão',
       'OpenClaw · SQLite somente leitura',
       'Antigravity · SQLite somente leitura',
+      'Cindy · diretório de sessões pi',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Omit<Dict, 'app'> = {
       {
         problem: 'Cada agente guarda o próprio log',
         detail: 'JSONL aqui, snapshots de sessão ali, SQLite acolá. Misturados, você honestamente não sabe dizer quanto custou o dia.',
-        stance: 'Acesso somente leitura a 19 fontes, detectadas automaticamente sem configuração. Nenhum processo externo é criado.',
-        evidence: '19 formats → 1 ledger',
+        stance: 'Acesso somente leitura a 20 fontes, detectadas automaticamente sem configuração. Nenhum processo externo é criado.',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: 'CLIs existentes reescaneiam tudo',
@@ -194,7 +195,7 @@ const dict: Omit<Dict, 'app'> = {
   },
   sources: {
     kicker: '§05 · Cobertura',
-    title: '19 fontes de agentes, somente leitura',
+    title: '20 fontes de agentes, somente leitura',
     subtitle: 'Tudo com acesso somente leitura (parsing de JSONL/JSON em stream ou conexões SQLite somente leitura), detecção automática sem configuração, com sobrescrita por variáveis de ambiente.',
     legend: ['parsing em stream', 'SQLite somente leitura', 'formatos proprietários'],
     legendAria: 'legenda de método de leitura',
@@ -220,7 +221,9 @@ const dict: Omit<Dict, 'app'> = {
       { name: 'pi-agent', method: 'diretórios de sessão' },
       { name: 'OpenClaw', method: 'SQLite + formato duplo' },
       { name: 'Antigravity', method: 'SQLite multi-raiz' },
+      { name: 'Cindy', method: 'diretório de sessões pi' },
     ],
+    note: 'O Cindy cobre apenas o runtime Pi: sessões de Claude Code / Codex iniciadas por ele continuam contando para esses agentes; o custo 0 preenchido pelo gateway é tratado como “sem preço”; um mesmo arquivo de sessão é cobrado uma única vez.',
   },
   local: {
     kicker: '§06 · Postura',

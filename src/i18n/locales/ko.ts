@@ -8,7 +8,7 @@ const dict: Omit<Dict, 'app'> = {
   meta: {
     title: 'Tokenmetry — 열자마자 보이는 AI 코딩 비용',
     description:
-      '로컬 퍼스트 오픈 소스 AI 코딩 사용량 분석: 19개 Agent의 로컬 로그를 읽기 전용으로 직접 읽어 SQLite에 증분 기록하고 9개 고정 뷰로 집계합니다. 비용은 ccusage와 일별·모델별로 대조됩니다. 트레이 상주, 오프라인 사용 가능.',
+      '로컬 퍼스트 오픈 소스 AI 코딩 사용량 분석: 20개 Agent의 로컬 로그를 읽기 전용으로 직접 읽어 SQLite에 증분 기록하고 9개 고정 뷰로 집계합니다. 비용은 ccusage와 일별·모델별로 대조됩니다. 트레이 상주, 오프라인 사용 가능.',
     ogAlt: 'Tokenmetry 개요 뷰',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Omit<Dict, 'app'> = {
     title: '열자마자 보입니다,',
     titleLine2: 'AI 코딩에 들어간 비용',
     subtitle:
-      'Claude Code, Codex, ZCode 등 19개 Agent가 흩어 둔 로컬 로그를 읽기 전용으로 직접 읽고, SQLite에 증분 기록하며, 여러분 대신 골라 둔 고정 뷰로 집계합니다. 로컬 퍼스트, 대조 가능.',
+      'Claude Code, Codex, ZCode, Cindy 등 20개 Agent가 흩어 둔 로컬 로그를 읽기 전용으로 직접 읽고, SQLite에 증분 기록하며, 여러분 대신 골라 둔 고정 뷰로 집계합니다. 로컬 퍼스트, 대조 가능.',
     download: 'Releases에서 받기',
     github: 'GitHub',
     badges: [
-      { value: '19', label: '개 데이터 소스 읽기 전용 직접 읽기' },
+      { value: '20', label: '개 데이터 소스 읽기 전용 직접 읽기' },
       { value: '9', label: '개 고정 뷰' },
       { value: '±0.00', label: '비용 대조 오차' },
     ],
@@ -56,6 +56,7 @@ const dict: Omit<Dict, 'app'> = {
       'pi-agent · 세션 디렉터리',
       'OpenClaw · SQLite 읽기 전용',
       'Antigravity · SQLite 읽기 전용',
+      'Cindy · pi 세션 디렉터리',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Omit<Dict, 'app'> = {
       {
         problem: 'Agent마다 로그가 따로논다',
         detail: 'JSONL, 세션 스냅샷, SQLite… 형식도 위치도 제각각이라 뒤섞이면 오늘 얼마를 썼는지 솔직히 말할 수 없습니다.',
-        stance: '19개 소스를 읽기 전용으로 직접 읽고, 설정 없이 자동 탐지, 외부 프로세스를 띄우지 않습니다.',
-        evidence: '19 formats → 1 ledger',
+        stance: '20개 소스를 읽기 전용으로 직접 읽고, 설정 없이 자동 탐지, 외부 프로세스를 띄우지 않습니다.',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: '기존 CLI는 매번 전체 재스캔',
@@ -194,7 +195,7 @@ const dict: Omit<Dict, 'app'> = {
   },
   sources: {
     kicker: '§05 · 커버리지',
-    title: '19개 데이터 소스, 읽기 전용 직접 읽기',
+    title: '20개 데이터 소스, 읽기 전용 직접 읽기',
     subtitle: '모두 읽기 전용 접근 (JSONL/JSON 스트리밍 파싱 또는 SQLite 읽기 전용 연결), 설정 없이 자동 탐지, 환경 변수로 데이터 디렉터리 재정의 가능.',
     legend: ['스트리밍 파싱', 'SQLite 읽기 전용', '전용 포맷'],
     legendAria: '읽기 방식 범례',
@@ -220,7 +221,9 @@ const dict: Omit<Dict, 'app'> = {
       { name: 'pi-agent', method: '세션 디렉터리' },
       { name: 'OpenClaw', method: 'SQLite + 듀얼 포맷' },
       { name: 'Antigravity', method: 'SQLite 멀티루트 중복 제거' },
+      { name: 'Cindy', method: 'pi 세션 디렉터리' },
     ],
+    note: 'Cindy는 Pi runtime만 지원합니다. Cindy에서 실행한 Claude Code / Codex 세션은 각 Agent로 집계되고, 게이트웨이가 채우는 0 비용은 「미산정」으로 처리하며, 같은 세션 파일을 두 번 집계하지 않습니다.',
   },
   local: {
     kicker: '§06 · 입장',

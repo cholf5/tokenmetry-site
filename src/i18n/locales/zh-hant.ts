@@ -8,7 +8,7 @@ const dict: Omit<Dict, 'app'> = {
   meta: {
     title: 'Tokenmetry — 打開就知道 AI 編程花了多少錢',
     description:
-      '本機優先的開源 AI 編程用量分析：唯讀直讀 19 個 Agent 的本機日誌，增量寫入 SQLite，彙成 9 個固定檢視；成本口徑與 ccusage 逐日逐模型對帳。系統匣常駐，離線可用。',
+      '本機優先的開源 AI 編程用量分析：唯讀直讀 20 個 Agent 的本機日誌，增量寫入 SQLite，彙成 9 個固定檢視；成本口徑與 ccusage 逐日逐模型對帳。系統匣常駐，離線可用。',
     ogAlt: 'Tokenmetry 總覽介面',
   },
   nav: {
@@ -24,11 +24,11 @@ const dict: Omit<Dict, 'app'> = {
     title: '打開就知道，',
     titleLine2: 'AI 編程花了多少錢',
     subtitle:
-      '把 Claude Code、Codex、ZCode……19 個 Agent 散落本機的日誌唯讀直讀，增量寫入 SQLite，彙成一套替你選好的固定檢視。本機優先，可對帳。',
+      '把 Claude Code、Codex、ZCode、Cindy……20 個 Agent 散落本機的日誌唯讀直讀，增量寫入 SQLite，彙成一套替你選好的固定檢視。本機優先，可對帳。',
     download: '從 Releases 下載',
     github: 'GitHub',
     badges: [
-      { value: '19', label: '個資料來源唯讀直讀' },
+      { value: '20', label: '個資料來源唯讀直讀' },
       { value: '9', label: '個固定檢視' },
       { value: '±0.00', label: '成本對帳誤差' },
     ],
@@ -56,6 +56,7 @@ const dict: Omit<Dict, 'app'> = {
       'pi-agent · 工作階段目錄',
       'OpenClaw · SQLite 唯讀',
       'Antigravity · SQLite 唯讀',
+      'Cindy · pi 工作階段目錄',
     ],
   },
   why: {
@@ -65,8 +66,8 @@ const dict: Omit<Dict, 'app'> = {
       {
         problem: '每個 Agent 一套日誌',
         detail: 'JSONL、工作階段快照、SQLite……格式不同、位置不同，混用時你根本說不清今天燒了多少錢。',
-        stance: '唯讀直讀 19 個來源，零配置自動偵測，不 spawn 外部處理程序。',
-        evidence: '19 formats → 1 ledger',
+        stance: '唯讀直讀 20 個來源，零配置自動偵測，不 spawn 外部處理程序。',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: '現成 CLI 每次全量重掃',
@@ -194,7 +195,7 @@ const dict: Omit<Dict, 'app'> = {
   },
   sources: {
     kicker: '§05 · 覆蓋',
-    title: '19 個資料來源，唯讀直讀',
+    title: '20 個資料來源，唯讀直讀',
     subtitle: '全部為唯讀存取（JSONL/JSON 串流解析或 SQLite 唯讀連線），零配置自動偵測，支援以環境變數覆寫資料目錄。',
     legend: ['串流解析', 'SQLite 唯讀', '專用格式'],
     legendAria: '讀取方式圖例',
@@ -220,7 +221,9 @@ const dict: Omit<Dict, 'app'> = {
       { name: 'pi-agent', method: '工作階段目錄' },
       { name: 'OpenClaw', method: 'SQLite + 雙格式' },
       { name: 'Antigravity', method: 'SQLite 多根去重' },
+      { name: 'Cindy', method: 'pi 工作階段目錄' },
     ],
+    note: 'Cindy 只接 Pi runtime：用它啟動的 Claude Code / Codex 工作階段仍計入各自 Agent；閘道回填的 0 成本按「未計價」處理；同一份工作階段檔案只出一份帳，不雙算。',
   },
   local: {
     kicker: '§06 · 立場',

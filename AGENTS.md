@@ -18,7 +18,7 @@ pnpm icons           # 重新烘焙站点图标（public/favicon-{16,32}.png、a
 
 ## 结构与分层
 
-- `src/config/site.ts` — **所有外部链接与站点常量集中于此**，组件不得硬编码 URL（sourceCount=19、viewCount=9 等数字以主仓库为准）。
+- `src/config/site.ts` — **所有外部链接与站点常量集中于此**，组件不得硬编码 URL（sourceCount=20、viewCount=9 等数字以主仓库为准）。
 - `src/i18n/ui.ts` — i18n 聚合层：`Locale` 联合类型（10 语）、`LANGUAGES` 语种元数据（URL 前缀 / hreflang 标签 / og:locale / 语言本名 / 移动端短码）、`defaultLocale='en'`、`visualLocale()` 映射。组件统一接收 `locale` prop 从 `ui[locale]` 取文案。
 - `src/i18n/locales/{locale}.ts` — 字典本体，结构以 zh.ts 为基准逐 key 对齐（`pnpm locales:check` 校验）；zh/en 含 `app` 段，其余语种为 `Omit<Dict, 'app'>`。
 - `src/layouts/Layout.astro` — SEO / canonical / hreflang / OG meta + 主题系统 + 首访语言协商 + 交互委托脚本。
@@ -42,6 +42,7 @@ pnpm icons           # 重新烘焙站点图标（public/favicon-{16,32}.png、a
 
 ## 已知坑
 
+- **数据源口径以主仓库采集管道注册表为准**：当前 20 源（19 个原适配器 + Cindy），`SourcesWall` 的计数读 `site.sourceCount`，不再写字面量。Cindy 的口径（只接 Pi runtime、Claude Code / Codex 当 runtime 时仍归各自 Agent、网关回填的 0 成本按未计价、文件级归属仲裁不双算）写在 `sources.note`，改这段文案前先核对主仓库 `src/Tokenmetry.Infrastructure/Cindy/` 与 `LocalIngestionDataSource.ApplyFileOwnership`；主仓库 README 尚未列 Cindy，别再拿 README 的「19 源」当依据。
 - `src/components/visuals/` 复刻的锚定数据是主仓库 `SiteShotsTests.SiteData`（截图渲染日 2026-10-25：星期分布、最活跃日 2026-10-22 等相对量都锚定该日）；总览为真机手记（35.22亿 / $137.49 / 432 会话，zh「最近更新 19:39」、en「19:44」）。改数字先对 SiteData，别凭印象。
 - `public/og-*.png` 是构建产物且被 gitignore，改动 OG 文案后跑 `pnpm og` 重新生成；OG 图只有中英两版，新增语种不新增 OG 图（见 generate-og.mjs 的回退映射）。
 - 改品牌图标的同步点：`src/assets/brand/app-icon.svg`（母版）→ `Logo.astro`（内联几何）→ `pnpm icons` 重烘焙 favicon 并提交。apple-touch-icon 是方角全出血版（iOS 自裁圆角），由脚本自动处理。

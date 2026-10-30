@@ -11,7 +11,7 @@ const dict = {
   meta: {
     title: 'Tokenmetry — 打开就知道 AI 编程花了多少钱',
     description:
-      '本地优先的开源 AI 编程用量分析：只读直读 19 个 Agent 的本地日志，增量落进 SQLite，聚成 9 个固定视图；成本口径与 ccusage 逐日逐模型对账。托盘常驻，断网可用。',
+      '本地优先的开源 AI 编程用量分析：只读直读 20 个 Agent 的本地日志，增量落进 SQLite，聚成 9 个固定视图；成本口径与 ccusage 逐日逐模型对账。托盘常驻，断网可用。',
     ogAlt: 'Tokenmetry 总览界面',
   },
   nav: {
@@ -27,11 +27,11 @@ const dict = {
     title: '打开就知道，',
     titleLine2: 'AI 编程花了多少钱',
     subtitle:
-      '把 Claude Code、Codex、ZCode……19 个 Agent 散落本地的日志只读直读，增量落进 SQLite，聚成一套替你选好的固定视图。本地优先，可对账。',
+      '把 Claude Code、Codex、ZCode、Cindy……20 个 Agent 散落本地的日志只读直读，增量落进 SQLite，聚成一套替你选好的固定视图。本地优先，可对账。',
     download: '从 Releases 下载',
     github: 'GitHub',
     badges: [
-      { value: '19', label: '个数据源只读直读' },
+      { value: '20', label: '个数据源只读直读' },
       { value: '9', label: '个固定视图' },
       { value: '±0.00', label: '成本对账误差' },
     ],
@@ -59,6 +59,7 @@ const dict = {
       'pi-agent · 会话目录',
       'OpenClaw · SQLite 只读',
       'Antigravity · SQLite 只读',
+      'Cindy · pi 会话目录',
     ],
   },
   why: {
@@ -68,8 +69,8 @@ const dict = {
       {
         problem: '每个 Agent 一套日志',
         detail: 'JSONL、会话快照、SQLite……格式不同、位置不同，混用时你根本说不清今天烧了多少钱。',
-        stance: '只读直读 19 源，零配置自动探测，不 spawn 外部进程。',
-        evidence: '19 formats → 1 ledger',
+        stance: '只读直读 20 源，零配置自动探测，不 spawn 外部进程。',
+        evidence: '20 formats → 1 ledger',
       },
       {
         problem: '现成 CLI 每次全量重扫',
@@ -197,7 +198,7 @@ const dict = {
   },
   sources: {
     kicker: '§05 · 覆盖',
-    title: '19 个数据源，只读直读',
+    title: '20 个数据源，只读直读',
     subtitle: '全部为只读访问（JSONL/JSON 流式解析或 SQLite 只读连接），零配置自动探测，支持环境变量覆盖数据目录。',
     legend: ['流式解析', 'SQLite 只读', '专用格式'],
     legendAria: '读取方式图例',
@@ -223,7 +224,9 @@ const dict = {
       { name: 'pi-agent', method: '会话目录' },
       { name: 'OpenClaw', method: 'SQLite + 双格式' },
       { name: 'Antigravity', method: 'SQLite 多根去重' },
+      { name: 'Cindy', method: 'pi 会话目录' },
     ],
+    note: 'Cindy 只接 Pi runtime：用它启动的 Claude Code / Codex 会话仍计入各自 Agent；网关回填的 0 成本按「未知」处理，不折零；同一份会话文件只出一份账，不双算。',
   },
   local: {
     kicker: '§06 · 立场',
