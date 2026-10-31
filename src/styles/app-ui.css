@@ -1313,7 +1313,8 @@
 
 .ta-tray-actions {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  /* 产品 ColumnDefinitions="*,*"：两钮同为"离开弹窗去某页"的导航出口，等宽无强调 */
+  grid-template-columns: 1fr 1fr;
   gap: calc(9 * var(--u));
   margin-top: calc(14 * var(--u));
 }
@@ -1325,16 +1326,9 @@
   height: calc(34 * var(--u));
   border-radius: calc(8 * var(--u));
   font-size: calc(11.5 * var(--u));
-  font-weight: 600;
   border: calc(1 * var(--u)) solid var(--taline);
   color: var(--tatext);
   background: transparent;
-}
-
-.ta-tray-btn.primary {
-  border: none;
-  background: var(--tablue); /* 产品 popover-btn.primary：实色 AppAccentBlueBrush + 恒白字 */
-  color: #fff;
 }
 
 /* ── 窄屏兜底：复刻随容器缩放，仅需防止极端小宽下模糊抗锯齿差异 ── */
