@@ -1,0 +1,12 @@
+# PV pipeline: everything regenerable stays out of git.
+# Regeneration order: pnpm build → cut_fragments.py → make_timeline.py [slug]
+#   → build-page.mjs [en|zh] → capture.mjs [lang] → mux.sh [lang]
+node_modules/
+frames/
+stills/
+page/
+ui/
+ui-zh/
+music/
+playlist.html
+out/

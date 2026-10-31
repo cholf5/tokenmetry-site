@@ -1,0 +1,162 @@
+/* ── Tokenmetry Launch PV stage ─────────────────────────────────
+   1920×1080, dark, deterministic: promo.js drives every animated
+   property per frame. No CSS transition/animation may survive here
+   (site css motion is neutralized below) so frame capture is exact. */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg, #0f1118);
+  font-variant-numeric: tabular-nums;
+}
+
+.camera {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* determinism: kill all site-css motion inside the stage */
+.stage, .stage * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+.scene.on { visibility: visible; opacity: 1; }
+
+.flash   { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.fadeout { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+.vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(125% 95% at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* ── shared type ──
+   Window replicas are self-titled; the only external copy is the tray
+   scene's split-composition text block (left column, vertically centered,
+   clear of the player progress-bar zone). */
+.tray-copy  { position: absolute; left: 120px; top: 540px; transform: translateY(-50%); max-width: 620px; }
+.tray-copy .t { font-size: 46px; font-weight: 650; letter-spacing: -0.01em; line-height: 1.25; color: var(--fg, #e8eef9); }
+.tray-copy .s { margin-top: 18px; font-size: 25px; line-height: 1.5; color: var(--fg, #e8eef9); opacity: 0.62; }
+
+.mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* brand mark svg (inline geometry from app-icon / Logo.astro) */
+.bmark svg { display: block; }
+.bmark rect.bar { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ── scene: hook ── */
+.hook-type {
+  position: absolute; left: 0; right: 0; top: 316px; text-align: center;
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  font-size: 42px; color: var(--fg, #e8eef9); opacity: 0.8; letter-spacing: 0.01em;
+}
+.hook-type .cursor {
+  display: inline-block; width: 0.55em; height: 1.05em;
+  background: var(--accent, #4c8dff); vertical-align: -0.18em; margin-left: 6px;
+}
+.hook-num {
+  position: absolute; left: 0; right: 0; top: 426px; text-align: center;
+  font-size: 210px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1;
+  color: var(--fg, #e8eef9);
+}
+.hook-rule {
+  position: absolute; left: 50%; top: 700px; width: 0; height: 5px; margin-left: 0;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #1d9e79, #38d6a4);
+  border-radius: 3px;
+}
+.hook-sub {
+  position: absolute; left: 0; right: 0; top: 748px; text-align: center;
+  font-size: 34px; color: var(--fg, #e8eef9); opacity: 0.65;
+}
+
+/* ── scene: logo ── */
+.logo-wrap {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 34px;
+}
+.logo-word {
+  font-size: 96px; font-weight: 750; letter-spacing: -0.02em; color: var(--fg, #e8eef9);
+}
+.logo-word span { display: inline-block; will-change: transform; }
+.logo-tag { font-size: 36px; color: var(--fg, #e8eef9); opacity: 0.66; margin-top: -6px; }
+
+/* ── window slots (tapp replicas) ──
+   Windows sit vertically centered on y=460 (upper zone); captions live in
+   the bottom band, so windows can run much larger without overlap. */
+.slot {
+  position: absolute; left: 50%; top: 540px;
+  will-change: transform;
+}
+.slot-overview { width: 1400px; margin-left: -700px; }
+.slot-montage  { width: 1400px; margin-left: -700px; }
+
+/* ── scene: sources ── */
+.slot-sources { position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%; width: 1680px; }
+.slot-sources .container { max-width: 1680px !important; }
+.slot-sources .section-head { margin-bottom: 40px !important; max-width: none !important; }
+.slot-sources h2 { font-size: 54px !important; letter-spacing: -0.01em; max-width: none !important; white-space: nowrap; }
+.slot-sources .sub { font-size: 23px !important; max-width: 1100px; }
+.slot-sources .wall {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+}
+.slot-sources .cell { padding: 16px 20px !important; }
+.slot-sources .cell .name { font-size: 22px !important; }
+.slot-sources .cell .method { font-size: 16px !important; }
+
+/* ── scene: tray ── */
+.menubar {
+  position: absolute; top: 0; left: 0; right: 0; height: 66px;
+  background: rgba(8, 10, 14, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 44px; gap: 34px;
+}
+.menubar .glyph { width: 24px; height: 24px; opacity: 0.5; }
+.menubar .clock {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 21px; color: var(--fg, #e8eef9); opacity: 0.85;
+}
+.menubar .tk-icon { opacity: 1; }
+.slot-tray { position: absolute; top: 84px; right: 150px; width: 640px; will-change: transform; }
+.scene[data-scene="tray"] .cap { bottom: 96px; }
+
+/* ── scene: cta ── */
+.cta-wrap {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px;
+}
+.cta-word { font-size: 88px; font-weight: 750; letter-spacing: -0.02em; color: var(--fg, #e8eef9); }
+.cta-tag { font-size: 34px; color: var(--fg, #e8eef9); opacity: 0.66; margin-top: -12px; }
+.cta-chips { display: flex; gap: 18px; margin-top: 18px; }
+.chip {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 28px; padding: 16px 34px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16); color: var(--fg, #e8eef9);
+  background: rgba(255, 255, 255, 0.045);
+  will-change: transform;
+}
+.chip.hi { border-color: #27c496; color: #38d6a4; background: rgba(56, 214, 164, 0.08); font-size: 32px; padding: 18px 40px; }
+.cta-foot { font-size: 24px; color: var(--fg, #e8eef9); opacity: 0.5; margin-top: 6px; }
