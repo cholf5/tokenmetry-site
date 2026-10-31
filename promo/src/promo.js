@@ -147,7 +147,6 @@
   }
 
   function renderMontage(name) {
-    const sceneEl = () => sceneEls[name];
     return (lt, t) => {
       const slot = $('.slot-' + name);
       slot.style.opacity = eoCubic(clamp(lt / 0.25)).toFixed(4);
@@ -215,24 +214,27 @@
   }
 
   /* ── master render ── */
+  /* Crossfade: the outgoing scene keeps fading out BENEATH the incoming one
+     (later scenes sit higher in DOM order) instead of a hard visibility cut.
+     No white flash — at full-bleed brightness it read as screen flicker. */
+  const XFADE = 0.35;
   function render(t) {
     let active = null;
-    for (const s of SCENES) {
-      const on = t >= s.start && t < s.end;
-      sceneEls[s.name].classList.toggle('on', on);
-      if (on) active = s;
-    }
+    SCENES.forEach((s, i) => {
+      const el = sceneEls[s.name];
+      const isActive = t >= s.start && t < s.end;
+      const isOutgoing = !isActive && t >= s.end && t < s.end + XFADE && i < SCENES.length - 1;
+      el.classList.toggle('on', isActive || isOutgoing);
+      if (isOutgoing) {
+        el.style.opacity = (1 - clamp((t - s.end) / XFADE)).toFixed(4);
+      } else if (el.style.opacity) {
+        el.style.opacity = '';
+      }
+      if (isActive) active = s;
+    });
     if (active) active.render(t - active.start, t);
 
-    // cut flash
-    let f = 0;
-    for (const s of SCENES) {
-      if (s.flash) {
-        const dt = t - s.start;
-        if (dt >= 0 && dt < 0.4) f = Math.max(f, Math.exp(-dt * 16) * 0.07);
-      }
-    }
-    flashEl.style.opacity = f.toFixed(4);
+    flashEl.style.opacity = '0';
 
     // camera punch + hook shake
     let scale = 1, dx = 0, dy = 0;

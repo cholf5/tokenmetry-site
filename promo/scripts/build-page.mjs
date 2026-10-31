@@ -136,7 +136,6 @@ const page = `<!doctype html>
         <div class="cta-word">Tokenmetry</div>
         <div class="cta-tag">${S.ctaTag}</div>
         <div class="cta-chips">
-          <span class="chip">v0.3.2</span>
           <span class="chip hi">tokenmetry.app</span>
           <span class="chip">github.com/cholf5/tokenmetry</span>
         </div>
